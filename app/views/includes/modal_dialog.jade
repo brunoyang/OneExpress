@@ -1,0 +1,38 @@
+.modal-dialog-bg
+.modal-dialog.modal-dialog-signin
+  form(method="post", action="/user/signin")
+    .modal-dialog-title
+      .modal-dialog-title-text
+        h3 加入一通
+      span.modal-dialog-close.icon-close &#xea0d;
+    .modal-dialog-content
+      .modal-dialog-form-row
+        input.modal-dialog-email(required, name="user[email]", type="email", placeholder="邮箱")
+        span.modal-dialog-show-password.icon-check.h &#xea10;
+      .modal-dialog-form-row.modal-dialog-password
+        input(required, name="user[password]", type="password", placeholder="密码")
+        span.modal-dialog-show-password.icon-eye &#xe9ce;
+    .modal-dialog-msg
+      p
+    .modal-dialog-button
+      input#modal-dialog-signin-button(type="submit",value="登录")
+.modal-dialog.modal-dialog-signup
+  form(method="post", action="/user/signup")
+    .modal-dialog-title
+      .modal-dialog-title-text
+        h3 加入一通
+      span.modal-dialog-close.icon-close &#xea0d;
+    .modal-dialog-content
+      .modal-dialog-form-row
+        input.modal-dialog-user(required, name="user[name]", type="text", placeholder="用户名 输入数字、字母或下划线")
+        span.modal-dialog-show-password.icon-check.h &#xea10;
+      .modal-dialog-form-row
+        input.modal-dialog-email(required, name="user[email]", type="email", placeholder="邮箱")
+        span.modal-dialog-show-password.icon-check.h &#xea10;
+      .modal-dialog-form-row.modal-dialog-password
+        input(required, name="user[password]", type="password", placeholder="密码")
+        span.modal-dialog-show-password.icon-eye &#xe9ce;
+    .modal-dialog-msg
+      p 
+    .modal-dialog-button
+      input#modal-dialog-signup-button(type="submit",value="注册")

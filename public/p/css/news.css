@@ -1,0 +1,74 @@
+.container {
+  width: 1050px;
+  margin: 50px auto 0;
+  overflow: hidden;
+}
+
+.sidebar {
+  float: right;
+  width: 20%;
+}
+
+.tools {
+  width: 100%;
+}
+
+.news-info{
+  width: 75%;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
+
+h2 {
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 50px;
+  color: #333;
+}
+.news-time {
+  padding-right: 15px;
+}
+.main-content {
+  float: left;
+  position: relative;
+  width: 75%;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 15px;
+  color: #333;
+  min-height: 500px;
+  border: 1px solid #bfbfbf;
+}
+.main-content p{
+  font-size: 14px;
+  color: #333;
+  text-indent: 2em;
+  line-height: 23px;
+  margin: 15px 0;
+}
+.main-content p strong{
+  font-weight: bold;
+}
+.news-func{
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  margin-left: -15px;
+  bottom: 0;
+  padding: 10px 15px;
+  border-top: 1px dashed gray;
+  line-height: 1.2;
+}
+.news-func span a{
+  color: #F0553A;
+  font-size: 18px;
+}
+.news-func .back-button {
+  float: left;
+}
+.news-func .go-top{
+  float: right;
+}
+
+

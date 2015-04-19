@@ -1,0 +1,29 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/news.css")
+
+block script
+  script(src="/p/js/func.js")
+
+block content
+  section.container
+    header.news-header
+      h2 #{news.title}
+      .news-info
+        time.news-time #{moment(news.meta.updateAt).format('MM/DD/YYYY')}
+        span.news-author 作者：#{news.author}
+    aside.sidebar
+      include ../../components/tools
+    article.main-content
+      .news-content !{news.content}
+      .news-func 
+        span.back-button.icon-back 
+          a(href="/news/") &#xea44; 返回新闻页
+        span.go-top.icon-top 
+          a(href="javascript:;") &#xea41; 去顶部
+
+
+
+      

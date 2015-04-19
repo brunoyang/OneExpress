@@ -1,0 +1,28 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th 新闻标题
+            th 作者
+            th 新闻预览
+            th 最后更新时间
+            th 查看
+            th 编辑
+            th 删除
+        tbody
+          each news in newslist
+            tr(class="news-id-#{news._id}")
+              td #{news.title}
+              td #{news.author}
+              td #{news.content.substring(0, 20) + '...'}
+              td #{moment(news.meta.createAt).format('MM/DD/YYYY')}
+              td: a(href="/news/#{news._id}", target="_blank") 查看
+              td: a(href="/admin/news/update/#{news._id}", target="_blank") 编辑
+              td: button.btn.btn-danger.del(data-id="#{news._id}") 删除
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/news/new") 增加新闻
+block srcipt
+  script(src="/p/js/func.js")

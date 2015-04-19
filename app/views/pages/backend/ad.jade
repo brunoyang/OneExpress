@@ -1,0 +1,23 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/ad/save", method="POST")
+        input(type="hidden", name="ad[id]", value="#{ad._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputTitle") 广告标题
+          .col-md-10
+            input#inputTitle.form-control(type="text", name="ad[title]", value="#{ad.title}")
+        .form-group
+          label.col-md-2.control-label(for="inputImgSrc") 广告头图
+          .col-md-10
+            input#inputImgSrc.form-control(type="text", name="ad[imgSrc]", value="#{ad.imgSrc}")
+        .form-group
+          label.col-md-2.control-label(for="inputContent") 广告内容
+          .col-md-10
+            textarea#inputContetn.form-control(type="text", name="ad[content]", rows="10") !{ad.content}
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入
+
