@@ -1,15 +1,23 @@
 $(function() {
   var $slider = $('.bruno-slider'),
     $sliderUl = $slider.find('ul'),
-    $index = 0;
-  $span = $slider.find('.nav-dot span');
+    $sliderLi = $slider.find('li'),
+    $dot = $slider.find('.nav-dot'),
+    $sliderLength = $sliderLi.length,
+    $index = 0,
+    timer = null;
+
+  $sliderUl.width(($sliderLi.length * 100) + '%');
+  $sliderLi.width((100 / $sliderLi.length) + '%');
+  $dot.width(15 * $sliderLength);
+  for (var i = 0; i < $sliderLength; i++) {
+    $dot.append('<span>');
+  }
+  var $span = $dot.find('span');
+  $span.first().addClass('active');
   $span.each(function(index) {
     $(this).data('index', index);
   });
-
-  $span.first().addClass('active');
-
-  var timer = null;
 
   timer = setInterval(next, 3000);
 
