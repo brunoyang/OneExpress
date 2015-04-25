@@ -3,7 +3,8 @@
   float: left;
   box-sizing: border-box;
 }
-.tools li{
+
+.tools li {
   box-sizing: border-box;
   float: left;
   width: 50%;
@@ -11,13 +12,88 @@
   padding-bottom: 15px;
   cursor: pointer;
 }
-.tools li i{
+
+.tools li i {
   display: block;
   width: 100%;
   font-size: 40px;
   color: #F0553A;
   margin-bottom: 10px;
 }
-.tools li a{
+
+.tools li a {
   color: #333;
+}
+
+.input-area {
+  background-color: #F2f2f2;
+  padding: 15px 0 15px;
+}
+
+.input-area label {
+  width: 100px;
+  display: inline-block;
+  text-align: right;
+  color: #F0553A;
+  margin-right: 16px;
+}
+
+#oe-city,
+#oe-type {
+  height: 25px;
+  font-size: 14px;
+  border: 1px solid #d4d4d4;
+}
+
+#oe-city {
+  min-width: 220px;
+}
+
+#oeSubmit {
+  background: #F0553A;
+  margin-left: 10px;
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  padding: 4px 15px;
+  font-family: 'microsoft yahei';
+  cursor: pointer;
+}
+
+#oe-city {
+  position: relative;
+}
+
+#oe-province {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  margin-top: -1px;
+  background: #fff;
+  display: none;
+  z-index: 99;
+}
+
+#oe-province .pro-title {
+  padding: 5px 6px;
+  background: #dcdcdc;
+  color: #F0553A;
+  font-size: 14px;
+}
+
+#pro-close {
+  width: 11px;
+  height: 11px;
+  background: url(/images/proClose.gif) no-repeat;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+}
+
+#oe-province select {
+  margin: 10px 6px;
+  padding: 3px 4px;
+}
+
+#oe-province option {
+  padding: 3px 4px;
 }

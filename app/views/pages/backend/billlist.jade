@@ -1,0 +1,32 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th 单号
+            th 发件人姓名
+            th 发件人地址
+            th 发件人电话
+            th 收件人姓名
+            th 收件人地址
+            th 收件人电话
+            th 查看
+            th 编辑
+        tbody
+          each bill in bills
+            tr(class="bill-id-#{bill._id}")
+              td: a(href="/admin/track/#{bill._id}") #{bill._id}
+              td #{bill.sendname}
+              td #{bill.sendprovince}/#{bill.sendcity}/#{bill.sendcounty}/#{bill.sendaddr}
+              td #{bill.sendcellphone}
+              td #{bill.delivername}
+              td #{bill.deliverprovince}/#{bill.delivercity}/#{bill.delivercounty}/#{bill.deliveraddr}
+              td #{bill.delivercellphone}
+              td: a(href="/bill/#{bill._id}", target="_blank") 查看
+              td: a(href="/admin/bill/update/#{bill._id}", target="_blank") 编辑
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/bill/new") 增加快递
+block srcipt
+  script(src="/p/js/func.js")

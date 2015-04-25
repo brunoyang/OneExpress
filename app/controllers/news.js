@@ -78,7 +78,9 @@ exports.update = function(req, res) {
 };
 
 exports.list = function(req, res) {
-  News.fetch(0, 15, function(err, newslist){
+  var start = req.query.start ? req.query.start : 0;
+  var limit = req.query.limit ? req.query.limit : 15;
+  News.fetchLimit(start, limit, function(err, newslist){
     if(err) {
       console.log(err);
     }

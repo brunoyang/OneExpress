@@ -1,0 +1,18 @@
+div.input-area
+  label(for="oe-city") 省份城市：
+  input#oe-city(type="text" readonly placeholder="请输入省市县", name="area")
+  div#oe-province
+    div.pro-title 请选择地区
+      a#pro-close(href="javascript:;")
+    div.pro-content
+      select#s-province
+        option(value="") 省份
+      select#s-city
+        option(value="") 地级市
+      select#s-county
+        option(value="") 市、县级市
+  label(for="oe-type") 类型：
+  select#oe-type(name="site[type]")
+    option(value="oeName") 网点名称
+    option(value="oePhone") 派送电话
+  input#oeSubmit(type="submit" value="搜一下")

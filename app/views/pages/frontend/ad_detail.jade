@@ -1,0 +1,25 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/news.css")
+
+block script
+  script(src="/p/js/func.js")
+
+block content
+  section.container
+    header.news-header
+      h2 #{ad.title}
+      .news-info
+        time.news-time #{moment(ad.meta.updateAt).format('MM/DD/YYYY')}
+        span.news-author 作者：#{ad.author}
+    aside.sidebar
+      include ../../components/tools
+    article.main-content
+      .news-content !{ad.content}
+      .news-func 
+        span.back-button.icon-back 
+          a(href="/ad/") &#xea44; 返回广告聚合页
+        span.go-top.icon-top 
+          a(href="javascript:;") &#xea41; 去顶部      
