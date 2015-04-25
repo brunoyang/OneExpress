@@ -1,0 +1,47 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/site/save", method="POST")
+        input(type="hidden", name="site[id]", value="#{site._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputProvince") 省份
+          .col-md-10
+            input#inputProvince.form-control(type="text", name="site[province]", value="#{site.province}")
+        .form-group
+          label.col-md-2.control-label(for="inputCity") 市
+          .col-md-10
+            input#inputCity.form-control(type="text", name="site[city]", value="#{site.city}")
+        .form-group
+          label.col-md-2.control-label(for="inputCounty") 县
+          .col-md-10
+            input#inputCounty.form-control(type="text", name="site[county]", value="#{site.county}")
+        .form-group
+          label.col-md-2.control-label(for="inputAddress") 详细地址
+          .col-md-10
+            input#inputAddress.form-control(type="text", name="site[address]", value="#{site.address}")
+        .form-group
+          label.col-md-2.control-label(for="inputTelephone") 电话
+          .col-md-10
+            input#inputTelephone.form-control(type="text", name="site[telephone]", value="#{site.telephone}")
+        .form-group
+          label.col-md-2.control-label(for="inputAreacode") 区号
+          .col-md-10
+            input#inputAreacode.form-control(type="text", name="site[areacode]", value="#{site.areacode}")
+        .form-group
+          label.col-md-2.control-label(for="inputX") 经度
+          .col-md-9
+            input#inputX.form-control(type="text", name="site[X]", value="#{site.X}")
+          a.btn.btn-success.col-md-1(href="http://www.gpsspg.com/maps.htm",style="margin-left: -15px;",placeholder="用空格分开经纬度", target="_blank") 经纬度查询
+        .form-group
+          label.col-md-2.control-label(for="inputY") 纬度
+          .col-md-10
+            input#inputY.form-control(type="text", name="site[Y]", value="#{site.Y}")
+        .form-group
+          label.col-md-2.control-label(for="inputManager") 负责人
+          .col-md-10
+            input#inputManager.form-control(type="text", name="site[manager]", value="#{site.manager}") 
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入

@@ -58,17 +58,17 @@ $(function() {
         return $signupWrong.html('邮箱格式好像有错误哦');
       }
       $.get('/api/check/email', {
-        email: emailVal
-      },
-      function(data) {
-        if (data.success) {
-          $span.addClass('h');
-          $signupWrong.html('已有该用户');
-        } else {
-          $span.removeClass('h');
-          $signupWrong.html('');
-        }
-      });
+          email: emailVal
+        },
+        function(data) {
+          if (data.success) {
+            $span.addClass('h');
+            $signupWrong.html('已有该用户');
+          } else {
+            $span.removeClass('h');
+            $signupWrong.html('');
+          }
+        });
     });
 
   $signinDialog
@@ -87,17 +87,17 @@ $(function() {
       }
 
       $.get('/api/check/email', {
-        email: emailVal
-      },
-      function(data) {
-        if (data.success) {
-          $signinWrong.html('');
-          $t.siblings('span').removeClass('h');
-        } else {
-          $span.addClass('h');
-          $signinWrong.html(data.data.msg);
-        }
-      });
+          email: emailVal
+        },
+        function(data) {
+          if (data.success) {
+            $signinWrong.html('');
+            $t.siblings('span').removeClass('h');
+          } else {
+            $span.addClass('h');
+            $signinWrong.html(data.data.msg);
+          }
+        });
     })
     .end().find()
 });

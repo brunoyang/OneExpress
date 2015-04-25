@@ -5,41 +5,48 @@ block css
   link(rel="stylesheet", href="/p/css/components.css")
 
 block script
-  script(src="/p/js/common.js")
+  script(src="/p/js/bill.js")
   script(src="/p/js/slider.js")
+  script(src="/p/js/components.js")
 
 block content
   section.search
-    div#s
-      form
+    #s
+      form#s-form
         input#oe-input(type="text" autocomplete="off" placeholder="输入快递号查询，用空格分隔多个快递号")
         button#oe-submit(type="submit")
         ul.oe-err-info
       span.oe-close
-      div.bill-list
-        div.bill-list-content
-        div.bill-list-content
-        div.bill-list-content
+      .bill-list
+        .bill-list-content
+          h3
+          ul
+        .bill-list-content
+          h3
+          ul
+        .bill-list-content
+          h3
+          ul
   section.features
     ul.container.clearfix
       li
-        div.circle.one
+        .circle.one
           span
         h3 安全
         p 无纸化快递，杜绝因快递单丢是导致的信息泄露，为您的隐私保驾护航
       li
-        div.circle.two
+        .circle.two
           span
         h3 高效
         p 一流的快递团队，一流的仓储管理，一流的服务为您带来前所未有的一流效率
       li
-        div.circle.three
+        .circle.three
           span
         h3 科技
         p 一通快递打通物流体系，先进的快递系统加上高效的仓储管理，让快递快上加快
   section.info
-    div.wrapper.clearfix
-      div.news
+    .wrapper.clearfix
+      .news
         header
           h3
             span 新闻公告
@@ -47,13 +54,13 @@ block content
           each news in newslist
             li
               a(href="/news/#{news._id}") #{news.title}
-      div.search-shop
+      .search-shop
         header
           h3
             span 服务网点
-        div.shop-wrapper
-          form(action="/api/querysite")
-            div.city-area.clearfix
+        .shop-wrapper
+          form(action="/site", method="get")
+            .city-area.clearfix
               span.hot-city-label 热门城市：
               ul.city-list
                 each val in ['北京','上海','天津','广州','深圳','杭州','无锡','苏州','成都','大连']
@@ -64,37 +71,13 @@ block content
                 each val in ['重庆','南京','青岛','郑州','长沙','嘉兴','福州','东莞','厦门','合肥']
                   li
                     a(href="")= val
-            div.input-area
-              label(for="oe-city") 省份城市：
-              input#oe-city(type="text" readonly placeholder="请输入省市县")
-              div#oe-province
-                div.pro-title 请选择地区
-                  a#pro-close(href="javascript:;")
-                div.pro-content
-                  select#s-province(name="s-province")
-                    option(value="省份") 省份
-                  select#s-city(name="s-city")
-                    option(value="地级市") 地级市
-                  select#s-country(name="s-country")
-                    option(value="市、县级市") 市、县级市
-              label(for="oe-type") 类型：
-              select#oe-type(name="oe-type")
-                option(value="oeName") 网点名称
-                option(value="oePhone") 派送电话
-              input#oeSubmit(type="submit" value="搜一下")
-      div.slider-show.bruno-slider
+            include ../../components/site
+      .slider-show.bruno-slider
         ul.clearfix
           each ad in ads
             li
               img(src="#{ad.imgSrc}", alt="#{ad.title}")
               h3
                 a(href="ad/#{ad._id}") #{ad.title}
-        div.nav-dot
+        .nav-dot
       include ../../components/tools
-  
-
-
-
-            
-
-

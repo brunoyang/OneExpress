@@ -5,17 +5,19 @@ $(function() {
     }, 500);
   });
 
-  $('.news-del', '.ad-del').on('click', function(e) {
+  $('.news-del, .ad-del, .site-del').on('click', function(e) {
     var target = $(e.target),
       id = target.data('id'),
       item = null;
-    if($(this).attr('class').indexOf('news') !== -1){
+    if ($(this).attr('class').indexOf('news') !== -1) {
       item = 'news';
-    } else {
+    } else if ($(this).attr('class').indexOf('ad') !== -1) {
       item = 'ad';
+    } else if ($(this).attr('class').indexOf('site') !== -1) {
+      item = 'site';
     }
     var tr = $('.' + item + '-id-' + id);
-    var confirm = confirm('确认删除吗?');
+    var confirm = window.confirm('确认删除吗?');
     if (confirm) {
       $.ajax({
           type: 'DELETE',
@@ -24,7 +26,7 @@ $(function() {
         .done(function(result) {
           if (result.success === 1) {
             if (tr.length) {
-              re.remove();
+              tr.remove();
             }
           }
         });

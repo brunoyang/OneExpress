@@ -1,0 +1,92 @@
+extends ../layout
+
+
+
+block script
+  - var city = ''
+  if sites
+    - city = sites[0].city
+  else if site
+    - city = site.city
+  script(src="http://api.map.baidu.com/api?v=2.0&ak=WUMElrzOguA5sN9Pl1sFDMfU")
+  script(src="/p/js/components.js")
+  script(type="text/javascript").
+    var map = new BMap.Map("allmap"); 
+    map.centerAndZoom('#{city}', 15);
+    map.enableScrollWheelZoom(true);
+    $('#oeSubmit').on('click', function(e){
+      e.preventDefault();
+      var _site = $('#oe-city').val().split('-');
+      var site = {
+        province: _site[0],
+        city: _site[1],
+        county: _site[2]
+      }
+      $.get('/api/query/sitemap', site, function(data){
+        if(data.success) {
+          console.log(data)
+          var data = data.data;
+          map.centerAndZoom(data.object[0].city, 15);
+          map.enableScrollWheelZoom(true);
+          $tbody = $('.site-content table tbody');
+          $tbody.empty();
+          var node = '';
+          $.each(data.object, function(index, site){
+            node += '<tr><td>' + site.province + '/' + site.city + '/' + site.county + '</td><td>' + site.address + '</td><td>' + site.manager + '</td><td>+' + site.areacode + ' ' + site.telephone + '</td></tr>';
+          });
+          $tbody.html(node);
+        }
+      })
+    })
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/site.css")
+
+block content
+  section.container
+    .site-wrap
+      header.site-header
+        form
+          div.input-area
+            label(for="oe-city") 省份城市：
+            input#oe-city(type="text" readonly placeholder="请输入省市县" value="#{location}")
+            div#oe-province
+              div.pro-title 请选择地区
+                a#pro-close(href="javascript:;")
+              div.pro-content
+                select#s-province
+                  option(value="") 省份
+                select#s-city
+                  option(value="") 地级市
+                select#s-county
+                  option(value="") 市、县级市
+            label(for="oe-type") 类型：
+            select#oe-type(name="site[type]")
+              option(value="oeName") 网点名称
+              option(value="oePhone") 派送电话
+            input#oeSubmit(type="submit" value="搜一下")
+      section.site-content
+        table
+          thead
+            tr
+              th 省份城市
+              th 详细地址
+              th 网点经理
+              th 联系电话
+          tbody
+            if sites
+              each site in sites
+                tr
+                  td #{location.replace(/-/g, '/')}
+                  td #{site.address}
+                  td #{site.manager}
+                  td +#{site.areacode} #{site.telephone}
+            else if site
+              tr
+                td #{location.replace(/-/g, '/')}
+                td #{site.address}
+                td #{site.manager}
+                td +#{site.areacode} #{site.telephone}
+        #allmap
+    aside.sidebar
+      include ../../components/tools

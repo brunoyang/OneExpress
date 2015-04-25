@@ -1,0 +1,93 @@
+extends ../admin_layout
+
+block script
+  script(type="text/javascript").
+    $fragile = $('#inputFragile');
+    
+    $fragile.on('click', function(){
+      if($fragile.prop('checked')){
+        $fragile.val(true);
+      } else {
+        $fragile.val(false);
+      }
+      
+    });
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/bill/save", method="POST")
+        input(type="hidden", name="bill[id]", value="#{bill._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputSendname") 发件人
+          .col-md-10
+            input#inputSendname.form-control(type="text", name="bill[sendname]", value="#{bill.sendname}")
+        .form-group
+          label.col-md-2.control-label(for="inputSendareacode") 发件人电话区号
+          .col-md-2
+            input#inputSendareacode.form-control(type="text", name="bill[sendareacode]", value="#{bill.sendareacode}")
+          label.col-md-1.control-label(for="inputSendtelephone") 发件人电话
+          .col-md-7
+            input#inputSendtelephone.form-control(type="text", name="bill[sendtelephone]", value="#{bill.sendtelephone}")
+        .form-group
+          label.col-md-2.control-label(for="inputSendcellphone") 发件人手机
+          .col-md-10
+            input#inputSendcellphone.form-control(type="text", name="bill[sendcellphone]", value="#{bill.sendcellphone}")
+        .form-group
+          label.col-md-2.control-label(for="inputSendprovince") 发件省份
+          .col-md-2
+            input#inputSendprovince.form-control(type="text", name="bill[sendprovince]", value="#{bill.sendprovince}")
+          label.col-md-1.control-label(for="inputSendcity") 发件市
+          .col-md-3
+            input#inputSendcity.form-control(type="text", name="bill[sendcity]", value="#{bill.sendcity}")
+          label.col-md-1.control-label(for="inputSendcounty") 发件区
+          .col-md-3
+            input#inputSendcounty.form-control(type="text", name="bill[sendcounty]", value="#{bill.sendcounty}")
+        .form-group
+          label.col-md-2.control-label(for="inputSendaddr") 发件人地址
+          .col-md-10
+            textarea#inputSendaddr.form-control(type="text", name="bill[sendaddr]", rows="3") !{bill.sendaddr}
+        <br/>
+        .form-group
+          label.col-md-2.control-label(for="inputDelivername") 收件人
+          .col-md-10
+            input#inputDelivername.form-control(type="text", name="bill[delivername]", value="#{bill.delivername}")
+        .form-group
+          label.col-md-2.control-label(for="inputDeliverareacode") 收件人电话区号
+          .col-md-2
+            input#inputDeliverareacode.form-control(type="text", name="bill[deliverareacode]", value="#{bill.deliverareacode}")
+          label.col-md-1.control-label(for="inputDelivertelephone") 收件人电话
+          .col-md-7
+            input#inputDelivertelephone.form-control(type="text", name="bill[delivertelephone]", value="#{bill.delivertelephone}")
+        .form-group
+          label.col-md-2.control-label(for="inputDelivercellphone") 收件人手机
+          .col-md-10
+            input#inputDelivercellphone.form-control(type="text", name="bill[delivercellphone]", value="#{bill.delivercellphone}")
+        .form-group
+          label.col-md-2.control-label(for="inputDeliverprovince") 收件省份
+          .col-md-2
+            input#inputDeliverprovince.form-control(type="text", name="bill[deliverprovince]", value="#{bill.deliverprovince}")
+          label.col-md-1.control-label(for="inputDelivercity") 收件市
+          .col-md-3
+            input#inputDelivercity.form-control(type="text", name="bill[delivercity]", value="#{bill.delivercity}")
+          label.col-md-1.control-label(for="inputDelivercounty") 收件区
+          .col-md-3
+            input#inputDelivercounty.form-control(type="text", name="bill[delivercounty]", value="#{bill.delivercounty}")
+        .form-group
+          label.col-md-2.control-label(for="inputDeliveraddr") 收件人地址
+          .col-md-10
+            textarea#inputDeliveraddr.form-control(type="text", name="bill[deliveraddr]", rows="3") !{bill.deliveraddr}
+        <br/>
+        .form-group
+          label.col-md-2.control-label(for="inputWeight") 重量(kg)
+          .col-md-2
+            input#inputWeight.form-control(type="text", name="bill[weight]", value="#{bill.weight}")
+          label.col-md-1.control-label(for="inputFreight") 运费
+          .col-md-3
+            input#inputFreight.form-control(type="text", name="bill[freight]", value="#{bill.freight}")
+          label.col-md-1.control-label(for="inputFragile") 易碎品 
+          .col-md-2
+            input#inputFragile.checkbox(type="checkbox", name="bill[fragile]", value="#{bill.fragile}",style="margin-top:11px;", checked="#{bill.fragile}")
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入

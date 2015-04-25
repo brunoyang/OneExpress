@@ -82,8 +82,8 @@ exports.list = function(req, res) {
     if(err) {
       console.log(err);
     }
-    res.render('backend/ads', {
-      title: '新闻列表',
+    res.render('backend/adlist', {
+      title: '广告列表',
       ads: ads
     });
   });
