@@ -95,7 +95,6 @@ jQuery(document).ready(function($) {
       e.stopPropagation();
     });
 
-    console.log(data);
     displayBillList(data);
   }
 

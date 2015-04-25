@@ -143,9 +143,7 @@ exports.queryTrack = function(req, res) {
     count++;
     var trackDetail = {billnumber: '',trackinfo: []};
     Track.findById(billnumber, function(err, trackObj) {
-      console.log(trackObj);
       _.each(trackObj.trackinfo, function(track, index) {
-        console.log(track);
         trackDetail.trackinfo.unshift(formatTrack(track));
       });
       trackDetail.billnumber = billnumber;
