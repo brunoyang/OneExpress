@@ -19,7 +19,7 @@ exports.new = function(req, res) {
     news: {
       author: '',
       title: '',
-      content: '',
+      content: ''
     }
   });
 };

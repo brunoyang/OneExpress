@@ -5,7 +5,7 @@ $(function() {
     }, 500);
   });
 
-  $('.news-del, .ad-del, .site-del').on('click', function(e) {
+  $('.news-del, .ad-del, .site-del, .user-del').on('click', function(e) {
     var target = $(e.target),
       id = target.data('id'),
       item = null;
@@ -15,6 +15,8 @@ $(function() {
       item = 'ad';
     } else if ($(this).attr('class').indexOf('site') !== -1) {
       item = 'site';
+    } else if($(this).attr('class').indexOf('user') !== -1) {
+      item = 'user';
     }
     var tr = $('.' + item + '-id-' + id);
     var confirm = window.confirm('确认删除吗?');

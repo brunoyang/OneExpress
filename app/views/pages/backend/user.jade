@@ -1,0 +1,50 @@
+extends ../admin_layout
+
+block script 
+  script(type="text/javascript").
+    var $select = $('#inputRole');
+    if($select) {
+      var role = parseInt($select.attr('value'));
+      console.log(role)
+      if(!role) {
+        $select.find('option').eq(0).attr('selected', true);
+      } else if(role === 21) {
+        $select.find('option').eq(1).attr('selected', true);
+      } else if(role === 51) {
+        $select.find('option').eq(2).attr('selected', true);
+      }
+    }
+    
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/user/save", method="POST")
+        input(type="hidden", name="user[id]", value="#{user._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputName") 用户名
+          .col-md-10
+            input#inputName.form-control(type="text", name="user[name]", value="#{user.name}")
+        .form-group
+          label.col-md-2.control-label(for="inputEmail") 邮箱
+          .col-md-10
+            input#inputEmail.form-control(type="text", name="user[email]", value="#{user.email}")
+        if !user._id
+          .form-group
+            label.col-md-2.control-label(for="inputEmail") 密码
+            .col-md-10
+              input#inputEmail.form-control(type="password", name="user[password]")
+          .form-group
+            label.col-md-2.control-label(for="inputEmail") 重复密码
+            .col-md-10
+              input#inputEmail.form-control(type="password")
+        .form-group
+          label.col-md-2.control-label(for="inputRole") 权限
+          .col-md-2
+            select#inputRole.form-control(type="text", name="user[role]", value="#{user.role}")
+              option(value="0") 普通用户
+              option(value="21") 管理员
+              if role > 50
+                option(value="51") 超级管理员
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入
