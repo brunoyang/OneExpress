@@ -2,6 +2,20 @@ var mongoose = require('mongoose');
 var Ad = mongoose.model('Ad');
 var _ = require('underscore');
 
+exports.ad = function(req, res) {
+  var start = req.query.start ? req.query.start : 0;
+  var limit = req.query.limit ? req.query.limit : 15;
+  Ad.fetchLimit(start, limit, function(err, ads){
+    if(err) {
+      console.log(err);
+    }
+    res.render('frontend/ad/ad', {
+      title: '广告列表',
+      ads: ads
+    });
+  });
+};
+
 exports.detail = function(req, res) {
   var id = req.params.id;
 
@@ -41,7 +55,7 @@ exports.save = function(req, res) {
           console.log(err);
         }
 
-        res.redirect('/ad/' + ad._id);
+        res.redirect('/admin/ad/list');
       });
     });
   } else {
@@ -55,7 +69,7 @@ exports.save = function(req, res) {
         console.log(err);
       }
 
-      res.redirect('/ad/' + ad._id);
+      res.redirect('/admin/ad/list');
     });
   }
 };
