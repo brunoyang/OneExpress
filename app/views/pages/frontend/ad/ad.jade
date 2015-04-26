@@ -8,11 +8,11 @@ block css
 block content
   section.container
     article.main-content
-      h1 新闻公告
+      h1 广告列表
       ul
-        each news in newslist
+        each ad in ads
           li 
-            a(href="/news/detail/#{news._id}") #{news.title}
-              span #{moment(news.meta.updateAt).format('YYYY/MM/DD')}
+            a(href="ad/detail/#{ad._id}") #{ad.title}
+              span #{moment(ad.meta.updateAt).format('YYYY/MM/DD')}
     aside.sidebar
       include ../../../components/tools

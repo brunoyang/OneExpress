@@ -36,7 +36,8 @@ module.exports = function(app) {
   app.get('/admin/news/list', User.signinRequired, User.adminRequired, News.list);
   app.delete('/admin/news/list', User.signinRequired, User.adminRequired, News.del);
 
-  app.get('/ad/:id', Ad.detail);
+  app.get('/ad', Ad.ad);
+  app.get('/ad/detail/:id', Ad.detail);
   app.post('/admin/ad/save', User.signinRequired, User.adminRequired, Ad.save);
   app.get('/admin/ad/new', User.signinRequired, User.adminRequired, Ad.new);
   app.get('/admin/ad/update/:id', User.signinRequired, User.adminRequired, Ad.update);
