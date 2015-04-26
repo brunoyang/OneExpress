@@ -6,7 +6,7 @@ exports.detail = function(req, res) {
   var id = req.params.id;
 
   News.findById(id, function(err, news) {
-    res.render('frontend/news_detail', {
+    res.render('frontend/news/news_detail', {
       title: news.title + ' - 一通快递',
       news: news
     });
@@ -69,7 +69,7 @@ exports.update = function(req, res) {
         console.log(err);
       }
 
-      res.render('backend/news', {
+      res.render('backend/news/news', {
         title: '新闻更新',
         news: news
       });
@@ -84,7 +84,7 @@ exports.list = function(req, res) {
     if(err) {
       console.log(err);
     }
-    res.render('backend/newslist', {
+    res.render('backend/news/newslist', {
       title: '新闻列表',
       newslist: newslist
     });

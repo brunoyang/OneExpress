@@ -7,7 +7,7 @@ exports.detail = function(req, res) {
   var id = req.params.id;
 
   Bill.findById(id, function(err, bill) {
-    res.render('frontend/bill_detail', {
+    res.render('frontend/bill/bill_detail', {
       title: bill.title + ' - 一通快递',
       bill: bill
     });
@@ -15,7 +15,7 @@ exports.detail = function(req, res) {
 };
 
 exports.new = function(req, res) {
-  res.render('backend/bill', {
+  res.render('backend/bill/bill', {
     title: '新建快递单',
     bill: {
       sendname: '',
@@ -102,7 +102,7 @@ exports.update = function(req, res) {
         console.log(err);
       }
 
-      res.render('backend/bill', {
+      res.render('backend/bill/bill', {
         title: '快递单信息更新',
         bill: bill
       });
@@ -117,7 +117,7 @@ exports.list = function(req, res) {
     if(err) {
       console.log(err);
     }
-    res.render('backend/billlist', {
+    res.render('backend/bill/billlist', {
       title: '快递列表',
       bills: bills
     });

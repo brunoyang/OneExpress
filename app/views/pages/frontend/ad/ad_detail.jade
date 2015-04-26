@@ -10,16 +10,16 @@ block script
 block content
   section.container
     header.news-header
-      h2 #{news.title}
+      h2 #{ad.title}
       .news-info
-        time.news-time #{moment(news.meta.updateAt).format('MM/DD/YYYY')}
-        span.news-author 作者：#{news.author}
+        time.news-time #{moment(ad.meta.updateAt).format('MM/DD/YYYY')}
+        span.news-author 作者：#{ad.author}
     aside.sidebar
-      include ../../components/tools
+      include ../../../components/tools
     article.main-content
-      .news-content !{news.content}
+      .news-content !{ad.content}
       .news-func 
         span.back-button.icon-back 
-          a(href="/news/") &#xea44; 返回新闻页
+          a(href="/ad/") &#xea44; 返回广告聚合页
         span.go-top.icon-top 
-          a(href="javascript:;") &#xea41; 去顶部
+          a(href="javascript:;") &#xea41; 去顶部      

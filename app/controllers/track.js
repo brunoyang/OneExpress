@@ -5,7 +5,7 @@ exports.query = function(req, res) {
 
   Track.findById(id, function(err, tracklist){
     var track = tracklist ? tracklist.trackinfo : '';
-    res.render('backend/track', {
+    res.render('backend/track/track', {
       title: '快递追踪',
       id: id,
       tracklist: track

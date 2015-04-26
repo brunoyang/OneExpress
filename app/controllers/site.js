@@ -7,7 +7,7 @@ exports.detail = function(req, res) {
   var id = req.params.id;
 
   Site.findById(id, function(err, site) {
-    res.render('frontend/site_detail', {
+    res.render('frontend/site/site_detail', {
       title: '网点信息',
       site: site,
       location: site.province + '-' + site.city + '-' + site.county
@@ -21,7 +21,7 @@ exports.site = function(req, res) {
   var county = area.split('-')[2];
 
   Site.findByAreas(county, function(err, sites) {
-    res.render('frontend/site_detail', {
+    res.render('frontend/site/site_detail', {
       title: '网点信息',
       sites: sites,
       location: area
@@ -30,7 +30,7 @@ exports.site = function(req, res) {
 };
 
 exports.new = function(req, res) {
-  res.render('backend/site', {
+  res.render('backend/site/site', {
     title: '后台快递网点编辑',
     site: {
       province: '',
@@ -65,14 +65,11 @@ exports.save = function(req, res) {
       }
 
       if (!area) {
-        console.log('aaa ' + _area.province);
         var _area_ = new Area(_area);
-        console.log('bbb' + _area_);
         _area_.save(function(err, area) {
           if (err) {
             console.log(err);
           }
-          console.log('ccc' + area);
         });
       }
       Site.findById(id, function(err, site) {
@@ -100,11 +97,8 @@ exports.save = function(req, res) {
       }
       console.log(area);
       if (!area) {
-        console.log('before ' + _area);
         _area = new Area(_area);
-        console.log('after ' + _area);
         _area.save(function(err, area) {
-          console.log('asd' + area);
         });
       }
       _site = new Site({
@@ -137,7 +131,7 @@ exports.update = function(req, res) {
         console.log(err);
       }
 
-      res.render('backend/site', {
+      res.render('backend/site/site', {
         title: '网点更新',
         site: site
       });
@@ -152,7 +146,7 @@ exports.list = function(req, res) {
     if (err) {
       console.log(err);
     }
-    res.render('backend/sitelist', {
+    res.render('backend/site/sitelist', {
       title: '网点列表',
       sites: sites
     });

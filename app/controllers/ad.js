@@ -6,7 +6,7 @@ exports.detail = function(req, res) {
   var id = req.params.id;
 
   Ad.findById(id, function(err, ad) {
-    res.render('frontend/ad_detail', {
+    res.render('frontend/ad/ad_detail', {
       title: ad.title + ' - 一通快递',
       ad: ad
     });
@@ -14,7 +14,7 @@ exports.detail = function(req, res) {
 };
 
 exports.new = function(req, res) {
-  res.render('backend/ad', {
+  res.render('backend/ad/ad', {
     title: '后台广告编辑',
     ad: {
       imgSrc: '',
@@ -69,7 +69,7 @@ exports.update = function(req, res) {
         console.log(err);
       }
 
-      res.render('backend/ad', {
+      res.render('backend/ad/ad', {
         title: '广告更新',
         ad: ad
       });
@@ -82,7 +82,7 @@ exports.list = function(req, res) {
     if(err) {
       console.log(err);
     }
-    res.render('backend/adlist', {
+    res.render('backend/ad/adlist', {
       title: '广告列表',
       ads: ads
     });
