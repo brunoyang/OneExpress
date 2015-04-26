@@ -71,4 +71,34 @@ h2 {
   float: right;
 }
 
+.main-content h1 {
+  font-size: 20px;
+  line-height: 2;
+  font-weight: bold;
+  color: #fff;
+  background: gray;
+  padding: 5px 15px;
+  margin: -15px -15px 15px;
+}
+
+.main-content ul li a{
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  border: 2px solid #dfdfdf;
+  padding: 12px;
+  margin-bottom: 10px;
+  color: #3498DB;
+  border-radius: 4px;
+  transition: .15s all ease;
+  font-size: 14px;
+}
+
+.main-content ul li a:hover{
+  border-color: #3498DB;
+}
+.main-content ul li a span {
+  float: right;
+}
 

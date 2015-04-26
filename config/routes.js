@@ -28,7 +28,8 @@ module.exports = function(app) {
   app.post('/admin/user/save', User.signinRequired, User.adminRequired, User.save);
   app.delete('/admin/user/list', User.signinRequired, User.adminRequired, User.del);
 
-  app.get('/news/:id', News.detail);
+  app.get('/news', News.news);
+  app.get('/news/detail/:id', News.detail);
   app.post('/admin/news/save', User.signinRequired, User.adminRequired, News.save);
   app.get('/admin/news/new', User.signinRequired, User.adminRequired, News.new);
   app.get('/admin/news/update/:id', User.signinRequired, User.adminRequired, News.update);
