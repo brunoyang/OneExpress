@@ -1,0 +1,71 @@
+.main-content {
+  float: left;
+  width: 70%;
+  background: #fff;
+  border: 1px solid #bfbfbf;
+}
+
+.main-content h1 {
+  font-size: 20px;
+  line-height: 2;
+  font-weight: bold;
+  color: #fff;
+  background: gray;
+  padding: 5px 15px;
+  margin-bottom: 10px;
+}
+
+.main-content .content-container {
+  padding: 15px;
+}
+
+.main-content .content-container p {
+  font-size: 14px;
+  line-height: 1.5;
+  text-indent: 2em;
+  color: #333;
+  margin: 10px 0;
+}
+
+.main-content .content-container li {
+  font-size: 14px;
+}
+
+.main-content .content-container ul li {
+  list-style-position:inside;
+  list-style-type: square;
+}
+
+.main-content .content-container ol li {
+  list-style-position:inside;
+  list-style-type: decimal;
+}
+
+.enhance-text strong{
+  color: #eb1d21;
+  font-weight: bold;
+}
+
+.sidebar {
+  float: right;
+  width: 20%;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  color: #333;
+}
+
+.sidebar ul li {
+  margin-top: 10px;
+  border-bottom: 1px dotted gray;
+}
+
+.sidebar ul a {
+  color: #666;
+  transition: .2s color ease;
+}
+
+.sidebar ul a:hover {
+  color: #222;
+}

@@ -1,0 +1,16 @@
+extends ../../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/page.css")
+
+block content
+  section.container.clearfix
+    article.main-content
+      .page-container
+        h1 #{page.title}
+        .content-container
+          !{page.content}
+    aside.sidebar
+      include ../../../components/side_bar
+
+
