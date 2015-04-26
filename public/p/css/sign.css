@@ -1,0 +1,86 @@
+.dialog {
+  margin: 50px auto;
+  width: 500px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.dialog .dialog-title h3 {
+  font-size: 25px;
+  color: #666;
+  margin: 20px;
+}
+
+.dialog .dialog-form-row {
+  margin: 0 auto 20px;
+  width: 80%;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+}
+
+.dialog .dialog-form-row input {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 75%;
+  font-size: 16px;
+  line-height: 1.2;
+  border: 2px solid #dfdfdf;
+  border-radius: 4px;
+  padding: 8px 10px;
+  height: 34px;
+  transition: .15s all ease;
+}
+
+.dialog .dialog-form-row input:focus {
+  border-color: #3498DB;
+}
+
+.dialog .dialog-label-icon {
+  display: inline-block;
+  font-size: 35px;
+  vertical-align: middle;
+  color: #666;
+  width: 15%;
+}
+
+.dialog .icon-check,
+.dialog .icon-eye {
+  position: absolute;
+  right: 30px;
+  line-height: 35px;
+}
+
+.dialog .icon-check {
+  color: #3498DB;
+}
+
+.dialog .icon-eye {
+  cursor: pointer;
+}
+
+.dialog .icon-eye:active {
+  color: #3498DB;
+}
+
+#dialog-signin-button,
+#dialog-signup-button {
+  font-size: 16px;
+  width: 30%;
+  position: relative;
+  right: -106px;
+  padding: 6px 14px;
+  line-height: 1.5;
+  border-radius: 4px;
+  background: #3498DB;
+  color: #fff;
+  border: 1px solid #3498DB;
+}
+
+.dialog .dialog-msg {
+  margin-bottom: 20px;
+  color: #F0553A;
+}

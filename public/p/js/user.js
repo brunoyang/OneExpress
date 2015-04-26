@@ -5,7 +5,7 @@ $(function() {
     $signupWrong = $('.modal-dialog-signup .modal-dialog-msg p'),
     $signinWrong = $('.modal-dialog-signin .modal-dialog-msg p'),
     rUsername = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/,
-    rEmail = /^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
+    rEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
 
   $('#signin-button').on('click', function() {
@@ -32,7 +32,7 @@ $(function() {
 
   $signupDialog.find('.modal-dialog-user').on('blur', function() {
       var $t = $(this);
-      var $span = $t.siblings('span');
+      var $span = $t.siblings('.icon-check');
       var userVal = $t.val();
       if (userVal === '') {
         $span.addClass('h');
@@ -47,7 +47,7 @@ $(function() {
     })
     .end().find('.modal-dialog-email').on('blur', function() {
       var $t = $(this);
-      var $span = $t.siblings('span');
+      var $span = $t.siblings('.icon-check');
       var emailVal = $t.val();
       if (emailVal === '') {
         $span.addClass('h');
@@ -75,7 +75,7 @@ $(function() {
     .find('.modal-dialog-email')
     .on('blur', function() {
       var $t = $(this);
-      var $span = $t.siblings('span');
+      var $span = $t.siblings('.icon-check');
       var emailVal = $t.val();
       if (emailVal === '') {
         $span.addClass('h');
@@ -92,12 +92,11 @@ $(function() {
         function(data) {
           if (data.success) {
             $signinWrong.html('');
-            $t.siblings('span').removeClass('h');
+            $span.removeClass('h');
           } else {
             $span.addClass('h');
             $signinWrong.html(data.data.msg);
           }
         });
-    })
-    .end().find()
+    });
 });

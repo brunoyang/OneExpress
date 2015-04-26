@@ -3,13 +3,13 @@ var _ = require('underscore');
 //signup 注册 signin 登录
 
 exports.showSignup = function(req, res) {
-  res.render('frontend/signup', {
+  res.render('frontend/user/signup', {
     title: '注册页面'
   });
 };
 
 exports.showSignin = function(req, res) {
-  res.render('frontend/signin', {
+  res.render('frontend/user/signin', {
     title: '登录页面'
   });
 };
@@ -89,7 +89,7 @@ exports.logout = function(req, res) {
 };
 
 exports.new = function(req, res) {
-  res.render('backend/user', {
+  res.render('backend/user/user', {
     title: '后台编辑',
     role: req.session.user.role,
     user: {
@@ -150,7 +150,7 @@ exports.update = function(req, res) {
         console.log(err);
       }
 
-      res.render('backend/user', {
+      res.render('backend/user/user', {
         title: '用户更新',
         user: user
       });
@@ -166,7 +166,7 @@ exports.list = function(req, res) {
     if(err) {
       console.log(err);
     }
-    res.render('backend/userlist', {
+    res.render('backend/user/userlist', {
       title: '用户列表',
       users: users,
       role: req.session.user.role

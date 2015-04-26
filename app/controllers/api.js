@@ -7,7 +7,7 @@ var _ = require('underscore');
 var Q = require('Q');
 var moment = require('moment');
 var rUsername = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
-var rEmail = /^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
+var rEmail = /([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
 
 function returnSuccessMsg(obj) {
   return {
