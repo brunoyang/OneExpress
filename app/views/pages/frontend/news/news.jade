@@ -1,0 +1,18 @@
+extends ../layout
+
+
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/news.css")
+
+block content
+  section.container
+    article.main-content
+      h1 新闻公告
+      ul
+        each news in newslist
+          li 
+            a(href="news/detail/#{news._id}") #{news.title}
+              span #{moment(news.meta.updateAt).format('YYYY/MM/DD')}
+    aside.sidebar
+      include ../../../components/tools

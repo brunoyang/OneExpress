@@ -1,0 +1,22 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/news/save", method="POST")
+        input(type="hidden", name="news[id]", value="#{news._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputTitle") 新闻标题
+          .col-md-10
+            input#inputTitle.form-control(type="text", name="news[title]", value="#{news.title}")
+        .form-group
+          label.col-md-2.control-label(for="inputAuthor") 新闻作者
+          .col-md-10
+            input#inputAuthor.form-control(type="text", name="news[author]", value="#{news.author}")
+        .form-group
+          label.col-md-2.control-label(for="inputContent") 新闻内容
+          .col-md-10
+            textarea#inputContetn.form-control(type="text", name="news[content]", rows="10") !{news.content}
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入

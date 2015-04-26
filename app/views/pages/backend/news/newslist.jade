@@ -19,7 +19,7 @@ block content
               td #{news.title}
               td #{news.author}
               td #{news.content.substring(0, 20) + '...'}
-              td #{moment(news.meta.createAt).format('MM/DD/YYYY')}
+              td #{moment(news.meta.updateAt).format('MM/DD/YYYY')}
               td: a(href="/news/#{news._id}", target="_blank") 查看
               td: a(href="/admin/news/update/#{news._id}", target="_blank") 编辑
               td: button.btn.btn-danger.news-del(data-id="#{news._id}") 删除
