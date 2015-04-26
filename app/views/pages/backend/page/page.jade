@@ -1,0 +1,22 @@
+extends ../../admin_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/page/save", method="POST")
+        input(type="hidden", name="page[id]", value="#{page._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputTitle") 标题
+          .col-md-10
+            input#inputTitle.form-control(type="text", name="page[title]", value="#{page.title}")
+        .form-group
+          label.col-md-2.control-label(for="inputTag") 标签
+          .col-md-10
+            input#inputTag.form-control(type="text", name="page[tag]", value="#{page.tag}")
+        .form-group
+          label.col-md-2.control-label(for="inputContent") 内容
+          .col-md-10
+            textarea#inputContetn.form-control(type="text", name="page[content]", rows="10") !{page.content}
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入

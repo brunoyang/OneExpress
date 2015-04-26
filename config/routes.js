@@ -4,6 +4,7 @@ var News = require('../app/controllers/news');
 var User = require('../app/controllers/user');
 var Site = require('../app/controllers/site');
 var Bill = require('../app/controllers/bill');
+var Page = require('../app/controllers/page');
 var Api = require('../app/controllers/api');
 var Ad = require('../app/controllers/ad');
 
@@ -64,4 +65,11 @@ module.exports = function(app) {
   app.post('/api/save/track', Api.saveTrack);
   app.post('/api/check/user', Api.checkUser);
   app.post('/api/query/site', Api.querySite);
+
+  app.get('/page/:first/:second', Page.detail);
+  app.post('/admin/page/save', User.signinRequired, User.adminRequired, Page.save);
+  app.get('/admin/page/new', User.signinRequired, User.adminRequired, Page.new);
+  app.get('/admin/page/update/:first/:second', User.signinRequired, User.adminRequired, Page.update);
+  app.get('/admin/page/list', User.signinRequired, User.adminRequired, Page.list);
+  app.delete('/admin/page/list', User.signinRequired, User.adminRequired, Page.del);
 };
