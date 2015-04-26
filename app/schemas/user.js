@@ -3,12 +3,12 @@ var bcrypt = require('bcryptjs');
 var SALT_WORK_FACTORY = 10;
 
 var UserSchema = new mongoose.Schema({
-  name: {
+  name: String,
+  password: String,
+  email: {
     unique: true,
     type: String
   },
-  password: String,
-  email: String,
   role: {
     type: Number,
     default: 0
@@ -61,6 +61,13 @@ UserSchema.statics = {
     return this
       .find({})
       .sort('meta.updateAt')
+      .exec(cb);
+  },
+  findById: function(id, cb) {
+    return this
+      .findOne({
+        _id: id
+      })
       .exec(cb);
   },
   findByEmail: function(email, cb) {
