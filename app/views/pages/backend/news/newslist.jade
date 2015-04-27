@@ -3,6 +3,7 @@ extends ../admin_layout
 block content
   .container
     .row
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/news/new") 增加新闻
       table.table.table-hover.table-striped
         thead
           tr
@@ -20,9 +21,8 @@ block content
               td #{news.author}
               td #{news.content.substring(0, 20) + '...'}
               td #{moment(news.meta.updateAt).format('MM/DD/YYYY')}
-              td: a(href="/news/#{news._id}", target="_blank") 查看
+              td: a(href="/news/detail/#{news._id}", target="_blank") 查看
               td: a(href="/admin/news/update/#{news._id}", target="_blank") 编辑
               td: button.btn.btn-danger.news-del(data-id="#{news._id}") 删除
-      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/news/new") 增加新闻
 block srcipt
   script(src="/p/js/func.js")

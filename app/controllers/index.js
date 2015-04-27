@@ -1,7 +1,7 @@
 var News = require('../models/news');
 var Ad = require('../models/ad');
 
-exports.index = function(req, res) {
+exports.FEIndex = function(req, res) {
   News.fetchLimit(0, 15, function(err, newslist) {
     if (err) {
       console.log(err);
@@ -16,5 +16,11 @@ exports.index = function(req, res) {
         ads: ads
       });
     });
+  });
+};
+
+exports.BEIndex = function(req, res) {
+  res.render('backend/index', {
+    title: '首页'
   });
 };

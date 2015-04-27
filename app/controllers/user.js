@@ -58,6 +58,7 @@ exports.signin = function(req, res) {
   var _user = req.body.user;
   var email = _user.email;
   var password = _user.password;
+  var url = req.query.url;
 
   User.findByEmail(email, function(err, user) {
     if (err) {
@@ -75,7 +76,7 @@ exports.signin = function(req, res) {
 
       if (isMatch) {
         req.session.user = user;
-        return res.redirect('/');
+        return res.redirect(url);
       } else {
         return res.redirect('/signup');
       }
@@ -84,8 +85,9 @@ exports.signin = function(req, res) {
 };
 
 exports.logout = function(req, res) {
+  var url = req.query.url;
   delete req.session.user;
-  res.redirect('/');
+  res.redirect(url || '/');
 };
 
 exports.new = function(req, res) {

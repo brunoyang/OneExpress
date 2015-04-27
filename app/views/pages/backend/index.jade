@@ -1,0 +1,66 @@
+extends ./admin_layout
+
+block css
+  style.
+    .thumbnail{
+      background: #f4f4f4;
+      transition: .15s box-shadow ease;
+      padding-top: 15px;
+    }
+    .thumbnail:hover{
+      box-shadow: 0 0 6px rgba(0,0,0,.1);
+    }
+
+block content
+  .container
+    .row
+      .col-md-3
+        .thumbnail
+          img(src="/images/admin_news.png", alt="")
+          .caption
+            h4 新闻
+            p 发新闻
+            p  
+              a.btn.btn-primary(href="/admin/news/list") 新闻列表
+      .col-md-3
+        .thumbnail
+          img(src="/images/admin_ad.png", alt="", width="128px")
+          .caption
+            h4 广告
+            p 发广告
+            p  
+              a.btn.btn-primary(href="/admin/ad/list") 广告列表
+      .col-md-3
+        .thumbnail
+          img(src="/images/admin_bill.png", alt="", width="128px")
+          .caption
+            h4 快递单
+            p 管理快递单，修改快递信息
+            p  
+              a.btn.btn-primary(href="/admin/bill/list") 快递单列表
+      .col-md-3
+        .thumbnail
+          img(src="/images/admin_page.png", alt="", width="128px")
+          .caption
+            h4 单页面
+            p 生成单页面
+            p  
+              a.btn.btn-primary(href="/admin/bill/list") 单页面列表
+    .row
+      .col-md-3
+        .thumbnail
+          img(src="/images/admin_site.png", alt="", width="128px")
+          .caption
+            h4 网点
+            p 管理网点信息，删除增加网点
+            p  
+              a.btn.btn-primary(href="/admin/site/list") 网点列表
+      .col-md-3
+        .thumbnail
+          img(src="/images/admin_user.png", alt="", width="128px")
+          .caption
+            h4 用户
+            p 管理用户信息，删除增加用户
+            p  
+              a.btn.btn-primary(href="/admin/bill/list") 用户列表
+     

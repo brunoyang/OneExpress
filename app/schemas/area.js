@@ -53,7 +53,7 @@ AreaSchema.statics = {
   fetchLimit: function(start, limit, cb) {
     return this
       .find({})
-      .sort('meta.updateAt')
+      .sort('-meta.updateAt')
       .skip(start)
       .limit(limit)
       .exec(cb);

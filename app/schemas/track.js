@@ -32,7 +32,7 @@ TrackSchema.statics = {
   fetch: function(cb) {
     return this
       .find({})
-      .sort('meta.updateAt')
+      .sort('-meta.updateAt')
       .exec(cb);
   },
   findById: function(id, cb) {
@@ -45,7 +45,7 @@ TrackSchema.statics = {
   fetchLimit: function(start, limit, cb) {
     return this
       .find({})
-      .sort('meta.updateAt')
+      .sort('-meta.updateAt')
       .skip(start)
       .limit(limit)
       .exec(cb);
