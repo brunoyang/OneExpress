@@ -39,18 +39,18 @@ SiteSchema.statics = {
       .sort('-meta.updateAt')
       .exec(cb);
   },
-  findByArea: function(area, cb) {
+  findByArea: function(arealevel, area, cb) {
     return this
       .findOne({
         county: area
       })
       .exec(cb);
   },
-  findByAreas: function(area, cb) {
+  findByAreas: function(arealevel, area, cb) {
+    var obj = {};
+    obj[arealevel] = area;
     return this
-      .find({
-        county: area
-      })
+      .find(obj)
       .sort('meta.updateAt')
       .exec(cb);
   },
