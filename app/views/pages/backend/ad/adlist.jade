@@ -3,6 +3,7 @@ extends ../admin_layout
 block content
   .container
     .row
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/ad/new") 增加新闻
       table.table.table-hover.table-striped
         thead
           tr
@@ -18,9 +19,8 @@ block content
               td #{ad.title}
               td: img(src="#{ad.imgSrc}", alt="#{ad.title}", style="max-width: 300px;")
               td #{moment(ad.meta.createAt).format('MM/DD/YYYY')}
-              td: a(href="/ad/#{ad._id}", target="_blank") 查看
+              td: a(href="/ad/detail/#{ad._id}", target="_blank") 查看
               td: a(href="/admin/ad/update/#{ad._id}", target="_blank") 编辑
               td: button.btn.btn-danger.ad-del(data-id="#{ad._id}") 删除
-      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/ad/new") 增加新闻
 block srcipt
   script(src="/p/js/func.js")

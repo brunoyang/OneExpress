@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         }
       },
       js: {
-        files: ['public/p/**', 'app/models/**/*.js', 'app/schemas/**/*.js', 'app/controller/**/*.js', 'config/routes.js', 'app.js'],
+        files: ['public/**', 'app/models/**/*.js', 'app/schemas/**/*.js', 'app/controller/**/*.js', 'config/routes.js', 'app.js'],
        //tashs: ['jshint'],
         option: {
           livereload: true
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         logConcurrentOutput: true
       }
     }
-  })
+  });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-nodemon');
@@ -47,4 +47,4 @@ module.exports = function(grunt) {
 
   grunt.option('force', true);
   grunt.registerTask('default', ['concurrent']);
-}
+};

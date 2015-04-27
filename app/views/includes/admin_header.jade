@@ -1,4 +1,23 @@
-.container
-  .row
-    .page-haeder
-      h1 后台管理
+nav.navbar.navbar-default
+  .container-fluid(style="padding-left: 50px;")
+    .navbar-header
+      a.navbar-brand(href="/admin")
+        img(src="/images/ico.png", alt="", width="20px")
+    .collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li
+          a(href="/admin") 后台首页
+        li
+          a(href="/admin/news/list") 新闻
+        li 
+          a(href="/admin/ad/list") 广告
+        li
+          a(href="/admin/bill/list") 快递单
+        li
+          a(href="/admin/page/list") 单页面
+        li
+          a(href="/admin/site/list") 网点
+        li
+          a(href="/admin/user/list") 用户
+        li
+          a(href="/") 前台首页

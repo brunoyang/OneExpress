@@ -28,7 +28,7 @@ exports.detail = function(req, res) {
 };
 
 exports.new = function(req, res) {
-  res.render('backend/news', {
+  res.render('backend/news/news', {
     title: '后台新闻页编辑',
     news: {
       author: '',

@@ -15,7 +15,8 @@ module.exports = function(app) {
     next();
   });
 
-  app.get('/', Index.index);
+  app.get('/', Index.FEIndex);
+  app.get('/admin', User.signinRequired, User.adminRequired, Index.BEIndex);
 
   app.post('/user/signup', User.signup);
   app.post('/user/signin', User.signin);

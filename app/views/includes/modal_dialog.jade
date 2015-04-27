@@ -36,3 +36,12 @@
       p 
     .modal-dialog-button
       input#modal-dialog-signup-button(type="submit",value="注册")
+script(type="text/javascript").
+  $('#modal-dialog-signin-button').on('click', function() {
+    $form = $('.modal-dialog-signin form')
+    $form.attr('action', $form.attr('action') + '?url=' + encodeURIComponent(location.href));
+  })
+  $('#modal-dialog-signup-button').on('click', function() {
+    $form = $('.modal-dialog-signup form')
+    $form.attr('action', $form.attr('action') + '?url=' + encodeURIComponent(location.href));
+  })

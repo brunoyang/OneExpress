@@ -198,7 +198,8 @@ header.wrapper {
   padding: 5px 10px;
   color: #3498DB;
   border-radius: 4px;
-  font: 18px/1.5 'microsoft yahei';
+  font-size: 18px;
+  line-height: 1.5;
   transition: border-color .2s ease-in-out;
   border: 2px solid transparent;
 }
@@ -209,7 +210,6 @@ header.wrapper {
 
 footer {
   width: 100%;
-  font-family: 'microsoft yahei';
   margin-top: 20px;
   border-top: 1px solid rgba(0, 0, 0, .2);
   box-shadow: 0 0 15px rgba(0, 0, 0, .4);

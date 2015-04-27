@@ -81,7 +81,7 @@ exports.save = function(req, res) {
           if (err) {
             console.log(err);
           }
-          res.redirect('/site/' + site._id);
+          res.redirect('/admin/site/list');
         });
       });
     });
@@ -116,7 +116,7 @@ exports.save = function(req, res) {
         if (err) {
           console.log(err);
         }
-        res.redirect('/site/' + site._id);
+        res.redirect('/admin/site/list');
       });
     });
   }
