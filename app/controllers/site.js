@@ -7,6 +7,9 @@ exports.detail = function(req, res) {
   var id = req.params.id;
 
   Site.findById(id, function(err, site) {
+    if (site === null) {
+      site = {province: '中国'};
+    }
     res.render('frontend/site/site_detail', {
       title: '网点信息',
       site: site,
@@ -18,9 +21,12 @@ exports.detail = function(req, res) {
 exports.site = function(req, res) {
   var site = req.query;
   var area = site.area;
-  var county = area.split('-')[2];
+  var location = area.split('-');
+  var lastLen = location.length - 1;
+  var sites = ['province', 'city', 'county'];
+  console.log(sites[lastLen]);
 
-  Site.findByAreas(county, function(err, sites) {
+  Site.findByAreas(sites[lastLen], location[lastLen], function(err, sites) {
     res.render('frontend/site/site_detail', {
       title: '网点信息',
       sites: sites,

@@ -63,14 +63,14 @@ block content
             .city-area.clearfix
               span.hot-city-label 热门城市：
               ul.city-list
-                each val in ['北京','上海','天津','广州','深圳','杭州','无锡','苏州','成都','大连']
+                each val in [{'city': '北京','href': '/site?area=北京'},{'city': '上海','href': '/site?area=上海'},{'city': '天津','href': '/site?area=天津'},{'city': '广州','href': '/site?area=广州'},{'city': '深圳','href': '/site?area=深圳'},{'city': '杭州','href': '/site?area=杭州'},{'city': '无锡','href': '/site?area=无锡'},{'city': '苏州','href': '/site?area=苏州'},{'city': '成都','href': '/site?area=成都'},{'city': '大连','href': '/site?area=大连'}]
                   li
-                    a(href="")= val
+                    a(href="#{val.href}")= val.city
               span.hot-city-label &nbsp;
               ul.city-list
-                each val in ['重庆','南京','青岛','郑州','长沙','嘉兴','福州','东莞','厦门','合肥']
+                each val in [{'city': '重庆','href': '/site?area=重庆'},{'city': '南京','href': '/site?area=南京'},{'city': '青岛','href': '/site?area=青岛'},{'city': '郑州','href': '/site?area=郑州'},{'city': '长沙','href': '/site?area=长沙'},{'city': '嘉兴','href': '/site?area=嘉兴'},{'city': '福州','href': '/site?area=福州'},{'city': '东莞','href': '/site?area=东莞'},{'city': '厦门','href': '/site?area=厦门'},{'city': '合肥', 'href': '/site?area=合肥'}]
                   li
-                    a(href="")= val
+                    a(href="#{val.href}")= val.city
             include ../../components/site
       .slider-show.bruno-slider
         ul.clearfix

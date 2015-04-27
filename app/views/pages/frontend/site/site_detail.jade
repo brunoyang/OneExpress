@@ -5,7 +5,7 @@ extends ../layout
 block script
   - var city = ''
   if sites
-    - city = sites[0].city
+    - city = sites[0].city || sites[0].province
   else if site
     - city = site.city
   script(src="http://api.map.baidu.com/api?v=2.0&ak=WUMElrzOguA5sN9Pl1sFDMfU")
