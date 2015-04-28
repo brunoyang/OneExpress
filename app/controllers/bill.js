@@ -3,7 +3,7 @@ var Bill = require('../models/bill');
 //var Track = require('../models/track');
 var _ = require('underscore');
 
-exports.detail = function(req, res) {
+exports.detail = function(req, res, next) {
   var id = req.params.id;
 
   Bill.findById(id, function(err, bill) {
@@ -14,7 +14,7 @@ exports.detail = function(req, res) {
   });
 };
 
-exports.new = function(req, res) {
+exports.new = function(req, res, next) {
   res.render('backend/bill/bill', {
     title: '新建快递单',
     bill: {
@@ -41,7 +41,7 @@ exports.new = function(req, res) {
   });
 };
 
-exports.save = function(req, res) {
+exports.save = function(req, res, next) {
   var id = req.body.bill.id;
   var billObj = req.body.bill;
   var _bill = null;
@@ -49,7 +49,8 @@ exports.save = function(req, res) {
   if (id !== 'undefined') {
     Bill.findById(id, function(err, bill) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       _bill = _.extend(bill, billObj);
@@ -85,7 +86,8 @@ exports.save = function(req, res) {
     });
     _bill.save(function(err, bill) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.redirect('/bill/' + bill._id);
@@ -93,13 +95,14 @@ exports.save = function(req, res) {
   }
 };
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   var id = req.params.id;
 
   if (id) {
     Bill.findById(id, function(err, bill) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.render('backend/bill/bill', {
@@ -110,12 +113,13 @@ exports.update = function(req, res) {
   }
 };
 
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  Bill.fetchLimit(start, limit, function(err, bills){
-    if(err) {
-      console.log(err);
+  Bill.fetchLimit(start, limit, function(err, bills) {
+    if (err) {
+      next(err);
+      return;
     }
     res.render('backend/bill/billlist', {
       title: '快递列表',

@@ -1,16 +1,22 @@
 var Page = require('../models/page');
 var _ = require('underscore');
 
-exports.detail = function(req, res) {
+exports.detail = function(req, res, next) {
   var first = req.params.first;
   var second = req.params.second;
   var tag = first + '/' + second;
-  console.log(tag);
+
   Page.findByTag(tag, function(err, page) {
-    if(err) {
-      console.log(err);
+    if (err) {
+      next(err);
+      return;
     }
-    console.log(page);
+    
+    if (page === null) {
+      next();
+      return;
+    }
+
     res.render('frontend/' + first + '/' + first, {
       title: page.title + ' - 一通快递',
       page: page,
@@ -19,7 +25,7 @@ exports.detail = function(req, res) {
   });
 };
 
-exports.new = function(req, res) {
+exports.new = function(req, res, next) {
   res.render('backend/page/page', {
     title: '后台单页编辑',
     page: {
@@ -30,18 +36,15 @@ exports.new = function(req, res) {
   });
 };
 
-exports.save = function(req, res) {
+exports.save = function(req, res, next) {
   var pageObj = req.body.page;
   var id = pageObj.id;
   var tag = pageObj.tag;
   var _page = null;
-  console.log(pageObj);
-  if(id !== 'undefined') {
-    console.log(id);
+
+  if (id !== 'undefined') {
     Page.findById(id, function(err, page) {
-      console.log(page);
       _page = _.extend(page, pageObj);
-      console.log(_page);
       _page.save(function(err, page) {
         if (err) {
           console.log(err);
@@ -58,7 +61,8 @@ exports.save = function(req, res) {
     });
     _page.save(function(err, page) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.redirect('/admin/page/list');
@@ -66,7 +70,7 @@ exports.save = function(req, res) {
   }
 };
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   var first = req.params.first;
   var second = req.params.second;
   var tag = first + '/' + second;
@@ -74,7 +78,8 @@ exports.update = function(req, res) {
   if (tag) {
     Page.findByTag(tag, function(err, page) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.render('backend/page/page', {
@@ -85,11 +90,11 @@ exports.update = function(req, res) {
   }
 };
 
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  Page.fetchLimit(start, limit, function(err, pages){
-    if(err) {
+  Page.fetchLimit(start, limit, function(err, pages) {
+    if (err) {
       console.log(err);
     }
     res.render('backend/page/pagelist', {
@@ -99,7 +104,7 @@ exports.list = function(req, res) {
   });
 };
 
-exports.del = function(req, res) {
+exports.del = function(req, res, next) {
   var id = req.query.id;
 
   if (id) {
@@ -107,7 +112,8 @@ exports.del = function(req, res) {
       _id: id
     }, function(err, page) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       } else {
         res.json({
           success: 1

@@ -2,28 +2,28 @@ var User = require('../models/user');
 var _ = require('underscore');
 //signup 注册 signin 登录
 
-exports.showSignup = function(req, res) {
+exports.showSignup = function(req, res, next) {
   res.render('frontend/user/signup', {
     title: '注册页面'
   });
 };
 
-exports.showSignin = function(req, res) {
+exports.showSignin = function(req, res, next) {
   res.render('frontend/user/signin', {
     title: '登录页面'
   });
 };
 
-exports.signup = function(req, res) {
+exports.signup = function(req, res, next) {
   var _user = req.body.user;
   var isFirstOne = false;
 
   User.fetch(function(err, user) {
-    if(user == false) {
+    if (user == false) {
       isFirstOne = true;
     }
 
-    if(isFirstOne) {
+    if (isFirstOne) {
       _user.role = 51;
       user = new User(_user);
       user.save(function(err, user) {
@@ -33,11 +33,12 @@ exports.signup = function(req, res) {
         res.redirect('/');
       });
     } else {
-      User.findByEmail( _user.email, function(err, user) {
+      User.findByEmail(_user.email, function(err, user) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
-       
+
         if (user) {
           return res.redirect('/signin');
         } else {
@@ -54,7 +55,7 @@ exports.signup = function(req, res) {
   });
 };
 
-exports.signin = function(req, res) {
+exports.signin = function(req, res, next) {
   var _user = req.body.user;
   var email = _user.email;
   var password = _user.password;
@@ -64,14 +65,15 @@ exports.signin = function(req, res) {
     if (err) {
       console.log(err);
     }
-    
+
     if (!user) {
       return res.redirect('/signup');
     }
 
     user.comparePassword(password, function(err, isMatch) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       if (isMatch) {
@@ -84,13 +86,13 @@ exports.signin = function(req, res) {
   });
 };
 
-exports.logout = function(req, res) {
+exports.logout = function(req, res, next) {
   var url = req.query.url;
   delete req.session.user;
   res.redirect(url || '/');
 };
 
-exports.new = function(req, res) {
+exports.new = function(req, res, next) {
   res.render('backend/user/user', {
     title: '后台编辑',
     role: req.session.user.role,
@@ -102,7 +104,7 @@ exports.new = function(req, res) {
   });
 };
 
-exports.save = function(req, res) {
+exports.save = function(req, res, next) {
   var id = req.body.user.id;
   var userObj = req.body.user;
   var _user = null;
@@ -110,13 +112,15 @@ exports.save = function(req, res) {
   if (id !== 'undefined') {
     User.findById(id, function(err, user) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       _user = _.extend(user, userObj);
       _user.save(function(err, user) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
 
         res.redirect('/admin/user/list');
@@ -125,16 +129,18 @@ exports.save = function(req, res) {
   } else {
     User.findByEmail(userObj.email, function(err, user) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
-     
+
       if (user) {
         return res.redirect('/signin');
       } else {
         user = new User(userObj);
         user.save(function(err, user) {
           if (err) {
-            console.log(err);
+            next(err);
+            return;
           }
           res.redirect('/admin/user/list');
         });
@@ -143,13 +149,14 @@ exports.save = function(req, res) {
   }
 };
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   var id = req.params.id;
 
   if (id) {
     User.findById(id, function(err, user) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.render('backend/user/user', {
@@ -160,13 +167,13 @@ exports.update = function(req, res) {
   }
 };
 
-exports.list = function(req, res) {
-  console.log(11);
+exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  User.fetchLimit(start, limit, function(err, users){
-    if(err) {
-      console.log(err);
+  User.fetchLimit(start, limit, function(err, users) {
+    if (err) {
+      next(err);
+      return;
     }
     res.render('backend/user/userlist', {
       title: '用户列表',
@@ -176,7 +183,7 @@ exports.list = function(req, res) {
   });
 };
 
-exports.del = function(req, res) {
+exports.del = function(req, res, next) {
   var id = req.query.id;
 
   if (id) {
@@ -184,7 +191,8 @@ exports.del = function(req, res) {
       _id: id
     }, function(err, user) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       } else {
         res.json({
           success: 1
@@ -213,4 +221,3 @@ exports.adminRequired = function(req, res, next) {
 
   next();
 };
-

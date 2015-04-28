@@ -2,12 +2,13 @@ var mongoose = require('mongoose');
 var Ad = mongoose.model('Ad');
 var _ = require('underscore');
 
-exports.ad = function(req, res) {
+exports.ad = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  Ad.fetchLimit(start, limit, function(err, ads){
-    if(err) {
-      console.log(err);
+  Ad.fetchLimit(start, limit, function(err, ads) {
+    if (err) {
+      next(err);
+      return;
     }
     res.render('frontend/ad/ad', {
       title: '广告列表',
@@ -16,10 +17,15 @@ exports.ad = function(req, res) {
   });
 };
 
-exports.detail = function(req, res) {
+exports.detail = function(req, res, next) {
   var id = req.params.id;
 
   Ad.findById(id, function(err, ad) {
+    if (err) {
+      next(err);
+      return;
+    }
+
     res.render('frontend/ad/ad_detail', {
       title: ad.title + ' - 一通快递',
       ad: ad
@@ -27,7 +33,7 @@ exports.detail = function(req, res) {
   });
 };
 
-exports.new = function(req, res) {
+exports.new = function(req, res, next) {
   res.render('backend/ad/ad', {
     title: '后台广告编辑',
     ad: {
@@ -38,7 +44,7 @@ exports.new = function(req, res) {
   });
 };
 
-exports.save = function(req, res) {
+exports.save = function(req, res, next) {
   var id = req.body.ad.id;
   var adObj = req.body.ad;
   var _ad = null;
@@ -46,7 +52,8 @@ exports.save = function(req, res) {
   if (id !== 'undefined') {
     Ad.findById(id, function(err, ad) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       _ad = _.extend(ad, adObj);
@@ -66,7 +73,8 @@ exports.save = function(req, res) {
     });
     _ad.save(function(err, ad) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.redirect('/admin/ad/list');
@@ -74,13 +82,14 @@ exports.save = function(req, res) {
   }
 };
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   var id = req.params.id;
 
   if (id) {
     Ad.findById(id, function(err, ad) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.render('backend/ad/ad', {
@@ -91,10 +100,11 @@ exports.update = function(req, res) {
   }
 };
 
-exports.list = function(req, res) {
-  Ad.fetchLimit(0, 15, function(err, ads){
-    if(err) {
-      console.log(err);
+exports.list = function(req, res, next) {
+  Ad.fetchLimit(0, 15, function(err, ads) {
+    if (err) {
+      next(err);
+      return;
     }
     res.render('backend/ad/adlist', {
       title: '广告列表',
@@ -103,7 +113,7 @@ exports.list = function(req, res) {
   });
 };
 
-exports.del = function(req, res) {
+exports.del = function(req, res, next) {
   var id = req.query.id;
 
   if (id) {
@@ -111,7 +121,8 @@ exports.del = function(req, res) {
       _id: id
     }, function(err, ad) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       } else {
         res.json({
           success: 1

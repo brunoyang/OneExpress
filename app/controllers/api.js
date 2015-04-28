@@ -27,13 +27,13 @@ function returnFailMsg(msg) {
   };
 }
 
-exports.checkEmail = function(req, res) {
+exports.checkEmail = function(req, res, next) {
   var email = req.query.email;
 
   if (rEmail.test(email)) {
     User.findByEmail(email, function(err, user) {
       if (err) {
-        console.log(err);
+        return res.json(returnFailMsg('Server Error'));
       }
       if (user) {
         return res.json(returnSuccessMsg(user));
@@ -46,7 +46,7 @@ exports.checkEmail = function(req, res) {
   }
 };
 
-exports.checkUser = function(req, res) {
+exports.checkUser = function(req, res, next) {
   var _user = req.body.user,
     email = _user.email,
     password = _user.password;
@@ -63,7 +63,7 @@ exports.checkUser = function(req, res) {
     email: email
   }, function(err, user) {
     if (err) {
-      console.log(err);
+      return res.json(returnFailMsg('Server Error'));
     }
     if (!user) {
       return res.json(returnFailMsg('没有该用户'));
@@ -71,7 +71,8 @@ exports.checkUser = function(req, res) {
 
     user.comparePassword(password, function(err, isMatch) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
       if (isMatch) {
         return res.json(returnSuccessMsg(user));
@@ -82,27 +83,30 @@ exports.checkUser = function(req, res) {
   });
 };
 
-exports.querySite = function(req, res) {
+exports.querySite = function(req, res, next) {
   Area.find({}, function(err, sites) {
     if (err) {
-      console.log(err);
+      return res.json(returnFailMsg('Server Error'));
     }
     return res.json(returnSuccessMsg(sites));
   });
 };
 
-exports.querySiteDetail = function(req, res) {
+exports.querySiteDetail = function(req, res, next) {
   var site = req.query;
   var province = site.province;
   var city = site.city;
   var county = site.county;
 
   Site.findByAreas(county, function(err, sites) {
+    if (err) {
+      return res.json(returnFailMsg('Server Error'));
+    }
     return res.json(returnSuccessMsg(sites));
   });
 };
 
-exports.queryBills = function(req, res) {
+exports.queryBills = function(req, res, next) {
   var bills = _.toArray(req.query);
   var len = bills.length;
   var value = [],
@@ -123,7 +127,7 @@ exports.queryBills = function(req, res) {
   });
 };
 
-exports.queryTrack = function(req, res) {
+exports.queryTrack = function(req, res, next) {
   var id = req.query.bill;
   var tracklist = [];
   var billlist = _.toArray(req.query);
@@ -141,8 +145,14 @@ exports.queryTrack = function(req, res) {
 
   _.each(billlist, function(billnumber, billindex) {
     count++;
-    var trackDetail = {billnumber: '',trackinfo: []};
+    var trackDetail = {
+      billnumber: '',
+      trackinfo: []
+    };
     Track.findById(billnumber, function(err, trackObj) {
+      if (err) {
+        return res.json(returnFailMsg('Server Error'));
+      }
       _.each(trackObj.trackinfo, function(track, index) {
         trackDetail.trackinfo.unshift(formatTrack(track));
       });
@@ -171,7 +181,7 @@ exports.queryTrack = function(req, res) {
   }
 };
 
-exports.saveTrack = function(req, res) {
+exports.saveTrack = function(req, res, next) {
   var trackObj = req.body.track;
   var type = trackObj.type;
   var id = trackObj.id;
@@ -181,7 +191,7 @@ exports.saveTrack = function(req, res) {
   if (type === 'update') {
     Track.findById(id, function(err, track) {
       if (err) {
-        console.log(err);
+        return res.json(returnFailMsg('Server Error'));
       }
       _track = {
         site: trackObj.site,
