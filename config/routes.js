@@ -7,9 +7,10 @@ var Bill = require('../app/controllers/bill');
 var Page = require('../app/controllers/page');
 var Api = require('../app/controllers/api');
 var Ad = require('../app/controllers/ad');
+var Error = require('../app/controllers/error');
 
 module.exports = function(app) {
-  app.use(function(req, res, next){
+  app.use(function(req, res, next) {
     var _user = req.session.user;
     app.locals.user = _user;
     next();
@@ -75,4 +76,8 @@ module.exports = function(app) {
   app.get('/admin/page/update/:first/:second', User.signinRequired, User.adminRequired, Page.update);
   app.get('/admin/page/list', User.signinRequired, User.adminRequired, Page.list);
   app.delete('/admin/page/list', User.signinRequired, User.adminRequired, Page.del);
+
+  app.get('/404', Error.to404);
+  app.get('/403', Error.to403);
+  app.get('/500', Error.to500);
 };

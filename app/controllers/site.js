@@ -3,12 +3,13 @@ var Site = require('../models/site');
 var Area = require('../models/area');
 var _ = require('underscore');
 
-exports.detail = function(req, res) {
+exports.detail = function(req, res, next) {
   var id = req.params.id;
 
   Site.findById(id, function(err, site) {
-    if (site === null) {
-      site = {province: '中国'};
+    if (err) {
+      next(err);
+      return;
     }
     res.render('frontend/site/site_detail', {
       title: '网点信息',
@@ -18,15 +19,19 @@ exports.detail = function(req, res) {
   });
 };
 
-exports.site = function(req, res) {
+exports.site = function(req, res, next) {
   var site = req.query;
   var area = site.area;
   var location = area.split('-');
   var lastLen = location.length - 1;
   var sites = ['province', 'city', 'county'];
-  console.log(sites[lastLen]);
 
   Site.findByAreas(sites[lastLen], location[lastLen], function(err, sites) {
+    if (err) {
+      next(err);
+      return;
+    }
+
     res.render('frontend/site/site_detail', {
       title: '网点信息',
       sites: sites,
@@ -35,7 +40,7 @@ exports.site = function(req, res) {
   });
 };
 
-exports.new = function(req, res) {
+exports.new = function(req, res, next) {
   res.render('backend/site/site', {
     title: '后台快递网点编辑',
     site: {
@@ -52,7 +57,7 @@ exports.new = function(req, res) {
   });
 };
 
-exports.save = function(req, res) {
+exports.save = function(req, res, next) {
   var id = req.body.site.id;
   var siteObj = req.body.site;
   var _site = null;
@@ -67,7 +72,8 @@ exports.save = function(req, res) {
 
     Area.findByAllArea(_area, function(err, area) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       if (!area) {
@@ -80,12 +86,14 @@ exports.save = function(req, res) {
       }
       Site.findById(id, function(err, site) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
         _site = _.extend(site, siteObj);
         _site.save(function(err, site) {
           if (err) {
-            console.log(err);
+            next(err);
+            return;
           }
           res.redirect('/admin/site/list');
         });
@@ -99,13 +107,13 @@ exports.save = function(req, res) {
     };
     Area.findByAllArea(_area, function(err, area) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
-      console.log(area);
+
       if (!area) {
         _area = new Area(_area);
-        _area.save(function(err, area) {
-        });
+        _area.save(function(err, area) {});
       }
       _site = new Site({
         province: siteObj.province,
@@ -128,13 +136,14 @@ exports.save = function(req, res) {
   }
 };
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   var id = req.params.id;
 
   if (id) {
     Site.findById(id, function(err, site) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       }
 
       res.render('backend/site/site', {
@@ -145,12 +154,13 @@ exports.update = function(req, res) {
   }
 };
 
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
   Site.fetchLimit(start, limit, function(err, sites) {
     if (err) {
-      console.log(err);
+      next(err);
+      return;
     }
     res.render('backend/site/sitelist', {
       title: '网点列表',
@@ -159,7 +169,7 @@ exports.list = function(req, res) {
   });
 };
 
-exports.del = function(req, res) {
+exports.del = function(req, res, next) {
   var id = req.query.id;
 
   if (id) {
@@ -167,7 +177,8 @@ exports.del = function(req, res) {
       _id: id
     }, function(err, site) {
       if (err) {
-        console.log(err);
+        next(err);
+        return;
       } else {
         res.json({
           success: 1
