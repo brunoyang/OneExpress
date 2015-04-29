@@ -98,14 +98,18 @@ exports.update = function(req, res, next) {
 exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  News.fetchLimit(start, limit, function(err, newslist) {
+  News.fetch(function(err, newslist) {
     if (err) {
       next(err);
       return;
     }
+    var len = newslist.length;
+    newslist.length = limit;
     res.render('backend/news/newslist', {
       title: '新闻列表',
-      newslist: newslist
+      newslist: newslist,
+      sum: len,
+      limit: limit
     });
   });
 };

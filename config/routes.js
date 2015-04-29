@@ -16,9 +16,11 @@ module.exports = function(app) {
     next();
   });
 
+  //index
   app.get('/', Index.FEIndex);
   app.get('/admin', User.signinRequired, User.adminRequired, Index.BEIndex);
 
+  //user
   app.post('/user/signup', User.signup);
   app.post('/user/signin', User.signin);
   app.get('/signin', User.showSignin);
@@ -30,6 +32,8 @@ module.exports = function(app) {
   app.post('/admin/user/save', User.signinRequired, User.adminRequired, User.save);
   app.delete('/admin/user/list', User.signinRequired, User.adminRequired, User.del);
 
+
+  //news
   app.get('/news', News.news);
   app.get('/news/detail/:id', News.detail);
   app.post('/admin/news/save', User.signinRequired, User.adminRequired, News.save);
@@ -38,6 +42,7 @@ module.exports = function(app) {
   app.get('/admin/news/list', User.signinRequired, User.adminRequired, News.list);
   app.delete('/admin/news/list', User.signinRequired, User.adminRequired, News.del);
 
+  //ad
   app.get('/ad', Ad.ad);
   app.get('/ad/detail/:id', Ad.detail);
   app.post('/admin/ad/save', User.signinRequired, User.adminRequired, Ad.save);
@@ -46,6 +51,7 @@ module.exports = function(app) {
   app.get('/admin/ad/list', User.signinRequired, User.adminRequired, Ad.list);
   app.delete('/admin/ad/list', User.signinRequired, User.adminRequired, Ad.del);
 
+  //site
   app.get('/site', Site.site);
   app.get('/site/:id', Site.detail);
   app.post('/admin/site/save', User.signinRequired, User.adminRequired, Site.save);
@@ -54,22 +60,14 @@ module.exports = function(app) {
   app.get('/admin/site/list', User.signinRequired, User.adminRequired, Site.list);
   app.delete('/admin/site/list', User.signinRequired, User.adminRequired, Site.del);
 
+  //bill
   app.get('/bill/:id', Bill.detail);
   app.post('/admin/bill/save', User.signinRequired, User.adminRequired, Bill.save);
   app.get('/admin/bill/new', User.signinRequired, User.adminRequired, Bill.new);
   app.get('/admin/bill/update/:id', User.signinRequired, User.adminRequired, Bill.update);
   app.get('/admin/bill/list', User.signinRequired, User.adminRequired, Bill.list);
 
-  app.get('/admin/track/:id', User.signinRequired, User.adminRequired, Track.query);
-
-  app.get('/api/check/email', Api.checkEmail);
-  app.get('/api/query/sitemap', Api.querySiteDetail);
-  app.get('/api/query/bills', Api.queryBills);
-  app.get('/api/query/track', Api.queryTrack);
-  app.post('/api/save/track', Api.saveTrack);
-  app.post('/api/check/user', Api.checkUser);
-  app.post('/api/query/site', Api.querySite);
-
+  //page
   app.get('/page/:first/:second', Page.detail);
   app.post('/admin/page/save', User.signinRequired, User.adminRequired, Page.save);
   app.get('/admin/page/new', User.signinRequired, User.adminRequired, Page.new);
@@ -77,6 +75,19 @@ module.exports = function(app) {
   app.get('/admin/page/list', User.signinRequired, User.adminRequired, Page.list);
   app.delete('/admin/page/list', User.signinRequired, User.adminRequired, Page.del);
 
+  app.get('/admin/track/:id', User.signinRequired, User.adminRequired, Track.query);
+
+  //api
+  app.get('/api/check/email', Api.checkEmail);
+  app.get('/api/query/sitemap', Api.querySiteDetail);
+  app.get('/api/query/bills', Api.queryBills);
+  app.get('/api/query/track', Api.queryTrack);
+  app.get('/api/get/list', User.signinRequired, User.adminRequired, Api.getList);
+  app.post('/api/save/track', Api.saveTrack);
+  app.post('/api/check/user', Api.checkUser);
+  app.post('/api/query/site', Api.querySite);
+
+  //error
   app.get('/404', Error.to404);
   app.get('/403', Error.to403);
   app.get('/500', Error.to500);
