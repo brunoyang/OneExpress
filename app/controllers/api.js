@@ -1,13 +1,27 @@
-var User = require('../models/user');
-var Site = require('../models/site');
+var Ad = require('../models/ad');
 var Area = require('../models/area');
 var Bill = require('../models/bill');
+var News = require('../models/news');
+var Page = require('../models/page');
+var Site = require('../models/site');
+var User = require('../models/user');
 var Track = require('../models/track');
 var _ = require('underscore');
 var Q = require('Q');
 var moment = require('moment');
 var rUsername = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
 var rEmail = /([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
+
+var ModelList = {
+  'ad': Ad,
+  'area': Area,
+  'bill': Bill,
+  'news': News,
+  'page': Page,
+  'site': Site,
+  'user': User,
+  'track': Track
+};
 
 function returnSuccessMsg(obj) {
   return {
@@ -234,5 +248,19 @@ exports.saveTrack = function(req, res, next) {
       }
     });
   }
+};
 
+exports.getList = function(req, res, next) {
+  var query = req.query;
+  var type = query.type;
+  var start = query.start;
+  var limit = query.limit;
+
+  ModelList[type].fetchLimit(start, limit, function(err, result) {
+    if (err) {
+      return res.json(returnFailMsg('Server Error'));
+    }
+
+    return res.json(returnSuccessMsg(result));
+  });
 };

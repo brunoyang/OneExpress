@@ -36,4 +36,30 @@ $(function() {
       return false;
     }
   });
+
+  // var $page = $('.pagination');
+  //   $page.on('click', 'a', function(e){
+  //     var $t = $(this);
+  //     var $tbody = $('table tbody');
+  //     var href = $t.attr('href');
+  //     e.preventDefault();
+
+  //     $.get(href, function(data){
+  //       if(data.success) {
+  //         var obj = data.data.object;
+  //         $tbody.empty();
+  //         $.each(obj, function(index, item){
+  //           var tr = '';
+  //           tr += '<tr class="news-id-'+item._id+'"><td>'+item.title+'</td><td>'+item.content.substring(0, 20) + '...'+'</td><td><></tr>'
+  //         });
+  //       } else {
+  //         //OE.alert(data.data.msg);
+  //       }
+  //     });
+  //   });
+
+  // function renderList(list) {
+  //   var $page = $('.pagination');
+    
+  // }
 });
