@@ -116,14 +116,22 @@ exports.update = function(req, res, next) {
 exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  Bill.fetchLimit(start, limit, function(err, bills) {
+  Bill.fetch(function(err, bills) {
     if (err) {
       next(err);
       return;
     }
+
+    var len = bills.length;
+    if(len > limit) {
+      bills.length = limit;
+    }
+
     res.render('backend/bill/billlist', {
       title: '快递列表',
-      bills: bills
+      bills: bills,
+      sum: len,
+      limit: limit
     });
   });
 };

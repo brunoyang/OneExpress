@@ -103,8 +103,13 @@ exports.list = function(req, res, next) {
       next(err);
       return;
     }
+    
     var len = newslist.length;
-    newslist.length = limit;
+
+    if(len > limit) {
+      newslist.length = limit;
+    }
+
     res.render('backend/news/newslist', {
       title: '新闻列表',
       newslist: newslist,

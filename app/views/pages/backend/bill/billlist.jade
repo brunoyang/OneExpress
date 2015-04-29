@@ -3,6 +3,7 @@ extends ../admin_layout
 block content
   .container
     .row
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/bill/new") 增加快递
       table.table.table-hover.table-striped
         thead
           tr
@@ -25,8 +26,92 @@ block content
               td #{bill.delivername}
               td #{bill.deliverprovince}/#{bill.delivercity}/#{bill.delivercounty}/#{bill.deliveraddr}
               td #{bill.delivercellphone}
-              td: a(href="/bill/#{bill._id}", target="_blank") 查看
-              td: a(href="/admin/bill/update/#{bill._id}", target="_blank") 编辑
-      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/bill/new") 增加快递
-block srcipt
+              td: a(href="/bill/detail/#{bill._id}", target="_blank") 查看
+              td: a(href="/admin/bill/update/#{bill._id}") 编辑
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=bill&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=bill&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=bill&start=#{limit}&limit=#{limit}")
+              span &raquo;
+block script
   script(src="/p/js/func.js")
+  script#content-list(type="text/x-handlebars-template").
+    {{#each list}}
+      <tr class="bill-id-{{id}}">
+        <td>
+          <a href="/admin/track/{{id}}">{{id}}</a>
+        </td>
+        <td>{{sendname}}</td>
+        <td>
+          {{sendprovince}}/{{sendcity}}/{{sendcounty}}/{{sendaddr}}
+        </td>
+        <td>{{sendcellphone}}</td>
+        <td>{{delivername}}</td>
+        <td>
+          {{deliverprovince}}/{{delivercity}}/{{delivercounty}}/{{deliveraddr}}
+        </td>
+        <td>{{delivercellphone}}</td>
+        <td>
+          <a href="/bill/detail/{{id}}">查看</a>
+        </td>
+        <td>
+          <a href="/admin/bill/update/{{id}}">编辑</a>
+        </td>
+      </tr>
+    {{/each}}  
+  script(type="text/javascript").
+    var $pagination = $('.pagination');
+    var $page = $pagination.find('a');
+    if($pagination.find('li').length === 2) {
+      $pagination.hide();
+    }
+    $page.on('click', function(e){
+      e.preventDefault();
+      var $t = $(this);
+      var $tbody = $('table tbody');
+      var href = $t.attr('href');
+      
+      $.get(href, function(data){
+        if(data.success) {
+          $tbody.empty();
+
+          var obj = data.data.object;
+          var tpl = $('#content-list').html();
+          var template = Handlebars.compile(tpl); 
+          var content = {
+            list: []
+          };
+
+          $.each(obj, function(index, item) {
+            var obj = {
+              id: item._id,
+              sendname: item.sendname,
+              sendprovince: item.sendprovince,
+              sendcity: item.sendcity,
+              sendcounty: item.sendcounty,
+              sendaddr: item.sendaddr,
+              sendcellphone: item.sendcellphone,
+              delivername: item.delivername,
+              deliverprovince: item.deliverprovince,
+              delivercity: item.delivercity,
+              delivercounty: item.delivercounty,
+              deliveraddr: item.deliveraddr,
+              delivercellphone: item.delivercellphone
+            };
+            content.list.push(obj);
+          });
+          
+          var html = template(content);
+          
+          $tbody.html(html);
+        } else {
+          //OE.alert(data.data.msg);
+        }
+      })
+    });

@@ -101,14 +101,24 @@ exports.update = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-  Ad.fetchLimit(0, 15, function(err, ads) {
+  var start = req.query.start ? req.query.start : 0;
+  var limit = req.query.limit ? req.query.limit : 15;
+  Ad.fetch(function(err, ads) {
     if (err) {
       next(err);
       return;
     }
+
+    var len = ads.length;
+    if(len > limit) {
+      ads.length = limit;
+    }
+
     res.render('backend/ad/adlist', {
       title: '广告列表',
-      ads: ads
+      ads: ads,
+      sum: len,
+      limit: limit
     });
   });
 };

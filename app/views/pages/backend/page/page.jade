@@ -8,11 +8,11 @@ block content
         .form-group
           label.col-md-2.control-label(for="inputTitle") 标题
           .col-md-10
-            input#inputTitle.form-control(type="text", name="page[title]", value="#{page.title}")
+            input#inputTitle.form-control(type="text", name="page[title]", value="#{page.title}", required)
         .form-group
           label.col-md-2.control-label(for="inputTag") 标签
           .col-md-10
-            input#inputTag.form-control(type="text", name="page[tag]", value="#{page.tag}")
+            input#inputTag.form-control(type="text", name="page[tag]", value="#{page.tag}", required)
         .form-group
           label.col-md-2.control-label(for="inputContent") 内容
           .col-md-10

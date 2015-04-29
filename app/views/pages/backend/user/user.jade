@@ -23,20 +23,20 @@ block content
         .form-group
           label.col-md-2.control-label(for="inputName") 用户名
           .col-md-10
-            input#inputName.form-control(type="text", name="user[name]", value="#{user.name}")
+            input#inputName.form-control(type="text", name="user[name]", value="#{user.name}", required)
         .form-group
           label.col-md-2.control-label(for="inputEmail") 邮箱
           .col-md-10
-            input#inputEmail.form-control(type="text", name="user[email]", value="#{user.email}")
+            input#inputEmail.form-control(type="text", name="user[email]", value="#{user.email}", required)
         if !user._id
           .form-group
             label.col-md-2.control-label(for="inputEmail") 密码
             .col-md-10
-              input#inputEmail.form-control(type="password", name="user[password]")
+              input#inputEmail.form-control(type="password", name="user[password]", required)
           .form-group
             label.col-md-2.control-label(for="inputEmail") 重复密码
             .col-md-10
-              input#inputEmail.form-control(type="password")
+              input#inputEmail.form-control(type="password", required)
         .form-group
           label.col-md-2.control-label(for="inputRole") 权限
           .col-md-2
