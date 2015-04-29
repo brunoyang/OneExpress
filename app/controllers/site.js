@@ -157,14 +157,23 @@ exports.update = function(req, res, next) {
 exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  Site.fetchLimit(start, limit, function(err, sites) {
+  Site.fetch(function(err, sites) {
     if (err) {
       next(err);
       return;
     }
+
+    var len = sites.length;
+
+    if(len > limit) {
+      sites.length = limit;
+    }
+
     res.render('backend/site/sitelist', {
       title: '网点列表',
-      sites: sites
+      sites: sites,
+      sum: len,
+      limit: limit
     });
   });
 };

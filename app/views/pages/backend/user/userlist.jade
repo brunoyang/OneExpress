@@ -29,5 +29,83 @@ block content
               if role > 50
                 td: a(href="/admin/user/update/#{user._id}", target="_blank") 编辑
                 td: button.btn.btn-danger.user-del(data-id="#{user._id}") 删除
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=user&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=user&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=user&start=#{limit}&limit=#{limit}")
+              span &raquo;
 block script
   script(src="/p/js/func.js")
+  script#content-list(type="text/x-handlebars-template").
+    {{#each list}}
+      <tr class="user-id-{{id}}">
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{role}}</td>
+        {{#if isSuperAadmin}}
+          <td>
+            <a href="/admin/user/update/{{id}}">编辑</a>
+          </td>
+          <td>
+            <button class="btn btn-danger user-del" data-id="{{id}}">
+              删除
+            </button>
+          </td>
+        {{/if}}   
+      </tr>
+    {{/each}}  
+  script(type="text/javascript").
+    var $ROLE = #{role};
+    var $pagination = $('.pagination');
+    var $page = $pagination.find('a');
+    if($pagination.find('li').length === 2) {
+      $pagination.hide();
+    }
+    $page.on('click', function(e){
+      e.preventDefault();
+      var $t = $(this);
+      var $tbody = $('table tbody');
+      var href = $t.attr('href');
+      
+      $.get(href, function(data){
+        if(data.success) {
+          $tbody.empty();
+
+          var obj = data.data.object;
+          var tpl = $('#content-list').html();
+          var template = Handlebars.compile(tpl); 
+          var content = {
+            list: []
+          };
+          var roleMap = {
+            0: '普通用户',
+            21: '管理员',
+            51: '超级管理员'
+          };
+
+          $.each(obj, function(index, item) {            
+            var obj = {
+              id: item._id,
+              email: item.email,
+              role: roleMap[item.content]
+            };
+            if(item.role > 50) {
+              obj['isSuperAadmin'] = true;
+            }
+            content.list.push(obj);
+          });
+          
+          var html = template(content);
+          
+          $tbody.html(html);
+        } else {
+          //OE.alert(data.data.msg);
+        }
+      })
+    });

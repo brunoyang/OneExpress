@@ -93,13 +93,22 @@ exports.update = function(req, res, next) {
 exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  Page.fetchLimit(start, limit, function(err, pages) {
+  Page.fetch(function(err, pages) {
     if (err) {
       console.log(err);
     }
+
+    var len = pages.length;
+
+    if(len > limit) {
+      pages.length = limit;
+    }
+
     res.render('backend/page/pagelist', {
       title: '单页列表',
-      pages: pages
+      pages: pages,
+      sum: len,
+      limit: limit
     });
   });
 };

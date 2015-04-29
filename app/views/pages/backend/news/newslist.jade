@@ -38,7 +38,7 @@ block content
 block script
   script(src="/p/js/func.js")
   script#content-list(type="text/x-handlebars-template").
-    {{#each newslist}}
+    {{#each list}}
       <tr class="news-id-{{id}}">
         <td>{{title}}</td>
         <td>{{author}}</td>
@@ -72,8 +72,10 @@ block script
           var obj = data.data.object;
           var tpl = $('#content-list').html();
           var template = Handlebars.compile(tpl);
-          console.log(template)
-          var content = [];
+
+          var content = {
+            list: []
+          };
           $.each(obj, function(index, item) {
             var obj = {
               id: item._id,
@@ -82,14 +84,9 @@ block script
               content: item.content.substring(0, 20) + '...',
               time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')
             };
-            content.push(obj);
+            content.list.push(obj);
           });
-          console.log(content);
-          var obj = {
-            newslist: content 
-          }
-          var html = template(obj);
-          console.log('tpl: '+html)
+          var html = template(content);
           $tbody.html(html);
         } else {
           //OE.alert(data.data.msg);

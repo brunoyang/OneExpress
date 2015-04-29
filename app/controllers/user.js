@@ -175,10 +175,19 @@ exports.list = function(req, res, next) {
       next(err);
       return;
     }
+
+    var len = users.length;
+
+    if(len > limit) {
+      users.length = limit;
+    }
+
     res.render('backend/user/userlist', {
       title: '用户列表',
       users: users,
-      role: req.session.user.role
+      role: req.session.user.role,
+      sum: len,
+      limit: limit
     });
   });
 };

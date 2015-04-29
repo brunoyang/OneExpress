@@ -25,8 +25,86 @@ block content
               td #{site.address}
               td +#{site.areacode} #{site.telephone}
               td #{site.manager}
-              td: a(href="/site/#{site._id}", target="_blank") 查看
-              td: a(href="/admin/site/update/#{site._id}", target="_blank") 编辑
+              td: a(href="/site/detail/#{site._id}", target="_blank") 查看
+              td: a(href="/admin/site/update/#{site._id}") 编辑
               td: button.btn.btn-danger.site-del(data-id="#{site._id}") 删除
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=site&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=site&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=site&start=#{limit}&limit=#{limit}")
+              span &raquo;
 block script
   script(src="/p/js/func.js")
+  script#content-list(type="text/x-handlebars-template").
+    {{#each list}}
+      <tr class="site-id-{{id}}">
+        <td>{{province}}</td>
+        <td>{{city}}</td>
+        <td>{{county}}</td>
+        <td>{{address}}</td>
+        <td>+{{sreacode}} {{telephone}}</td>
+        <td>{{manager}}</td>
+        <td>
+          <a href="/site/detail/{{id}}">查看</a>
+        </td>
+        <td>
+          <a href="/admin/site/update/{{id}}">编辑</a>
+        </td>
+        <td>
+          <button class="btn btn-danger site-del" data-id="{{id}}">
+            删除
+          </button>
+        </td>
+      </tr>
+    {{/each}}  
+  script(type="text/javascript").
+    var $pagination = $('.pagination');
+    var $page = $pagination.find('a');
+    if($pagination.find('li').length === 2) {
+      $pagination.hide();
+    }
+    $page.on('click', function(e){
+      e.preventDefault();
+      var $t = $(this);
+      var $tbody = $('table tbody');
+      var href = $t.attr('href');
+      
+      $.get(href, function(data){
+        if(data.success) {
+          $tbody.empty();
+
+          var obj = data.data.object;
+          var tpl = $('#content-list').html();
+          var template = Handlebars.compile(tpl); 
+          var content = {
+            list: []
+          };
+
+          $.each(obj, function(index, item) {
+            var obj = {
+              id: item._id,
+              province: item.province,
+              city: item.city,
+              county: item.county,
+              manager: item.manager,
+              address: item.address,
+              areacode: item.areacode,
+              telephone: item.telephone,
+            };
+            content.list.push(obj);
+          });
+          
+          var html = template(content);
+          
+          $tbody.html(html);
+        } else {
+          //OE.alert(data.data.msg);
+        }
+      })
+    });
