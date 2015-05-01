@@ -23,7 +23,7 @@ block content
               td #{page.content.substring(0, 20) + '...'}
               td #{moment(page.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
               td: a(href="/page/#{page.tag}", target="_blank") 查看
-              td: a(href="/admin/page/update/#{page.tag}", target="_blank") 编辑
+              td: a(href="/admin/page/update/#{page.tag}") 编辑
               td: button.btn.btn-danger.page-del(data-id="#{page._id}") 删除
       nav.text-center
         ul.pagination
@@ -58,7 +58,20 @@ block script
           </button>
         </td>
       </tr>
-    {{/each}}  
+    {{/each}}
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{title}} 
+          <div class="pull-right">
+            <a href="/admin/page/update/{{tag}}" class="btn btn-primary">编辑<a>
+            <a href="/page/{{tag}}" class="btn btn-default">查看</a>
+          </div>        
+        </h4>  
+        <p>url: {{tag}}</p>
+        <p>{{content}}</p>
+      </li>
+    {{/each}}
   script(type="text/javascript").
     var $pagination = $('.pagination');
     var $page = $pagination.find('a');
@@ -99,4 +112,22 @@ block script
           //OE.alert(data.data.msg);
         }
       })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          tag: item.tag,
+          title: item.title,
+          content: item.content.substring(0, 30) + '...'
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
     });

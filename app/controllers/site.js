@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Site = require('../models/site');
 var Area = require('../models/area');
 var _ = require('underscore');
+var nodejieba = require('../segment/nodejieba');
 
 exports.detail = function(req, res, next) {
   var id = req.params.id;
@@ -67,7 +68,8 @@ exports.save = function(req, res, next) {
     _area = {
       province: siteObj.province,
       city: siteObj.city,
-      county: siteObj.county
+      county: siteObj.county,
+      index: [siteObj.province, siteObj.city, siteObj.county]
     };
 
     Area.findByAllArea(_area, function(err, area) {
@@ -80,7 +82,8 @@ exports.save = function(req, res, next) {
         var _area_ = new Area(_area);
         _area_.save(function(err, area) {
           if (err) {
-            console.log(err);
+            next(err);
+            return;
           }
         });
       }
@@ -89,6 +92,7 @@ exports.save = function(req, res, next) {
           next(err);
           return;
         }
+        siteObj['index'] = _.toArray(siteObj);
         _site = _.extend(site, siteObj);
         _site.save(function(err, site) {
           if (err) {
@@ -103,7 +107,8 @@ exports.save = function(req, res, next) {
     _area = {
       province: siteObj.province,
       city: siteObj.city,
-      county: siteObj.county
+      county: siteObj.county,
+      index: [siteObj.province, siteObj.city, siteObj.county]
     };
     Area.findByAllArea(_area, function(err, area) {
       if (err) {
@@ -113,7 +118,7 @@ exports.save = function(req, res, next) {
 
       if (!area) {
         _area = new Area(_area);
-        _area.save(function(err, area) {});
+        _area.save();
       }
       _site = new Site({
         province: siteObj.province,
@@ -124,7 +129,8 @@ exports.save = function(req, res, next) {
         areacode: siteObj.areacode,
         manager: siteObj.manager,
         X: siteObj.X,
-        Y: siteObj.Y
+        Y: siteObj.Y,
+        index: _.toArray(siteObj)
       });
       _site.save(function(err, site) {
         if (err) {

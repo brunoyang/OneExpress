@@ -64,7 +64,20 @@ block script
           <a href="/admin/bill/update/{{id}}">编辑</a>
         </td>
       </tr>
-    {{/each}}  
+    {{/each}}
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{id}} 
+          <div class="pull-right">
+            <a href="/admin/bill/update/{{id}}" class="btn btn-primary">编辑<a>
+            <a href="/bill/detail/{{id}}" class="btn btn-default">查看</a>
+          </div>        
+        </h4>  
+        <p>从 {{sendprovince}} - {{sendcity}} 到 {{deliverprovince}} - {{delivercity}}</p>
+        <p>发件人电话：{{sendcellphone}} 收件人电话：{{delivercellphone}}</p>
+      </li>
+    {{/each}} 
   script(type="text/javascript").
     var $pagination = $('.pagination');
     var $page = $pagination.find('a');
@@ -114,4 +127,26 @@ block script
           //OE.alert(data.data.msg);
         }
       })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item._id,
+          sendprovince: item.sendprovince,
+          sendcity: item.sendcity,
+          sendcellphone: item.sendcellphone,
+          deliverprovince: item.deliverprovince,
+          delivercity: item.delivercity,
+          delivercellphone: item.delivercellphone
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
     });

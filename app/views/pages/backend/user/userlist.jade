@@ -3,7 +3,7 @@ extends ../admin_layout
 block content
   .container
     .row
-      a.btn.btn-success.col-md-2.col-md-offset-10(href="/admin/user/new") 增加用户
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/user/new") 增加用户
       table.table.table-hover.table-striped
         thead
           tr
@@ -27,7 +27,7 @@ block content
                 td 超级管理员
               //- td: a(href="/admin/user/view/#{user._id}", target="_blank") 查看
               if role > 50
-                td: a(href="/admin/user/update/#{user._id}", target="_blank") 编辑
+                td: a(href="/admin/user/update/#{user._id}") 编辑
                 td: button.btn.btn-danger.user-del(data-id="#{user._id}") 删除
       nav.text-center
         ul.pagination
@@ -48,7 +48,7 @@ block script
         <td>{{name}}</td>
         <td>{{email}}</td>
         <td>{{role}}</td>
-        {{#if isSuperAadmin}}
+        {{#if isSuperAdmin}}
           <td>
             <a href="/admin/user/update/{{id}}">编辑</a>
           </td>
@@ -59,7 +59,19 @@ block script
           </td>
         {{/if}}   
       </tr>
-    {{/each}}  
+    {{/each}}
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{email}} 
+          <div class="pull-right">
+            <a href="/admin/user/update/{{id}}" class="btn btn-primary">编辑<a>
+            <a href="/news/detail/{{id}}" class="btn btn-default">查看</a>
+          </div>        
+        </h4>  
+        <p>用户名：{{name}} 权限：{{role}}</p>
+      </li>
+    {{/each}}
   script(type="text/javascript").
     var $ROLE = #{role};
     var $pagination = $('.pagination');
@@ -93,14 +105,15 @@ block script
             var obj = {
               id: item._id,
               email: item.email,
-              role: roleMap[item.content]
+              role: roleMap[item.role],
+              name: item.name
             };
-            if(item.role > 50) {
-              obj['isSuperAadmin'] = true;
+            if($ROLE > 50) {
+              obj['isSuperAdmin'] = true;
             }
             content.list.push(obj);
           });
-          
+          console.log(content)
           var html = template(content);
           
           $tbody.html(html);
@@ -108,4 +121,28 @@ block script
           //OE.alert(data.data.msg);
         }
       })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      var roleMap = {
+        0: '普通用户',
+        21: '管理员',
+        51: '超级管理员'
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item._id,
+          email: item.email,
+          role: roleMap[item.role],
+          name: item.name
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
     });
