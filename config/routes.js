@@ -26,7 +26,7 @@ module.exports = function(app) {
   app.get('/signin', User.showSignin);
   app.get('/signup', User.showSignup);
   app.get('/logout', User.logout);
-  app.get('/admin/user/update/:id', User.signinRequired, User.adminRequired, User.update);
+  app.get('/admin/user/update/:id', User.signinRequired, User.adminRequired, User.superAdminRequired, User.update);
   app.get('/admin/user/list', User.signinRequired, User.adminRequired, User.list);
   app.get('/admin/user/new', User.signinRequired, User.adminRequired, User.new);
   app.post('/admin/user/save', User.signinRequired, User.adminRequired, User.save);
@@ -82,6 +82,7 @@ module.exports = function(app) {
   app.get('/api/query/sitemap', Api.querySiteDetail);
   app.get('/api/query/bills', Api.queryBills);
   app.get('/api/query/track', Api.queryTrack);
+  app.get('/api/query/search', User.signinRequired, User.adminRequired, Api.search);
   app.get('/api/get/list', User.signinRequired, User.adminRequired, Api.getList);
   app.post('/api/save/track', Api.saveTrack);
   app.post('/api/check/user', Api.checkUser);

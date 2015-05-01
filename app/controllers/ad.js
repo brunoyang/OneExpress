@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Ad = mongoose.model('Ad');
 var _ = require('underscore');
+var nodejieba = require('../segment/nodejieba');
 
 exports.ad = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
@@ -56,6 +57,7 @@ exports.save = function(req, res, next) {
         return;
       }
 
+      adObj['index'] = nodejieba.queryCutSync(ad.title);
       _ad = _.extend(ad, adObj);
       _ad.save(function(err, ad) {
         if (err) {
@@ -69,7 +71,8 @@ exports.save = function(req, res, next) {
     _ad = new Ad({
       imgSrc: adObj.imgSrc,
       title: adObj.title,
-      content: adObj.content
+      content: adObj.content,
+      index: nodejieba.queryCutSync(adObj.title)
     });
     _ad.save(function(err, ad) {
       if (err) {

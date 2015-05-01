@@ -1,5 +1,7 @@
 var Page = require('../models/page');
 var _ = require('underscore');
+var nodejieba = require('../segment/nodejieba');
+
 
 exports.detail = function(req, res, next) {
   var first = req.params.first;
@@ -44,6 +46,16 @@ exports.save = function(req, res, next) {
 
   if (id !== 'undefined') {
     Page.findById(id, function(err, page) {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      var wordlist =[];
+      _.each(pageObj, function(value) {
+        wordlist.push(nodejieba.queryCutSync(value));
+      });
+      pageObj['index'] = _.flatten(wordlist);
       _page = _.extend(page, pageObj);
       _page.save(function(err, page) {
         if (err) {

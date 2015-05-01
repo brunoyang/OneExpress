@@ -21,11 +21,16 @@
     "jade": "^1.9.2",
     "moment": "^2.10.0",
     "mongoose": "^4.0.1",
+    "mongoose-search-plugin": "^0.1.2",
     "morgan": "^1.5.2",
+    "natural": "^0.2.1",
+    "nodejieba": "^0.2.10",
     "q": "^1.2.0",
     "underscore": "^1.8.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mongoose-search-plugin": "^0.1.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

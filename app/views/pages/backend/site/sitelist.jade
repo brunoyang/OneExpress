@@ -48,7 +48,7 @@ block script
         <td>{{city}}</td>
         <td>{{county}}</td>
         <td>{{address}}</td>
-        <td>+{{sreacode}} {{telephone}}</td>
+        <td>+{{areacode}} {{telephone}}</td>
         <td>{{manager}}</td>
         <td>
           <a href="/site/detail/{{id}}">查看</a>
@@ -62,7 +62,20 @@ block script
           </button>
         </td>
       </tr>
-    {{/each}}  
+    {{/each}}
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{name}} 
+          <div class="pull-right">
+            <a href="/admin/site/update/{{id}}" class="btn btn-primary">编辑<a>
+            <a href="/site/detail/{{id}}" class="btn btn-default">查看</a>
+          </div>        
+        </h4>  
+        <p>地址: {{province}} - {{city}} - {{county}} - {{address}}</p>
+        <p>电话：+{{areacode}} {{telephone}} 负责人：{{manager}}</p>
+      </li>
+    {{/each}}
   script(type="text/javascript").
     var $pagination = $('.pagination');
     var $page = $pagination.find('a');
@@ -107,4 +120,28 @@ block script
           //OE.alert(data.data.msg);
         }
       })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item:_id,
+          name: item.name,
+          province: item.province,
+          city: item.city,
+          county: item.county,
+          manager: item.manager,
+          address: item.address,
+          areacode: item.areacode,
+          telephone: item.telephone,
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
     });

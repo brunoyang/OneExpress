@@ -21,3 +21,17 @@ nav.navbar.navbar-default
           a(href="/admin/user/list") 用户
         li
           a(href="/") 前台首页
+      form.navbar-form.navbar-right#search(method="GET", action="")
+        .form-group
+          input.form-control(type="text", placeholder="Search")
+        button.btn.btn-default(type="submit", data-toggle="modal", data-target="#search-modal") 搜索
+.modal.fade#search-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h4 关键词：
+          span
+      .modal-body
+        ul.list-unstyled
+      .modal-footer
+        button.btn.btn-primary(data-dismiss="modal") 关闭

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Bill = require('../models/bill');
 //var Track = require('../models/track');
+var nodejieba = require('../segment/nodejieba');
 var _ = require('underscore');
 
 exports.detail = function(req, res, next) {
@@ -52,14 +53,15 @@ exports.save = function(req, res, next) {
         next(err);
         return;
       }
-
+      
+      billObj['index'] = _.toArray(billObj);
       _bill = _.extend(bill, billObj);
       _bill.save(function(err, bill) {
         if (err) {
           console.log(err);
         }
 
-        res.redirect('/bill/' + bill._id);
+        res.redirect('/admin/bill/list');
       });
     });
   } else {
@@ -82,7 +84,8 @@ exports.save = function(req, res, next) {
       deliveraddr: billObj.deliveraddr,
       weight: billObj.weight,
       freight: billObj.freight,
-      fragile: billObj.fragile
+      fragile: billObj.fragile,
+      index: _.toArray(billObj)
     });
     _bill.save(function(err, bill) {
       if (err) {
@@ -90,7 +93,7 @@ exports.save = function(req, res, next) {
         return;
       }
 
-      res.redirect('/bill/' + bill._id);
+      res.redirect('/admin/bill/list');
     });
   }
 };

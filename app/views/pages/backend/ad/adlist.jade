@@ -20,8 +20,19 @@ block content
               td: img(src="#{ad.imgSrc}", alt="#{ad.title}", style="max-width: 200px;")
               td #{moment(ad.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
               td: a(href="/ad/detail/#{ad._id}", target="_blank") 查看
-              td: a(href="/admin/ad/update/#{ad._id}", target="_blank") 编辑
+              td: a(href="/admin/ad/update/#{ad._id}") 编辑
               td: button.btn.btn-danger.ad-del(data-id="#{ad._id}") 删除
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=ad&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=ad&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=ad&start=#{limit}&limit=#{limit}")
+              span &raquo;
 block script
   script(src="/p/js/func.js")
   script#content-list(type="text/x-handlebars-template").
@@ -31,7 +42,7 @@ block script
           {{title}}
         </td>
         <td>
-          <img(src="{{imgSrc}}", alt="{{title}}", style="max-width: 200px;")>
+          <img src="{{imgSrc}}", alt="{{title}}", style="max-width: 200px;">
         </td>
         <td>{{time}}</td>
         <td>
@@ -47,12 +58,21 @@ block script
         </td>
       </tr>
     {{/each}}  
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{title}} 
+          <div class="pull-right">
+            <a href="/admin/ad/update/{{id}}" class="btn btn-primary">编辑<a>
+            <a href="/ad/detail/{{id}}" class="btn btn-default">查看</a>
+          </div>       
+        </h4>
+      </li>
+    {{/each}}
   script(type="text/javascript").
     var $pagination = $('.pagination');
     var $page = $pagination.find('a');
-    if($pagination.find('li').length === 2) {
-      $pagination.hide();
-    }
+    
     $page.on('click', function(e){
       e.preventDefault();
       var $t = $(this);
@@ -87,4 +107,21 @@ block script
           //OE.alert(data.data.msg);
         }
       })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item._id,
+          title: item.title
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
     });

@@ -15,7 +15,7 @@ $(function() {
       item = 'ad';
     } else if ($(this).attr('class').indexOf('site') !== -1) {
       item = 'site';
-    } else if($(this).attr('class').indexOf('user') !== -1) {
+    } else if ($(this).attr('class').indexOf('user') !== -1) {
       item = 'user';
     }
     var tr = $('.' + item + '-id-' + id);
@@ -36,30 +36,27 @@ $(function() {
       return false;
     }
   });
-
-  // var $page = $('.pagination');
-  //   $page.on('click', 'a', function(e){
-  //     var $t = $(this);
-  //     var $tbody = $('table tbody');
-  //     var href = $t.attr('href');
-  //     e.preventDefault();
-
-  //     $.get(href, function(data){
-  //       if(data.success) {
-  //         var obj = data.data.object;
-  //         $tbody.empty();
-  //         $.each(obj, function(index, item){
-  //           var tr = '';
-  //           tr += '<tr class="news-id-'+item._id+'"><td>'+item.title+'</td><td>'+item.content.substring(0, 20) + '...'+'</td><td><></tr>'
-  //         });
-  //       } else {
-  //         //OE.alert(data.data.msg);
-  //       }
-  //     });
-  //   });
-
-  // function renderList(list) {
-  //   var $page = $('.pagination');
-    
-  // }
+  
 });
+function searchList (cb){
+    var $search = $('#search');
+    $search.on('submit', function(e) {
+      e.preventDefault();
+      var val = $search.find('input').val();
+      if(val === '') {
+        return false;
+      }
+      var word = {
+        word: val,
+        type: location.pathname.split('/')[2]
+      };
+      $.get('/api/query/search', word, function(data) {console.log(data);
+        var obj = data.data.object;
+        $modal = $('#search-modal');
+        $modal.find('.modal-header h4 span').html(word.word);
+        $modalUl = $modal.find('.modal-body ul');
+        $modalUl.empty();
+        cb(obj, $modalUl);
+      });
+    });
+  }

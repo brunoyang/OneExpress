@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var News = mongoose.model('News');
 var _ = require('underscore');
+var nodejieba = require('../segment/nodejieba');
 
 exports.news = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
@@ -51,6 +52,9 @@ exports.save = function(req, res, next) {
         return;
       }
 
+      var wordlist = nodejieba.queryCutSync(news.title);
+      newsObj['index'] = wordlist;
+      console.log(wordlist);
       _news = _.extend(news, newsObj);
       _news.save(function(err, news) {
         if (err) {
@@ -64,7 +68,8 @@ exports.save = function(req, res, next) {
     _news = new News({
       author: newsObj.author,
       title: newsObj.title,
-      content: newsObj.content
+      content: newsObj.content,
+      index: nodejieba.queryCutSync(newsObj.title)
     });
     _news.save(function(err, news) {
       if (err) {
@@ -103,10 +108,10 @@ exports.list = function(req, res, next) {
       next(err);
       return;
     }
-    
+
     var len = newslist.length;
 
-    if(len > limit) {
+    if (len > limit) {
       newslist.length = limit;
     }
 

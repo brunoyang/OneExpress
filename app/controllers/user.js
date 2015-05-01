@@ -116,6 +116,7 @@ exports.save = function(req, res, next) {
         return;
       }
 
+      userObj['index'] = [userObj.name, userObj.email];
       _user = _.extend(user, userObj);
       _user.save(function(err, user) {
         if (err) {
@@ -136,6 +137,7 @@ exports.save = function(req, res, next) {
       if (user) {
         return res.redirect('/signin');
       } else {
+        userObj['index'] = [userObj.name, userObj.eamil];
         user = new User(userObj);
         user.save(function(err, user) {
           if (err) {
@@ -161,7 +163,8 @@ exports.update = function(req, res, next) {
 
       res.render('backend/user/user', {
         title: '用户更新',
-        user: user
+        user: user,
+        role: req.session.user.role
       });
     });
   }
@@ -170,14 +173,13 @@ exports.update = function(req, res, next) {
 exports.list = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
   var limit = req.query.limit ? req.query.limit : 15;
-  User.fetchLimit(start, limit, function(err, users) {
+  User.fetch(function(err, users) {
     if (err) {
       next(err);
       return;
     }
 
     var len = users.length;
-
     if(len > limit) {
       users.length = limit;
     }
@@ -225,6 +227,16 @@ exports.adminRequired = function(req, res, next) {
   var user = req.session.user;
 
   if (user.role <= 10) {
+    return res.redirect('/signin');
+  }
+
+  next();
+};
+
+exports.superAdminRequired = function(req, res, next) {
+  var user = req.session.user;
+
+  if (user.role <= 50) {
     return res.redirect('/signin');
   }
 

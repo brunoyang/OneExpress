@@ -29,6 +29,10 @@ var BillSchema = new mongoose.Schema({
       type: Date,
       default: Date.now()
     }
+  },
+  index: {
+    type: Array,
+    default: []
   }
 });
 
@@ -62,6 +66,14 @@ BillSchema.statics = {
       .sort('-meta.updateAt')
       .skip(start)
       .limit(limit)
+      .exec(cb);
+  },
+  search: function(wordlist, cb) {
+    return this
+      .find({
+        index: {$all: wordlist}
+      })
+      .sort('-meta.updateAt')
       .exec(cb);
   }
 };

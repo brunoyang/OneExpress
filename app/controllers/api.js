@@ -264,3 +264,17 @@ exports.getList = function(req, res, next) {
     return res.json(returnSuccessMsg(result));
   });
 };
+
+exports.search = function(req, res, next) {
+  var words = req.query.word;
+  var type = req.query.type;
+
+  var wordlist = _.unique(words.split(' '));
+  if (_.indexOf(wordlist, '') !== -1) {
+    wordlist.splice(_.indexOf(wordlist, ''), 1);
+  }
+
+  ModelList[type].search(wordlist, function(err, data) {
+    return res.json(returnSuccessMsg(data));
+  });
+};
