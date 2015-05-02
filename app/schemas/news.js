@@ -4,6 +4,10 @@ var NewsSchema = new mongoose.Schema({
   title: String,
   author: String,
   content: String,
+  pv: {
+    type: Number,
+    default: 0
+  },
   meta: {
     createAt: {
       type: Date,

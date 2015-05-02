@@ -8,6 +8,12 @@ exports.detail = function(req, res, next) {
   var second = req.params.second;
   var tag = first + '/' + second;
 
+  Page.update({tag: tag}, {$inc: {pv: 1}}, function(err){
+    if (err) {
+      next(err);
+      return;
+    }
+  });
   Page.findByTag(tag, function(err, page) {
     if (err) {
       next(err);
@@ -19,7 +25,7 @@ exports.detail = function(req, res, next) {
       return;
     }
 
-    res.render('frontend/' + first + '/' + first, {
+    res.render('frontend/page/' + first, {
       title: page.title + ' - 一通快递',
       page: page,
       first: first

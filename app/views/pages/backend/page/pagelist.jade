@@ -12,6 +12,7 @@ block content
             th 标签
             th 预览
             th 最后更新时间
+            th pv
             th 查看
             th 编辑
             th 删除
@@ -22,6 +23,7 @@ block content
               td #{page.tag}
               td #{page.content.substring(0, 20) + '...'}
               td #{moment(page.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
+              td #{page.pv}
               td: a(href="/page/#{page.tag}", target="_blank") 查看
               td: a(href="/admin/page/update/#{page.tag}") 编辑
               td: button.btn.btn-danger.page-del(data-id="#{page._id}") 删除
@@ -46,6 +48,7 @@ block script
         <td>{{tag}}</td>
         <td>{{content}}</td>
         <td>{{time}}</td>
+        <td>{{pv}}</td>
         <td>
           <a href="/page/{{tag}}">查看</a>
         </td>
@@ -100,7 +103,8 @@ block script
               id: item._id,
               title: item.title,
               content: item.content,
-              time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')
+              time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss'),
+              pv: item.pv
             };
             content.list.push(obj);
           });

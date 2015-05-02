@@ -23,6 +23,12 @@ exports.ad = function(req, res, next) {
 exports.detail = function(req, res, next) {
   var id = req.params.id;
 
+  Ad.update({_id: id}, {$inc: {pv: 1}}, function(err){
+    if (err) {
+      next(err);
+      return;
+    }
+  });
   Ad.findById(id, function(err, ad) {
     if (err) {
       next(err);

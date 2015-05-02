@@ -7,6 +7,10 @@ var PageSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
+  pv: {
+    type: Number,
+    default: 0
+  },
   meta: {
     createAt: {
       type: Date,

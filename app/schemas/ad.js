@@ -4,6 +4,10 @@ var AdSchema = new mongoose.Schema({
   imgSrc: String,
   title: String,
   content: String,
+  pv: {
+    type: Number,
+    default: 0
+  },
   meta: {
     createAt: {
       type: Date,
