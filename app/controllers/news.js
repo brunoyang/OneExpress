@@ -21,6 +21,18 @@ exports.news = function(req, res, next) {
 exports.detail = function(req, res, next) {
   var id = req.params.id;
 
+  News.update({
+    _id: id
+  }, {
+    $inc: {
+      pv: 1
+    }
+  }, function(err) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
   News.findById(id, function(err, news) {
     res.render('frontend/news/news_detail', {
       title: news.title + ' - 一通快递',
