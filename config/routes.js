@@ -45,7 +45,7 @@ module.exports = function(app) {
   //ad
   app.get('/ad', Ad.ad);
   app.get('/ad/detail/:id', Ad.detail);
-  app.post('/admin/ad/save', User.signinRequired, User.adminRequired, Ad.save);
+  app.post('/admin/ad/save', User.signinRequired, User.adminRequired, Ad.saveImg, Ad.save);
   app.get('/admin/ad/new', User.signinRequired, User.adminRequired, Ad.new);
   app.get('/admin/ad/update/:id', User.signinRequired, User.adminRequired, Ad.update);
   app.get('/admin/ad/list', User.signinRequired, User.adminRequired, Ad.list);

@@ -17,7 +17,11 @@ block content
           each ad in ads
             tr(class="ad-id-#{ad._id}")
               td #{ad.title}
-              td: img(src="#{ad.imgSrc}", alt="#{ad.title}", style="max-width: 200px;")
+              td
+                if ad.imgSrc.indexOf('http') > -1
+                  img(src="#{ad.imgSrc}", alt="#{ad.title}", style="max-width: 200px;")
+                else 
+                  img(src="/upload/#{ad.imgSrc}", alt="#{ad.title}", style="max-width: 200px;")
               td #{moment(ad.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
               td: a(href="/ad/detail/#{ad._id}", target="_blank") 查看
               td: a(href="/admin/ad/update/#{ad._id}") 编辑
@@ -42,7 +46,7 @@ block script
           {{title}}
         </td>
         <td>
-          <img src="{{imgSrc}}", alt="{{title}}", style="max-width: 200px;">
+          <img src="{{imgSrc}}" alt="{{title}}" style="max-width: 200px;">
         </td>
         <td>{{time}}</td>
         <td>
@@ -91,10 +95,16 @@ block script
           };
 
           $.each(obj, function(index, item) {
+            var src = '';
+            if(item.imgSrc.indexOf('http') === -1) {
+              src = '/upload/' + item.imgSrc;
+            } else {
+              src = item.imgSrc;
+            }
             var obj = {
               id: item._id,
               title: item.title,
-              imgSrc: item.imgSrc,
+              imgSrc: src,
               time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')
             };
             content.list.push(obj);

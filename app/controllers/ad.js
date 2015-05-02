@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Ad = mongoose.model('Ad');
 var _ = require('underscore');
 var nodejieba = require('../segment/nodejieba');
+var fs = require('fs');
+var path = require('path');
 
 exports.ad = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;
@@ -45,10 +47,34 @@ exports.new = function(req, res, next) {
   });
 };
 
+exports.saveImg = function(req, res, next) {
+  var imgData = req.files.uploadImg;
+  var filePath = imgData.path;
+  var originalFilename = imgData.originalFilename;
+  if(originalFilename) {
+    fs.readFile(filePath, function(err, data) {
+      var timestamp = Date.now();
+      var type = imgData.type.split('/')[1];
+      var img = timestamp + '.' + type;
+      var newPath = path.join(__dirname, '../../', '/public/upload/'+img);
+      fs.writeFile(newPath, data, function(err){
+        req.img = img;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
+};
+
 exports.save = function(req, res, next) {
   var id = req.body.ad.id;
   var adObj = req.body.ad;
   var _ad = null;
+
+  if(req.img) {
+    adObj.imgSrc = req.img;
+  }
 
   if (id !== 'undefined') {
     Ad.findById(id, function(err, ad) {
@@ -72,7 +98,7 @@ exports.save = function(req, res, next) {
       imgSrc: adObj.imgSrc,
       title: adObj.title,
       content: adObj.content,
-      index: nodejieba.queryCutSync(adObj.title)
+      index: nodejieba.queryCutSync(adObj.title),
     });
     _ad.save(function(err, ad) {
       if (err) {
