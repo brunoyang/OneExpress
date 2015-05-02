@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var multipart = require('connect-multiparty');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
+app.use(multipart());
 app.use(session({
   secret: 'oneexpress',
   resave: false,
