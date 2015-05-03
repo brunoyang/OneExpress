@@ -1,0 +1,14 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/contraband/save", method="POST")
+        input(type="hidden", name="contraband[id]", value="#{contraband._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputName") 违禁品名字
+          .col-md-10
+            input#inputName.form-control(type="text", name="contraband[name]", value="#{contraband.name}")
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入

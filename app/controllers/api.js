@@ -6,6 +6,7 @@ var Page = require('../models/page');
 var Site = require('../models/site');
 var User = require('../models/user');
 var Track = require('../models/track');
+var Contraband = require('../models/contraband');
 var _ = require('underscore');
 var Q = require('Q');
 var moment = require('moment');
@@ -94,6 +95,17 @@ exports.checkUser = function(req, res, next) {
         return res.json(returnFailMsg('密码不正确'));
       }
     });
+  });
+};
+
+exports.queryContraband = function(req, res, next) {
+  var name = req.query.name;
+
+  Contraband.findByName(name, function(err, result) {
+    if (err) {
+      return res.json(returnFailMsg('Server Error'));
+    }
+    return res.json(returnSuccessMsg(result));
   });
 };
 

@@ -1,0 +1,111 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/contraband/new") 增加违禁品
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th 违禁品名字
+            th 编辑
+            th 删除
+        tbody
+          each contraband in contrabands
+            tr(class="contraband-id-#{contraband._id}")
+              td #{contraband.name}
+              td: a(href="/admin/contraband/update/#{contraband._id}") 编辑
+              td: button.btn.btn-danger.contraband-del(data-id="#{contraband._id}") 删除
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=contraband&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=contraband&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=contraband&start=#{limit}&limit=#{limit}")
+              span &raquo;
+block script
+  script(src="/p/js/func.js")
+  script#content-list(type="text/x-handlebars-template").
+    {{#each list}}
+      <tr class="contraband-id-{{id}}">
+        <td>
+          {{name}}
+        </td>
+        <td>
+          <a href="/admin/contraband/update/{{id}}">编辑</a>
+        </td>
+        <td>
+          <button class="btn btn-danger contraband-del" data-id="{{id}}">
+            删除
+          </button>
+        </td>
+      </tr>
+    {{/each}}  
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{name}} 
+          <div class="pull-right">
+            <a href="/admin/ad/update/{{id}}" class="btn btn-primary">编辑<a>
+          </div>       
+        </h4>
+      </li>
+    {{/each}}
+  script(type="text/javascript").
+    var $pagination = $('.pagination');
+    var $page = $pagination.find('a');
+    
+    $page.on('click', function(e){
+      e.preventDefault();
+      var $t = $(this);
+      var $tbody = $('table tbody');
+      var href = $t.attr('href');
+      
+      $.get(href, function(data){
+        if(data.success) {
+          $tbody.empty();
+
+          var obj = data.data.object;
+          var tpl = $('#content-list').html();
+          var template = Handlebars.compile(tpl); 
+          var content = {
+            list: []
+          };
+
+          $.each(obj, function(index, item) {
+            var obj = {
+              id: item._id,
+              name: item.name
+            };
+            content.list.push(obj);
+          });
+          
+          var html = template(content);
+          
+          $tbody.html(html);
+        } else {
+          //OE.alert(data.data.msg);
+        }
+      })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item._id,
+          name: item.name
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
+    });

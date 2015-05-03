@@ -17,6 +17,7 @@
 
 .main-content .content-container {
   padding: 15px;
+  min-height: 300px;
 }
 
 .main-content .content-container p {
@@ -39,6 +40,47 @@
 .main-content .content-container ol li {
   list-style-position:inside;
   list-style-type: decimal;
+}
+
+#contraband-search .contraband-wrap {
+  position: relative;
+  width: 270px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+#contraband-search input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 3px;
+  padding-right: 25px;
+}
+
+#contraband-search .icon-contraband {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  line-height: 32px;
+}
+#contraband-search .icon-contraband.icon-right{
+  color: #3498DB;
+}
+#contraband-search .icon-contraband.icon-wrong{
+  color: #F0553A;
+}
+
+#contraband-search button {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #2e6da4;
+  font-size: 14px;
+  border-radius: 5px;
+  background: #337ab7;
+  color: #fff;
 }
 
 .enhance-text strong{
