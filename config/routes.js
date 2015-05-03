@@ -8,6 +8,7 @@ var Page = require('../app/controllers/page');
 var Api = require('../app/controllers/api');
 var Ad = require('../app/controllers/ad');
 var Error = require('../app/controllers/error');
+var Contraband = require('../app/controllers/contraband');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -77,11 +78,20 @@ module.exports = function(app) {
 
   app.get('/admin/track/:id', User.signinRequired, User.adminRequired, Track.query);
 
+  //tools-contraband
+  app.get('/tools/contraband', Contraband.detail);
+  app.post('/admin/contraband/save', User.signinRequired, User.adminRequired, Contraband.save);
+  app.get('/admin/contraband/new', User.signinRequired, User.adminRequired, Contraband.new);
+  app.get('/admin/contraband/update/:id', User.signinRequired, User.adminRequired, Contraband.update);
+  app.get('/admin/contraband/list', User.signinRequired, User.adminRequired, Contraband.list);
+  app.delete('/admin/contraband/list', User.signinRequired, User.adminRequired, Contraband.del);
+
   //api
   app.get('/api/check/email', Api.checkEmail);
   app.get('/api/query/sitemap', Api.querySiteDetail);
   app.get('/api/query/bills', Api.queryBills);
   app.get('/api/query/track', Api.queryTrack);
+  app.get('/api/query/contraband', Api.queryContraband);
   app.get('/api/query/search', User.signinRequired, User.adminRequired, Api.search);
   app.get('/api/get/list', User.signinRequired, User.adminRequired, Api.getList);
   app.post('/api/save/track', Api.saveTrack);
