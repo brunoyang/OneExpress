@@ -7,6 +7,8 @@ var Site = require('../models/site');
 var User = require('../models/user');
 var Track = require('../models/track');
 var Contraband = require('../models/contraband');
+var Complaint = require('../models/complaint');
+var nodejieba = require('../segment/nodejieba');
 var _ = require('underscore');
 var Q = require('Q');
 var moment = require('moment');
@@ -21,7 +23,9 @@ var ModelList = {
   'page': Page,
   'site': Site,
   'user': User,
-  'track': Track
+  'track': Track,
+  'contraband': Contraband,
+  'complaint': Complaint
 };
 
 function returnSuccessMsg(obj) {
@@ -227,7 +231,7 @@ exports.saveTrack = function(req, res, next) {
       };
 
       if (!_track.site || !_track.manager || !_track.status) {
-        res.json(returnFailMsg('没有填写必选项'));
+        return res.json(returnFailMsg('没有填写必选项'));
       }
 
       track.trackinfo.set([trackObj.index], _track);
@@ -260,6 +264,25 @@ exports.saveTrack = function(req, res, next) {
       }
     });
   }
+};
+
+exports.saveComplaint = function(req, res, next) {
+  var email = req.body;
+  var index = [email.to, nodejieba.queryCutSync(email.subject), nodejieba.queryCutSync(email.html)];
+  var complaint = new Complaint({
+    to: email.to,
+    subject: email.subject,
+    html: email.html,
+    index: index
+  });
+  complaint.save(function(err, result){
+    if (err) {
+      next(err);
+      return res.json(returnFailMsg('Server Error'));
+    } else {
+      return res.json(returnSuccessMsg());
+    }
+  });
 };
 
 exports.getList = function(req, res, next) {

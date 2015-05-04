@@ -1,0 +1,38 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/complaint/save", method="POST")
+        input(type="hidden", name="complaint[id]", value="#{complaint._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputFrom") 发件人
+          .col-md-10
+            input#inputFrom.form-control(type="text", name="complaint[from]", value="#{complaint.from}", required)
+        .form-group
+          label.col-md-2.control-label(for="inputPass") 密码
+          .col-md-10
+            input#inputPass.form-control(type="password", name="complaint[pass]", required)
+        .form-group
+          label.col-md-2.control-label(for="inputTo") 收件人
+          .col-md-10
+            input#inputTo.form-control(type="text", name="complaint[to]", value="#{complaint.to}", required)
+        .form-group
+          label.col-md-2.control-label(for="inputCc") 抄送
+          .col-md-10
+            input#inputCc.form-control(type="text", name="complaint[cc]", value="#{complaint.cc}")
+        .form-group
+          label.col-md-2.control-label(for="inputBcc") 密送
+          .col-md-10
+            input#inputBcc.form-control(type="text", name="complaint[bcc]", value="#{complaint.bcc}")
+        .form-group
+          label.col-md-2.control-label(for="inputSubject") 主题
+          .col-md-10
+            input#inputSubject.form-control(type="text", name="complaint[subject]", value="#{complaint.subject}", required)
+        .form-group
+          label.col-md-2.control-label(for="inputHTML") 邮件内容
+          .col-md-10
+            textarea#inputHTML.form-control(type="text", name="complaint[html]", rows="10") !{complaint.html}
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 发送

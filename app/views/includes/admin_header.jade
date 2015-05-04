@@ -17,8 +17,14 @@ nav.navbar.navbar-default
           a(href="/admin/page/list") 单页面
         li
           a(href="/admin/site/list") 网点
-        li
-          a(href="/admin/contraband/list") 禁寄品
+        li.dropdown
+          a.dropdown-toggle(href="#", data-toggle="dropdown") 工具
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href="/admin/contraband/list") 禁寄品
+            li
+              a(href="/admin/complaint/list") 投诉建议
         li
           a(href="/admin/user/list") 用户
         li

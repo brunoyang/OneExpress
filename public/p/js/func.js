@@ -34,6 +34,20 @@ $(function() {
     $icon.addClass('h').html('');
   });
 
+  $('#complaint').on('submit', function(e){
+    e.preventDefault();
+    $t = $(this);
+    var email = $t.serializeArray();
+    $.post('/api/save/complaint', email, function(data){
+      if (data.success) {
+        console.log(data);
+        //OE.alert('发送成功');
+      } else {
+        //OE.alert('发送失败，请重新发送')
+      }
+    });
+  });
+
   $('.news-del, .ad-del, .site-del, .user-del, .contraband-del').on('click', function(e) {
     var target = $(e.target),
       id = target.data('id'),

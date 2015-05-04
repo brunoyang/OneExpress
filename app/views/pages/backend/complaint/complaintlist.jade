@@ -1,0 +1,113 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/complaint/new") 写邮件
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th 来自
+            th 内容
+            th 最后回复时间
+            th 回复
+        tbody
+          each complaint in complaintlist
+            tr(class="complaint-id-#{complaint._id}")
+              if !complaint.readed
+                td
+                  a(href="/admin/complaint/reply/#{complaint._id}") #{complaint.to}
+                    span.badge 未读
+              else
+                td
+                  a(href="/admin/complaint/reply/#{complaint._id}") #{complaint.to}
+              td #{complaint.html.substring(0, 30) + '...'}
+              td #{moment(complaint.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
+              td: a(href="/admin/complaint/reply/#{complaint._id}") 回复
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=complaint&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=complaint&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=complaint&start=#{limit}&limit=#{limit}")
+              span &raquo;
+block script
+  script(src="/p/js/func.js")
+  script#content-list(type="text/x-handlebars-template").
+    {{#each list}}
+      <tr class="complaint-id-{{id}}">
+        <td>{{to}}</td>
+        <td>{{html}}</td>
+        <td>{{time}}</td>
+        <td>
+          <a href="/admin/complaint/reply/{{id}}">编辑</a>
+        </td>
+      </tr>
+    {{/each}}
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{to}} 
+          <div class="pull-right">
+            <a href="/admin/complaint/reply/{{id}}" class="btn btn-primary">回复<a>
+          </div>        
+        </h4>  
+        <p>{{html}}</p>
+      </li>
+    {{/each}}
+  script(type="text/javascript").
+    var $page = $('.pagination a')
+    $page.on('click', function(e){
+      e.preventDefault();
+      var $t = $(this);
+      var $tbody = $('table tbody');
+      var href = $t.attr('href');
+      
+      $.get(href, function(data){
+        if(data.success) {
+          $tbody.empty();
+          var obj = data.data.object;
+          var tpl = $('#content-list').html();
+          var template = Handlebars.compile(tpl);
+
+          var content = {
+            list: []
+          };
+          $.each(obj, function(index, item) {
+            var obj = {
+              id: item._id,
+              to: item.to,
+              html: item.html.substring(0, 30) + '...',
+              time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')
+            };
+            content.list.push(obj);
+          });
+          var html = template(content);
+          $tbody.html(html);
+        } else {
+          //OE.alert(data.data.msg);
+        }
+      })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item._id,
+          to: item.to,
+          html: item.html.substring(0, 20) + '...'
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
+    });
