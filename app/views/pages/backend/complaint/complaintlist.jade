@@ -16,7 +16,7 @@ block content
             tr(class="complaint-id-#{complaint._id}")
               if !complaint.readed
                 td
-                  a(href="/admin/complaint/reply/#{complaint._id}") #{complaint.to}
+                  a(href="/admin/complaint/reply/#{complaint._id}", style="padding-right: 8px;") #{complaint.to}
                     span.badge 未读
               else
                 td

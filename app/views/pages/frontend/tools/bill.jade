@@ -1,0 +1,52 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/page.css")
+
+block script
+  script(src="/libs/handlebars/handlebars.min.js")
+  script(src="/p/js/func.js")
+  script#bill-content(type="text/x-handlebars-template").
+    <table class="bill-table">
+      <thead>
+        <tr>
+          <th>发件人</th>
+          <th>发件地址</th>
+          <th>发件人电话</th>
+          <th>收件人</th>
+          <th>收件人地址</th>
+          <th>收件人电话</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{sendname}}</td>
+        <td>
+          {{sendprovince}}/{{sendcity}}/{{sendcounty}}/{{sendaddr}}
+        </td>
+        <td>{{sendcellphone}}</td>
+        <td>{{delivername}}</td>
+        <td>
+          {{deliverprovince}}/{{delivercity}}/{{delivercounty}}/{{deliveraddr}}
+        </td>
+        <td>{{delivercellphone}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+block content
+  section.container.clearfix
+    article.main-content
+      .page-container
+        h1 #{toolsTitle}
+        .content-container
+          form#bill-query(action="get")
+            .row
+              .col-8
+                input(type="text")
+              .col-2
+                button(type="submit") 查询
+          #bill-info
+    aside.sidebar
+      include ../../../components/side_bar
+    
