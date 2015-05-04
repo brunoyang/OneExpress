@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var News = mongoose.model('News');
 var _ = require('underscore');
-var nodejieba = require('../segment/nodejieba');
+var nodejieba = require('../models/nodejieba');
 
 exports.news = function(req, res, next) {
   var start = req.query.start ? req.query.start : 0;

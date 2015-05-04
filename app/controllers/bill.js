@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Bill = require('../models/bill');
 //var Track = require('../models/track');
-var nodejieba = require('../segment/nodejieba');
+var nodejieba = require('../models/nodejieba');
 var _ = require('underscore');
 
 exports.detail = function(req, res, next) {

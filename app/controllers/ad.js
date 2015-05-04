@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Ad = mongoose.model('Ad');
 var _ = require('underscore');
-var nodejieba = require('../segment/nodejieba');
+var nodejieba = require('../models/nodejieba');
 var fs = require('fs');
 var path = require('path');
 

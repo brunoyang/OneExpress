@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Contraband = mongoose.model('Contraband');
 var _ = require('underscore');
-var nodejieba = require('../segment/nodejieba');
+var nodejieba = require('../models/nodejieba');
 
 exports.detail = function(req, res, next) {
   res.render('frontend/tools/contraband', {

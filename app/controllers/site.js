@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Site = require('../models/site');
 var Area = require('../models/area');
 var _ = require('underscore');
-var nodejieba = require('../segment/nodejieba');
+var nodejieba = require('../models/nodejieba');
 
 exports.detail = function(req, res, next) {
   var id = req.params.id;
