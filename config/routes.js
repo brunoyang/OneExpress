@@ -9,6 +9,7 @@ var Api = require('../app/controllers/api');
 var Ad = require('../app/controllers/ad');
 var Error = require('../app/controllers/error');
 var Contraband = require('../app/controllers/contraband');
+var Complaint = require('../app/controllers/complaint');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -86,6 +87,14 @@ module.exports = function(app) {
   app.get('/admin/contraband/list', User.signinRequired, User.adminRequired, Contraband.list);
   app.delete('/admin/contraband/list', User.signinRequired, User.adminRequired, Contraband.del);
 
+  //tools-complaint
+  app.get('/tools/complaint', Complaint.detail);
+  app.post('/admin/complaint/save', User.signinRequired, User.adminRequired, Complaint.save);
+  app.get('/admin/complaint/new', User.signinRequired, User.adminRequired, Complaint.new);
+  app.get('/admin/complaint/reply/:id', User.signinRequired, User.adminRequired, Complaint.reply);
+  app.get('/admin/complaint/list', User.signinRequired, User.adminRequired, Complaint.list);
+  app.delete('/admin/complaint/list', User.signinRequired, User.adminRequired, Complaint.del);
+
   //api
   app.get('/api/check/email', Api.checkEmail);
   app.get('/api/query/sitemap', Api.querySiteDetail);
@@ -95,6 +104,7 @@ module.exports = function(app) {
   app.get('/api/query/search', User.signinRequired, User.adminRequired, Api.search);
   app.get('/api/get/list', User.signinRequired, User.adminRequired, Api.getList);
   app.post('/api/save/track', Api.saveTrack);
+  app.post('/api/save/complaint', Api.saveComplaint);
   app.post('/api/check/user', Api.checkUser);
   app.post('/api/query/site', Api.querySite);
 

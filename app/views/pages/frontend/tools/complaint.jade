@@ -1,0 +1,21 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/page.css")
+
+block script
+  script(src="/p/js/func.js")
+
+block content
+  section.container.clearfix
+    article.main-content
+      .page-container
+        h1 #{toolsTitle}
+        .content-container
+          form#complaint(action="get")
+            input(type="text", placeholder="请填写你的邮箱，方便我们反馈", name="to")
+            input(type="text", placeholder="主题", name="subject")
+            textarea#complaint-content(cols="30", rows="10", name="html")
+            button 发送
+    aside.sidebar
+      include ../../../components/side_bar
