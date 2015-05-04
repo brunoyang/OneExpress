@@ -41,12 +41,25 @@ NewsSchema.statics = {
       .sort('-meta.updateAt')
       .exec(cb);
   },
-  findById: function(id, cb) {
-    return this
-      .findOne({
-        _id: id
-      })
-      .exec(cb);
+  findById: function(id, cb, ignore) {
+    if (arguments.length === 2) {
+      return this
+        .findOne({
+          _id: id
+        })
+        .exec(cb);
+    } else if (arguments.length === 3) {
+      var ignoreList = {};
+      ignore.forEach(function(item, index) {
+        ignoreList[item] = 0;
+      });
+      console.log(ignoreList);
+      return this
+        .findOne({
+          _id: id
+        }, ignoreList)
+        .exec(cb);
+    }
   },
   fetchLimit: function(start, limit, cb) {
     return this
@@ -59,7 +72,9 @@ NewsSchema.statics = {
   search: function(wordlist, cb) {
     return this
       .find({
-        index: {$all: wordlist}
+        index: {
+          $all: wordlist
+        }
       })
       .sort('-meta.updateAt')
       .exec(cb);

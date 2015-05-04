@@ -5,13 +5,10 @@ var nodejieba = require('../segment/nodejieba');
 var _ = require('underscore');
 
 exports.detail = function(req, res, next) {
-  var id = req.params.id;
-
-  Bill.findById(id, function(err, bill) {
-    res.render('frontend/bill/bill_detail', {
-      title: bill.title + ' - 一通快递',
-      bill: bill
-    });
+  res.render('frontend/tools/bill', {
+    title: '快递查询 - 一通快递',
+    toolsTitle: '快递查询',
+    first: 'tools'
   });
 };
 

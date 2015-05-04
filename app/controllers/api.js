@@ -153,7 +153,7 @@ exports.queryBills = function(req, res, next) {
       if ((index + 1) === count) {
         return res.json(returnSuccessMsg(value));
       }
-    });
+    }, ['index']);
   });
 };
 

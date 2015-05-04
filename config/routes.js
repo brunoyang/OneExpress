@@ -63,7 +63,7 @@ module.exports = function(app) {
   app.delete('/admin/site/list', User.signinRequired, User.adminRequired, Site.del);
 
   //bill
-  app.get('/bill/deatail/:id', Bill.detail);
+  app.get('/tools/bill', Bill.detail);
   app.post('/admin/bill/save', User.signinRequired, User.adminRequired, Bill.save);
   app.get('/admin/bill/new', User.signinRequired, User.adminRequired, Bill.new);
   app.get('/admin/bill/update/:id', User.signinRequired, User.adminRequired, Bill.update);
