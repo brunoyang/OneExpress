@@ -93,7 +93,8 @@ exports.save = function(req, res, next) {
       _ad = _.extend(ad, adObj);
       _ad.save(function(err, ad) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
 
         res.redirect('/admin/ad/list');

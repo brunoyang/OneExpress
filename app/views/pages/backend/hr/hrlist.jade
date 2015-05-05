@@ -1,0 +1,120 @@
+extends ../admin_layout
+
+block content
+  .container
+    .row
+      a.btn.btn-success.col-md-1.col-md-offset-11(href="/admin/hr/new") 增加职位
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th 职位
+            th 招聘人数
+            th 最后更新时间
+            th 查看
+            th 编辑
+            th 删除
+        tbody
+          each hr in hrs
+            tr(class="hr-id-#{hr._id}")
+              td #{hr.job}
+              td #{hr.num}
+              td #{moment(hr.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
+              td: a(href="/hr/detail/#{hr._id}", target="_blank") 查看
+              td: a(href="/admin/hr/update/#{hr._id}") 编辑
+              td: button.btn.btn-danger.hr-del(data-id="#{hr._id}") 删除
+      nav.text-center
+        ul.pagination
+          li
+            a(href="/api/get/list?type=hr&start=0&limit=#{limit}")
+              span &laquo;
+          - for(var i = 0, l = Math.ceil(sum/limit); i < l; i++)
+            li
+              a(href="/api/get/list?type=hr&start=#{i*limit}&limit=#{limit}") #{i+1}
+          li
+            a(href="/api/get/list?type=hr&start=#{limit}&limit=#{limit}")
+              span &raquo;
+block script
+  script(src="/p/js/func.js")
+  script#content-list(type="text/x-handlebars-template").
+    {{#each list}}
+      <tr class="hr-id-{{id}}">
+        <td>{{job}}</td>
+        <td>{{num}}</td>
+        <td>{{time}}</td>
+        <td>
+          <a href="/hr/detail/{{id}}">查看</a>
+        </td>
+        <td>
+          <a href="/admin/hr/update/{{id}}">编辑</a>
+        </td>
+        <td>
+          <button class="btn btn-danger hr-del" data-id="{{id}}">
+            删除
+          </button>
+        </td>
+      </tr>
+    {{/each}}
+  script#search-list(type="text/x-handlebars-template").
+    {{#each searchList}}
+      <li class="clearfix">
+        <h4>{{job}} 
+          <div class="pull-right">
+            <a href="/admin/hr/update/{{id}}" class="btn btn-primary">编辑<a>
+            <a href="/hr/detail/{{id}}" class="btn btn-default">查看</a>
+          </div>        
+        </h4>  
+        <p>{{area}}</p>
+      </li>
+    {{/each}}
+  script(type="text/javascript").
+    var $page = $('.pagination a')
+    $page.on('click', function(e){
+      e.preventDefault();
+      var $t = $(this);
+      var $tbody = $('table tbody');
+      var href = $t.attr('href');
+      
+      $.get(href, function(data){
+        if(data.success) {
+          $tbody.empty();
+          var obj = data.data.object;
+          var tpl = $('#content-list').html();
+          var template = Handlebars.compile(tpl);
+
+          var content = {
+            list: []
+          };
+          $.each(obj, function(index, item) {
+            var obj = {
+              id: item._id,
+              job: item.job,
+              num: item.num,
+              time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')
+            };
+            content.list.push(obj);
+          });
+          var html = template(content);
+          $tbody.html(html);
+        } else {
+          //OE.alert(data.data.msg);
+        }
+      })
+    });
+    searchList(function(data, $ul){
+      var tpl = $('#search-list').html();
+      var template = Handlebars.compile(tpl);
+
+      var content = {
+        searchList: []
+      };
+      $.each(data, function(index, item) {
+        var obj = {
+          id: item._id,
+          job: item.job,
+          area: item.area
+        };
+        content.searchList.push(obj);
+      });
+      var html = template(content);
+      $ul.html(html);
+    });

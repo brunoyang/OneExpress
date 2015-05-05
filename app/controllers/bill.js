@@ -55,7 +55,8 @@ exports.save = function(req, res, next) {
       _bill = _.extend(bill, billObj);
       _bill.save(function(err, bill) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
 
         res.redirect('/admin/bill/list');

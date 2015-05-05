@@ -8,8 +8,9 @@ exports.FEIndex = function(req, res, next) {
       return;
     }
     Ad.fetchLimit(0, 5, function(err, ads) {
-      if(err) {
-        console.log(err);
+      if (err) {
+        next(err);
+        return;
       }
       res.render('frontend/index', {
         title: '首页',

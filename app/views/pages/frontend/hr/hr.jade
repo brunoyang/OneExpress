@@ -1,0 +1,18 @@
+extends ../layout
+
+
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/news.css")
+
+block content
+  section.container
+    article.main-content
+      h1 广告列表
+      ul
+        each hr in hrs
+          li 
+            a(href="hr/detail/#{hr._id}") #{hr.job}
+              span #{moment(hr.meta.updateAt).format('YYYY/MM/DD')}
+    aside.sidebar
+      include ../../../components/tools

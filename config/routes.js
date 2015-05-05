@@ -7,6 +7,7 @@ var Bill = require('../app/controllers/bill');
 var Page = require('../app/controllers/page');
 var Api = require('../app/controllers/api');
 var Ad = require('../app/controllers/ad');
+var Hr = require('../app/controllers/hr');
 var Error = require('../app/controllers/error');
 var Contraband = require('../app/controllers/contraband');
 var Complaint = require('../app/controllers/complaint');
@@ -79,6 +80,15 @@ module.exports = function(app) {
   app.delete('/admin/page/list', User.signinRequired, User.adminRequired, Page.del);
 
   app.get('/admin/track/:id', User.signinRequired, User.adminRequired, Track.query);
+
+  //hr
+  app.get('/hr', Hr.hr);
+  app.get('/hr/detail/:id', Hr.detail);
+  app.post('/admin/hr/save', User.signinRequired, User.adminRequired, Hr.save);
+  app.get('/admin/hr/new', User.signinRequired, User.adminRequired, Hr.new);
+  app.get('/admin/hr/update/:id', User.signinRequired, User.adminRequired, Hr.update);
+  app.get('/admin/hr/list', User.signinRequired, User.adminRequired, Hr.list);
+  app.delete('/admin/hr/list', User.signinRequired, User.adminRequired, Hr.del);
 
   //tools-contraband
   app.get('/tools/contraband', Contraband.detail);

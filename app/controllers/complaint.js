@@ -56,7 +56,6 @@ exports.save = function(req, res, next) {
       next(err);
       return;
     }
-    console.log(info);
   });
 
   if (id !== 'undefined') {
@@ -73,7 +72,8 @@ exports.save = function(req, res, next) {
       _complaint = _.extend(complaint, complaintObj);
       _complaint.save(function(err, complaint) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
 
         res.redirect('/admin/complaint/list');

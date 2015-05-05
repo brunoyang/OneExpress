@@ -1,0 +1,88 @@
+extends ../admin_layout
+
+block script
+  script#add(type="text/x-handlebars-template").
+    <div class="col-md-offset-2 col-md-9">
+      <input class="form-control {{type}}-list" type="text" name="hr[{{type}}_{{count}}]">
+    </div>
+    <div class="col-md-1">
+      <a class="btn btn-danger {{type}}-remove">删除</a>
+    </div>
+  script(type="text/javascript").
+    $('.work-add').on('click', function(e){
+      e.preventDefault();
+      var tpl = $('#add').html();
+      var template = Handlebars.compile(tpl);
+      var content = {
+        count: $('.work-list').length,
+        type: 'work' 
+      };
+      var html = template(content);
+      $('.work-list').last().parent().next().after(html);
+    });
+    $('.req-add').on('click', function(e){
+      e.preventDefault();
+      var tpl = $('#add').html();
+      var template = Handlebars.compile(tpl);
+      var content = {
+        count: $('.req-list').length,
+        type: 'req' 
+      };
+      var html = template(content);
+      $('.req-list').last().parent().next().after(html);
+    });
+    $(document).on('click', '.work-remove, .req-remove', function(e){
+      e.preventDefault();
+      $t = $(this);
+      $t.parent().prev().remove();
+      $t.remove();
+    })
+
+block content
+  .container
+    .row
+      form.form-horizontal(action="/admin/hr/save", method="POST")
+        input(type="hidden", name="hr[id]", value="#{hr._id}")
+        .form-group
+          label.col-md-2.control-label(for="inputJob") 职位
+          .col-md-10
+            input#inputJob.form-control(type="text", name="hr[job]", value="#{hr.job}", required)
+        .form-group
+          label.col-md-2.control-label(for="inputNum") 招聘人数
+          .col-md-10
+            input#inputNum.form-control(type="number", name="hr[num]", value="#{hr.num}")
+        .form-group
+          label.col-md-2.control-label(for="inputArea") 工作地点
+          .col-md-10
+            input#inputArea.form-control(type="text", name="hr[area]", value="#{hr.area}", required)
+        .form-group
+          label.col-md-2.control-label(for="inputWork") 岗位职责
+          .col-md-9
+            input#inputWork.form-control.work-list(type="text", name="hr[work_0]", value="#{hr.work[0]}", required)
+          .col-md-1
+            a.btn.btn-success.work-add(href="javascript:;") 增加
+        - hr.work.shift()
+        if hr.work
+          each item, index in hr.work
+            .form-group
+              .col-md-offset-2.col-md-9
+                input.form-control.work-list(type="text", name="hr[work_#{index+1}]", value="#{hr.work[index]}")
+              .col-md-1
+                a.btn.btn-danger.work-remove(href="javascript:;") 删除     
+        .form-group
+          label.col-md-2.control-label(for="inputReq") 工作要求
+          .col-md-9
+            input#inputReq.form-control.req-list(type="text", name="hr[req_0]", value="#{hr.req[0]}", required)
+          .col-md-1
+            a.btn.btn-success.req-add(href="javascript:;",) 增加
+        - hr.req.shift()
+        if hr.req
+          each item, index in hr.req
+            .form-group
+              .col-md-offset-2.col-md-9
+                input.form-control.req-list(type="text", name="hr[req_#{index+1}]", value="#{hr.req[index]}")
+              .col-md-1
+                a.btn.btn-danger.req-remove(href="javascript:;") 删除
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type="submit") 录入

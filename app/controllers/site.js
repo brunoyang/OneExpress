@@ -134,7 +134,8 @@ exports.save = function(req, res, next) {
       });
       _site.save(function(err, site) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
         res.redirect('/admin/site/list');
       });

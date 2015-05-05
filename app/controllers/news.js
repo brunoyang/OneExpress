@@ -66,11 +66,11 @@ exports.save = function(req, res, next) {
 
       var wordlist = nodejieba.queryCutSync(news.title);
       newsObj['index'] = wordlist;
-      console.log(wordlist);
       _news = _.extend(news, newsObj);
       _news.save(function(err, news) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
 
         res.redirect('/admin/news/list');

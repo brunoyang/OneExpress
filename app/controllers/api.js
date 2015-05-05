@@ -1,4 +1,5 @@
 var Ad = require('../models/ad');
+var Hr = require('../models/hr');
 var Area = require('../models/area');
 var Bill = require('../models/bill');
 var News = require('../models/news');
@@ -17,6 +18,7 @@ var rEmail = /([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3
 
 var ModelList = {
   'ad': Ad,
+  'hr': Hr,
   'area': Area,
   'bill': Bill,
   'news': News,

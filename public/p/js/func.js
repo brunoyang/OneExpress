@@ -79,7 +79,7 @@ $(function() {
     }
   });
 
-  $('.news-del, .ad-del, .site-del, .user-del, .contraband-del').on('click', function(e) {
+  $('.news-del, .ad-del, .site-del, .user-del, .contraband-del, .hr-del').on('click', function(e) {
     var target = $(e.target),
       id = target.data('id'),
       item = $(this).attr('class').split(' ')[2].split('-')[0];
