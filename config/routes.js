@@ -10,6 +10,7 @@ var Ad = require('../app/controllers/ad');
 var Error = require('../app/controllers/error');
 var Contraband = require('../app/controllers/contraband');
 var Complaint = require('../app/controllers/complaint');
+var Freight = require('../app/controllers/freight');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -94,6 +95,9 @@ module.exports = function(app) {
   app.get('/admin/complaint/reply/:id', User.signinRequired, User.adminRequired, Complaint.reply);
   app.get('/admin/complaint/list', User.signinRequired, User.adminRequired, Complaint.list);
   app.delete('/admin/complaint/list', User.signinRequired, User.adminRequired, Complaint.del);
+
+  //tools-freight
+  app.get('/tools/freight', Freight.detail);
 
   //api
   app.get('/api/check/email', Api.checkEmail);
