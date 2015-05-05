@@ -65,17 +65,23 @@ exports.save = function(req, res, next) {
       _page = _.extend(page, pageObj);
       _page.save(function(err, page) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
 
         res.redirect('/admin/page/list');
       });
     });
   } else {
+    var wordlist =[];
+      _.each(pageObj, function(value) {
+        wordlist.push(nodejieba.queryCutSync(value));
+      });
     _page = new Page({
       tag: pageObj.tag,
       title: pageObj.title,
-      content: pageObj.content
+      content: pageObj.content,
+      index: wordlist
     });
     _page.save(function(err, page) {
       if (err) {
@@ -113,7 +119,8 @@ exports.list = function(req, res, next) {
   var limit = req.query.limit ? req.query.limit : 15;
   Page.fetch(function(err, pages) {
     if (err) {
-      console.log(err);
+      next(err);
+      return;
     }
 
     var len = pages.length;

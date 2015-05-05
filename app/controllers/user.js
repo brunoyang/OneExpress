@@ -28,7 +28,8 @@ exports.signup = function(req, res, next) {
       user = new User(_user);
       user.save(function(err, user) {
         if (err) {
-          console.log(err);
+          next(err);
+          return;
         }
         res.redirect('/');
       });
@@ -45,7 +46,8 @@ exports.signup = function(req, res, next) {
           user = new User(_user);
           user.save(function(err, user) {
             if (err) {
-              console.log(err);
+              next(err);
+              return;
             }
             res.redirect('/');
           });
@@ -63,7 +65,8 @@ exports.signin = function(req, res, next) {
 
   User.findByEmail(email, function(err, user) {
     if (err) {
-      console.log(err);
+      next(err);
+      return;
     }
 
     if (!user) {

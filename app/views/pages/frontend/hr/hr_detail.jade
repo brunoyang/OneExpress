@@ -1,0 +1,38 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/news.css")
+
+block script
+  script(src="/p/js/func.js")
+
+block content
+  section.container
+    header.news-header
+      h2 #{hr.job}
+      .news-info
+        time.news-time #{moment(hr.meta.updateAt).format('MM/DD/YYYY')}
+    aside.sidebar
+      include ../../../components/tools
+    article.main-content
+      .news-content 
+        p
+          strong 招聘人数：#{hr.area}
+        p
+          strong 招聘人数：#{hr.num}
+        p
+          strong 岗位职责
+        ol
+          each item in hr.work
+            li #{item}
+        p
+          strong 工作要求
+        ol
+          each item in hr.req
+            li #{item}
+      .news-func 
+        span.back-button.icon-back 
+          a(href="/hr/") &#xea44; 返回招聘页面
+        span.go-top.icon-top 
+          a(href="javascript:;") &#xea41; 去顶部
