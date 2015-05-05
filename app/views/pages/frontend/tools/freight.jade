@@ -1,0 +1,43 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/page.css")
+
+block script
+  script(src="http://api.map.baidu.com/api?v=2.0&ak=WUMElrzOguA5sN9Pl1sFDMfU")
+  script(src="/libs/baidumap/DistanceTool.js")
+  script(src="/p/js/func.js")
+  script(type="text/javascript").
+    var map = new BMap.Map("allmap"); 
+    map.centerAndZoom('中国', 5);
+    map.enableScrollWheelZoom(true);
+    var myDis = new BMapLib.DistanceTool(map);
+    myDis.open();
+    myDis.addEventListener("drawend", function(e) {
+      var distance = parseInt(e.distance/1000);
+      var freight = null;
+      if (distance < 100) {
+        freight = 8;
+      } else if (distance < 1000) {
+        freight = parseInt(distance/100*3.5);
+      } else if (distance > 1000 && distance < 2000){
+        freight = parseInt(distance/1000*12);
+      } else {
+        freight = 25
+      }
+      $('#freight').html('您的运费是: '+freight+'元').append($('<button onClick="myDis.open()" style="margin-left:10px;cursor: pointer;" class="restart">重新计算</button>'));
+
+    });
+    $(document).on('click', '.restart', function(){
+      $('span[title="清除本次测距"]').click();
+    })
+block content
+  section.container.clearfix
+    article.main-content
+      .page-container
+        h1 #{toolsTitle}
+        .content-container
+          p#freight 请在下图选择发件地和收件地
+          #allmap(style="height: 700px")
+    aside.sidebar
+      include ../../../components/side_bar
