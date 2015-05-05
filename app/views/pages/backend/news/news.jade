@@ -1,5 +1,8 @@
 extends ../admin_layout
 
+block script
+  script(src="/p/js/components.js")
+
 block content
   .container
     .row
@@ -16,7 +19,8 @@ block content
         .form-group
           label.col-md-2.control-label(for="inputContent") 新闻内容
           .col-md-10
-            textarea#inputContetn.form-control(type="text", name="news[content]", rows="10") !{news.content}
+            include ../../../components/textarea
+            textarea#inputContent.form-control(type="text", name="news[content]", rows="10") !{news.content}
         .form-group
           .col-md-offset-2.col-md-10
             button.btn.btn-default(type="submit") 录入
