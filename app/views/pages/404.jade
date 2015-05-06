@@ -1,4 +1,14 @@
 extends ./frontend/layout
 
+block css
+  style.
+    body{
+      background: #fff;
+    }
+    .page-404{
+      display: block;
+      margin: 5px auto;
+    }
+
 block content
-  p 404
+  img.page-404(src="/images/404.jpg", alt="")

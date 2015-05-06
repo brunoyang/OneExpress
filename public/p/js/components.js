@@ -1,6 +1,6 @@
 $(function() {
   //三级联动选择省市区
-  $('#oe-city').on('click', function() {
+  $('#oe-city').on('click', function(e) {
     var $pro = $('#oe-province'),
       $input = $('#oe-city'),
       $sPro = $('#s-province'),
@@ -11,6 +11,8 @@ $(function() {
       siteInfo = {},
       i = 0,
       rNum = /^[1-9][0-9]*$/;
+    $pro.show();
+    stopProp(e);
 
     $(document).on('click', function(e) {
       e.preventDefault();
@@ -21,25 +23,21 @@ $(function() {
       stopProp(e);
     });
 
-    $input.on('click', function(e) {
-      $pro.show();
-      stopProp(e);
-    }).one('click', function(event) {
-      $.post('/api/query/site', function(data) {
-        var data = data.data.object;
-        $.each(data, function(index, site) {
-          siteInfo[site.province] = {};
-        });
-        for (var i in siteInfo) {
-          for (var j = 0; j < data.length; j++) {
-            if (i === data[j].province) {
-              siteInfo[i][data[j].city] = siteInfo[i][data[j].city] ? siteInfo[i][data[j].city] : [];
-              siteInfo[i][data[j].city].push(data[j].county);
-            }
+    $.post('/api/query/site', function(data) {
+      var data = data.data.object;
+      $.each(data, function(index, site) {
+        siteInfo[site.province] = {};
+      });
+      for (var i in siteInfo) {
+        for (var j = 0; j < data.length; j++) {
+          if (i === data[j].province) {
+            siteInfo[i][data[j].city] = siteInfo[i][data[j].city] ? siteInfo[i][data[j].city] : [];
+            siteInfo[i][data[j].city].push(data[j].county);
           }
         }
-        handlerSite($sPro, siteInfo, 'province');
-      });
+      }
+      $sPro.find('option').not(':first').remove();
+      handlerSite($sPro, siteInfo, 'province');
     });
 
     $sPro.on("change", function() {
