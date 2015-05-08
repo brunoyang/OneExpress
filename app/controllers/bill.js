@@ -34,7 +34,7 @@ exports.new = function(req, res, next) {
       deliveraddr: '',
       weight: '',
       freight: '',
-      fragile: ''
+      fragile: false
     }
   });
 };
