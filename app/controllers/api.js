@@ -11,7 +11,6 @@ var Contraband = require('../models/contraband');
 var Complaint = require('../models/complaint');
 var nodejieba = require('../models/nodejieba');
 var _ = require('underscore');
-var Q = require('Q');
 var moment = require('moment');
 var rUsername = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
 var rEmail = /([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
@@ -258,11 +257,15 @@ exports.saveTrack = function(req, res, next) {
       if (track === null) {
         _track.save(function(err, track) {
           track.trackinfo.unshift(_trackinfo);
-          track.save();
+          track.save(function(){
+            return res.json(returnSuccessMsg());
+          });
         });
       } else {
         track.trackinfo.unshift(_trackinfo);
-        track.save();
+        track.save(function(){
+          return res.json(returnSuccessMsg());
+        });
       }
     });
   }
@@ -278,6 +281,40 @@ exports.saveComplaint = function(req, res, next) {
     index: index
   });
   complaint.save(function(err, result){
+    if (err) {
+      next(err);
+      return res.json(returnFailMsg('Server Error'));
+    } else {
+      return res.json(returnSuccessMsg());
+    }
+  });
+};
+
+exports.saveBill = function(req, res, next) {
+  var billObj = req.body.bill;
+  var _bill = new Bill({
+    sendname: billObj.sendname,
+    sendareacode: billObj.sendareacode,
+    sendtelephone: billObj.sendtelephone,
+    sendcellphone: billObj.sendcellphone,
+    sendprovince: billObj.sendprovince,
+    sendcity: billObj.sendcity,
+    sendcounty: billObj.sendcounty || '',
+    sendaddr: billObj.sendaddr,
+    delivername: billObj.delivername,
+    deliverareacode: billObj.deliverareacode,
+    delivertelephone: billObj.delivertelephone,
+    delivercellphone: billObj.delivercellphone,
+    deliverprovince: billObj.deliverprovince,
+    delivercity: billObj.delivercity,
+    delivercounty: billObj.delivercounty || '',
+    deliveraddr: billObj.deliveraddr,
+    weight: billObj.weight,
+    freight: billObj.freight,
+    fragile: billObj.fragile,
+    index: _.toArray(billObj)
+  });
+  _bill.save(function(err, bill) {
     if (err) {
       next(err);
       return res.json(returnFailMsg('Server Error'));

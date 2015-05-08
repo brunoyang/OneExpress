@@ -119,6 +119,7 @@ module.exports = function(app) {
   app.get('/api/get/list', User.signinRequired, User.adminRequired, Api.getList);
   app.post('/api/save/track', Api.saveTrack);
   app.post('/api/save/complaint', Api.saveComplaint);
+  app.post('/api/save/bill', Api.saveBill);
   app.post('/api/check/user', Api.checkUser);
   app.post('/api/query/site', Api.querySite);
 
