@@ -7,10 +7,8 @@ block content
       table.table.table-hover.table-striped
         thead
           tr
-            th 省
-            th 市
-            th 区
-            th 详细地址
+            th 地址
+            th 网点名字
             th 固定电话
             th 负责人
             th 查看
@@ -19,10 +17,8 @@ block content
         tbody
           each site in sites
             tr(class="site-id-#{site._id}")
-              td #{site.province}
-              td #{site.city}
-              td #{site.county}
-              td #{site.address}
+              td #{site.province} - #{site.city} - #{site.county} - #{site.address}
+              td #{site.name}
               td +#{site.areacode} #{site.telephone}
               td #{site.manager}
               td: a(href="/site/detail/#{site._id}", target="_blank") 查看
@@ -44,10 +40,8 @@ block script
   script#content-list(type="text/x-handlebars-template").
     {{#each list}}
       <tr class="site-id-{{id}}">
-        <td>{{province}}</td>
-        <td>{{city}}</td>
-        <td>{{county}}</td>
-        <td>{{address}}</td>
+        <td>{{province}} - {{city}} - {{county}} - {{address}}</td>
+        <td>{{name}}</td>
         <td>+{{areacode}} {{telephone}}</td>
         <td>{{manager}}</td>
         <td>
@@ -102,12 +96,13 @@ block script
           $.each(obj, function(index, item) {
             var obj = {
               id: item._id,
-              province: item.province,
               city: item.city,
+              name: item.name,
               county: item.county,
               manager: item.manager,
               address: item.address,
               areacode: item.areacode,
+              province: item.province,
               telephone: item.telephone,
             };
             content.list.push(obj);
@@ -130,7 +125,7 @@ block script
       };
       $.each(data, function(index, item) {
         var obj = {
-          id: item:_id,
+          id: item._id,
           name: item.name,
           province: item.province,
           city: item.city,

@@ -16,11 +16,10 @@ $(function() {
       }, function(data) {
         if (data.success) {
           var isCon = data.data.object;
-          console.log(isCon);
           if (isCon) {
-            $icon.removeClass('h').html('&#xea10;').css('color', '#3498DB');
-          } else {
             $icon.removeClass('h').addClass('icon-wrong').html('&#xea0d;').css('color', '#F0553A');
+          } else {
+            $icon.removeClass('h').html('&#xea10;').css('color', '#3498DB');
           }
         } else {
           //OE.alert(data.data.msg);
@@ -40,7 +39,6 @@ $(function() {
     var email = $t.serializeArray();
     $.post('/api/save/complaint', email, function(data){
       if (data.success) {
-        console.log(data);
         //OE.alert('发送成功');
       } else {
         //OE.alert('发送失败，请重新发送')
@@ -116,7 +114,6 @@ function searchList(cb) {
       type: location.pathname.split('/')[2]
     };
     $.get('/api/query/search', word, function(data) {
-      console.log(data);
       var obj = data.data.object;
       $modal = $('#search-modal');
       $modal.find('.modal-header h4 span').html(word.word);

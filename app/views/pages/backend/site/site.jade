@@ -6,16 +6,18 @@ block content
       form.form-horizontal(action="/admin/site/save", method="POST")
         input(type="hidden", name="site[id]", value="#{site._id}")
         .form-group
+          label.col-md-2.control-label(for="inputName") 网点简称
+          .col-md-10
+            input#inputName.form-control(type="text", name="site[name]", value="#{site.name}", required, placeholder="如：上海三部，南京一部")
+        .form-group
           label.col-md-2.control-label(for="inputProvince") 省份
-          .col-md-10
+          .col-md-2
             input#inputProvince.form-control(type="text", name="site[province]", value="#{site.province}", required)
-        .form-group
-          label.col-md-2.control-label(for="inputCity") 市
-          .col-md-10
+          label.col-md-1.control-label(for="inputCity") 市
+          .col-md-3
             input#inputCity.form-control(type="text", name="site[city]", value="#{site.city}", required)
-        .form-group
-          label.col-md-2.control-label(for="inputCounty") 县
-          .col-md-10
+          label.col-md-1.control-label(for="inputCounty") 县
+          .col-md-3
             input#inputCounty.form-control(type="text", name="site[county]", value="#{site.county}", required)
         .form-group
           label.col-md-2.control-label(for="inputAddress") 详细地址

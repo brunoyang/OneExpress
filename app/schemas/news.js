@@ -53,7 +53,6 @@ NewsSchema.statics = {
       ignore.forEach(function(item, index) {
         ignoreList[item] = 0;
       });
-      console.log(ignoreList);
       return this
         .findOne({
           _id: id

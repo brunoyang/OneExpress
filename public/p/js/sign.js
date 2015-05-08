@@ -13,7 +13,6 @@ $signinDialog
   .on('blur', function() {
     var $t = $(this);
     var $span = $t.next('.icon-check');
-    console.log($span);
     var emailVal = $t.val();
     if (emailVal === '') {
       $span.addClass('h');

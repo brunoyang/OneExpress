@@ -1,5 +1,6 @@
 $(function() {
   //三级联动选择省市区
+  var $AREADATA = null;
   $('#oe-city').on('click', function(e) {
     var $pro = $('#oe-province'),
       $input = $('#oe-city'),
@@ -12,10 +13,8 @@ $(function() {
       i = 0,
       rNum = /^[1-9][0-9]*$/;
     $pro.show();
-    stopProp(e);
 
     $(document).on('click', function(e) {
-      e.preventDefault();
       //$pro.hide();
     });
 
@@ -23,11 +22,21 @@ $(function() {
       stopProp(e);
     });
 
-    $.post('/api/query/site', function(data) {
-      var data = data.data.object;
+    if($AREADATA) {
+      handleData($AREADATA);
+    } else {
+      $.post('/api/query/site', function(result){
+        var data = result.data.object;
+        $AREADATA = data;
+        handleData(data);
+      });
+    }
+
+    function handleData(data) {
       $.each(data, function(index, site) {
         siteInfo[site.province] = {};
       });
+
       for (var i in siteInfo) {
         for (var j = 0; j < data.length; j++) {
           if (i === data[j].province) {
@@ -38,7 +47,7 @@ $(function() {
       }
       $sPro.find('option').not(':first').remove();
       handlerSite($sPro, siteInfo, 'province');
-    });
+    }
 
     $sPro.on("change", function() {
       var val = $sPro.val();

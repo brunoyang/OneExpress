@@ -48,7 +48,7 @@ block script
         'track[status]': $('#inputStatus').val()
       };
       $.post('/api/save/track', track, function(data){
-        console.log(data);
+        // OE.alert('保存成功')
       });
       var $td = $t.parents('tr').find('td');
       $('.modify').attr('disabled', false);
@@ -72,7 +72,7 @@ block script
       };
 
       $.post('/api/save/track', track, function(data){
-        console.log(data);
+        // OE.alert('保存成功')
       });
       
       var $td = $t.parents('tr').find('td');
