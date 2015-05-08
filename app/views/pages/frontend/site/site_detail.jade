@@ -1,18 +1,19 @@
 extends ../layout
 
-
-
 block script
-  - var city = ''
+  - var city = '', level = 15;
   if sites
     - city = sites[0].city || sites[0].province
   else if site
     - city = site.city
+  else if china
+    - city = china;
+    - level = 5;
   script(src="http://api.map.baidu.com/api?v=2.0&ak=WUMElrzOguA5sN9Pl1sFDMfU")
   script(src="/p/js/components.js")
   script(type="text/javascript").
     var map = new BMap.Map("allmap"); 
-    map.centerAndZoom('#{city}', 15);
+    map.centerAndZoom('#{city}', #{level});
     map.enableScrollWheelZoom(true);
     $('#oeSubmit').on('click', function(e){
       e.preventDefault();

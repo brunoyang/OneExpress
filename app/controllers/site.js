@@ -22,23 +22,32 @@ exports.detail = function(req, res, next) {
 
 exports.site = function(req, res, next) {
   var site = req.query;
-  var area = site.area;
-  var location = area.split('-');
-  var lastLen = location.length - 1;
-  var sites = ['province', 'city', 'county'];
+  console.log(site);
+  if(!_.isEmpty(site)){
+    var area = site.area;
+    var location = area.split('-');
+    var lastLen = location.length - 1;
+    var sites = ['province', 'city', 'county'];
 
-  Site.findByAreas(sites[lastLen], location[lastLen], function(err, sites) {
-    if (err) {
-      next(err);
-      return;
-    }
+    Site.findByAreas(sites[lastLen], location[lastLen], function(err, sites) {
+      if (err) {
+        next(err);
+        return;
+      }
 
+      res.render('frontend/site/site_detail', {
+        title: '网点信息',
+        sites: sites,
+        location: area
+      });
+    });
+  } else {
     res.render('frontend/site/site_detail', {
       title: '网点信息',
-      sites: sites,
-      location: area
+      china: '中国',
+      location: ''
     });
-  });
+  }
 };
 
 exports.new = function(req, res, next) {
