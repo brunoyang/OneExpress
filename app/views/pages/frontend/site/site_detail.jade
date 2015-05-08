@@ -24,7 +24,6 @@ block script
       }
       $.get('/api/query/sitemap', site, function(data){
         if(data.success) {
-          console.log(data)
           var data = data.data;
           map.centerAndZoom(data.object[0].city, 15);
           map.enableScrollWheelZoom(true);
@@ -32,7 +31,7 @@ block script
           $tbody.empty();
           var node = '';
           $.each(data.object, function(index, site){
-            node += '<tr><td>' + site.province + '/' + site.city + '/' + site.county + '</td><td>' + site.address + '</td><td>' + site.manager + '</td><td>+' + site.areacode + ' ' + site.telephone + '</td></tr>';
+            node += '<tr><td>' + site.province + '/' + site.city + '/' + site.county + '</td><td>' + site.address + '</td><td>' + site.name + '</td><td>' + site.manager + '</td><td>+' + site.areacode + ' ' + site.telephone + '</td></tr>';
           });
           $tbody.html(node);
         }
@@ -60,10 +59,6 @@ block content
                   option(value="") 地级市
                 select#s-county
                   option(value="") 市、县级市
-            label(for="oe-type") 类型：
-            select#oe-type(name="site[type]")
-              option(value="oeName") 网点名称
-              option(value="oePhone") 派送电话
             input#oeSubmit(type="submit" value="搜一下")
       section.site-content
         table
@@ -71,6 +66,7 @@ block content
             tr
               th 省份城市
               th 详细地址
+              th 名称
               th 网点经理
               th 联系电话
           tbody
@@ -79,12 +75,14 @@ block content
                 tr
                   td #{location.replace(/-/g, '/')}
                   td #{site.address}
+                  td #{site.name}
                   td #{site.manager}
                   td +#{site.areacode} #{site.telephone}
             else if site
               tr
                 td #{location.replace(/-/g, '/')}
                 td #{site.address}
+                td #{site.name}
                 td #{site.manager}
                 td +#{site.areacode} #{site.telephone}
         #allmap

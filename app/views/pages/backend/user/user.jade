@@ -5,7 +5,6 @@ block script
     var $select = $('#inputRole');
     if($select) {
       var role = parseInt($select.attr('value'));
-      console.log(role)
       if(!role) {
         $select.find('option').eq(0).attr('selected', true);
       } else if(role === 21) {

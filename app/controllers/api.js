@@ -130,7 +130,7 @@ exports.querySiteDetail = function(req, res, next) {
   var city = site.city;
   var county = site.county;
 
-  Site.findByAreas(county, function(err, sites) {
+  Site.findByAreas('county', county, function(err, sites) {
     if (err) {
       return res.json(returnFailMsg('Server Error'));
     }

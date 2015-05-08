@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var SiteSchema = new mongoose.Schema({
+  name: String,
   province: String,
   city: String,
   county: String,
