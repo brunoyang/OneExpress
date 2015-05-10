@@ -22,7 +22,7 @@ exports.detail = function(req, res, next) {
 
 exports.site = function(req, res, next) {
   var site = req.query;
-  console.log(site);
+
   if(!_.isEmpty(site)){
     var area = site.area;
     var location = area.split('-');
@@ -54,6 +54,7 @@ exports.new = function(req, res, next) {
   res.render('backend/site/site', {
     title: '后台快递网点编辑',
     site: {
+      name: '',
       province: '',
       city: '',
       county: '',
@@ -130,6 +131,7 @@ exports.save = function(req, res, next) {
         _area.save();
       }
       _site = new Site({
+        name: siteObj.name,
         province: siteObj.province,
         city: siteObj.city,
         county: siteObj.county,
