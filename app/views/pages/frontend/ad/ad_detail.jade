@@ -17,7 +17,9 @@ block content
     aside.sidebar
       include ../../../components/tools
     article.main-content
-      .news-content !{ad.content}
+      .news-content 
+        img(src="#{ad.imgSrc}", alt="#{ad.title}")
+        !{ad.content}
       .news-func 
         span.back-button.icon-back 
           a(href="/ad/") &#xea44; 返回广告聚合页
