@@ -184,9 +184,15 @@ exports.queryTrack = function(req, res, next) {
       if (err) {
         return res.json(returnFailMsg('Server Error'));
       }
-      _.each(trackObj.trackinfo, function(track, index) {
-        trackDetail.trackinfo.unshift(formatTrack(track));
-      });
+
+      if (trackObj !== null) {
+        _.each(trackObj.trackinfo, function(track, index) {
+          trackDetail.trackinfo.unshift(formatTrack(track));
+        });
+      } else {
+        trackDetail.trackinfo.unshift(formatTrack(trackObj));
+      }
+
       trackDetail.billnumber = billnumber;
       tracklist.push(trackDetail);
       if ((billindex + 1) === count) {
@@ -197,16 +203,20 @@ exports.queryTrack = function(req, res, next) {
 
   function formatTrack(track) {
     var msg = '';
-    var detail = {
-      time: moment(track.time).format('YYYY-MM-DD hh:mm:ss'),
-      status: statusMap[track.status],
-      manager: track.manager,
-      site: track.site
-    };
-    if (detail.status === 4) {
-      msg = detail.time + ' ' + detail.site + ' ' + detail.status + ' 签收人：' + detail.manager;
+    if (track !== null) {
+      var detail = {
+        time: moment(track.time).format('YYYY-MM-DD hh:mm:ss'),
+        status: statusMap[track.status],
+        manager: track.manager,
+        site: track.site
+      };
+      if (detail.status === 4) {
+        msg = detail.time + ' ' + detail.site + ' ' + detail.status + ' 签收人：' + detail.manager;
+      } else {
+        msg = detail.time + ' ' + detail.site + ' ' + detail.status + ' 经手人：' + detail.manager;
+      }
     } else {
-      msg = detail.time + ' ' + detail.site + ' ' + detail.status + ' 经手人：' + detail.manager;
+      msg = '目前暂时没有快递信息';
     }
     return msg;
   }
@@ -257,13 +267,13 @@ exports.saveTrack = function(req, res, next) {
       if (track === null) {
         _track.save(function(err, track) {
           track.trackinfo.unshift(_trackinfo);
-          track.save(function(){
+          track.save(function() {
             return res.json(returnSuccessMsg());
           });
         });
       } else {
         track.trackinfo.unshift(_trackinfo);
-        track.save(function(){
+        track.save(function() {
           return res.json(returnSuccessMsg());
         });
       }
@@ -280,7 +290,7 @@ exports.saveComplaint = function(req, res, next) {
     html: email.html,
     index: index
   });
-  complaint.save(function(err, result){
+  complaint.save(function(err, result) {
     if (err) {
       next(err);
       return res.json(returnFailMsg('Server Error'));
