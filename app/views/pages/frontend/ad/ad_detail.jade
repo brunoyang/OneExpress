@@ -18,7 +18,10 @@ block content
       include ../../../components/tools
     article.main-content
       .news-content 
-        img(src="#{ad.imgSrc}", alt="#{ad.title}")
+        if ad.imgSrc.indexOf('http') > -1
+          img(src="#{ad.imgSrc}", alt="#{ad.title}")
+        else 
+          img(src="/upload/#{ad.imgSrc}", alt="#{ad.title}")
         !{ad.content}
       .news-func 
         span.back-button.icon-back 
