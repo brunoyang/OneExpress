@@ -102,7 +102,7 @@ exports.save = function(req, res, next) {
           next(err);
           return;
         }
-        siteObj['index'] = _.toArray(siteObj);
+        siteObj.index = _.toArray(siteObj);
         _site = _.extend(site, siteObj);
         _site.save(function(err, site) {
           if (err) {

@@ -19,7 +19,7 @@ exports.signup = function(req, res, next) {
   var isFirstOne = false;
 
   User.fetch(function(err, user) {
-    if (user == false) {
+    if (!_.isEmpty(user)) {
       isFirstOne = true;
     }
 
@@ -119,7 +119,7 @@ exports.save = function(req, res, next) {
         return;
       }
 
-      userObj['index'] = [userObj.name, userObj.email];
+      userObj.index = [userObj.name, userObj.email];
       _user = _.extend(user, userObj);
       _user.save(function(err, user) {
         if (err) {
@@ -140,7 +140,7 @@ exports.save = function(req, res, next) {
       if (user) {
         return res.redirect('/signin');
       } else {
-        userObj['index'] = [userObj.name, userObj.eamil];
+        userObj.index = [userObj.name, userObj.eamil];
         user = new User(userObj);
         user.save(function(err, user) {
           if (err) {

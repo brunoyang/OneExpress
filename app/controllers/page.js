@@ -49,6 +49,7 @@ exports.save = function(req, res, next) {
   var id = pageObj.id;
   var tag = pageObj.tag;
   var _page = null;
+  var wordlist =[];
 
   if (id !== 'undefined') {
     Page.findById(id, function(err, page) {
@@ -57,11 +58,10 @@ exports.save = function(req, res, next) {
         return;
       }
 
-      var wordlist =[];
       _.each(pageObj, function(value) {
         wordlist.push(nodejieba.queryCutSync(value));
       });
-      pageObj['index'] = _.flatten(wordlist);
+      pageObj.index = _.flatten(wordlist);
       _page = _.extend(page, pageObj);
       _page.save(function(err, page) {
         if (err) {
@@ -73,10 +73,9 @@ exports.save = function(req, res, next) {
       });
     });
   } else {
-    var wordlist =[];
-      _.each(pageObj, function(value) {
-        wordlist.push(nodejieba.queryCutSync(value));
-      });
+    _.each(pageObj, function(value) {
+      wordlist.push(nodejieba.queryCutSync(value));
+    });
     _page = new Page({
       tag: pageObj.tag,
       title: pageObj.title,

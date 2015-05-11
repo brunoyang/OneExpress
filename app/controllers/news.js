@@ -65,7 +65,7 @@ exports.save = function(req, res, next) {
       }
 
       var wordlist = nodejieba.queryCutSync(news.title);
-      newsObj['index'] = wordlist;
+      newsObj.index = wordlist;
       _news = _.extend(news, newsObj);
       _news.save(function(err, news) {
         if (err) {

@@ -46,6 +46,8 @@ exports.save = function(req, res, next) {
   var hrObj = req.body.hr;
   var id = hrObj.id;
   var _hr = null;
+  var _req = [];
+  var work = [];
 
   if (id !== 'undefined') {
     Hr.findById(id, function(err, hr) {
@@ -54,9 +56,7 @@ exports.save = function(req, res, next) {
         return;
       }
       
-      hrObj['index'] = hr.job;
-      var req =[];
-      var work = [];
+      hrObj.index = hr.job;
       _hr = _.extend(hr, hrObj);
       _.each(hrObj, function(item, index) {
         if (/^work_/.test(index)) {
@@ -66,8 +66,8 @@ exports.save = function(req, res, next) {
           req.push(item);
         }
       });
-      _hr['work'] = work;
-      _hr['req'] = req;
+      _hr.work = work;
+      _hr.req = req;
 
       _hr.save(function(err, hr) {
         if (err) {
@@ -79,9 +79,6 @@ exports.save = function(req, res, next) {
       });
     });
   } else {
-    var req = [];
-    var work = [];
-
     _.each(hrObj, function(item, index) {
       if (/^work_/.test(index)) {
         work.push(item);
