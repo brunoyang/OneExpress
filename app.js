@@ -14,8 +14,30 @@ var dbUrl = 'mongodb://localhost/oneexpress';
 mongoose.connect(dbUrl);
 
 var fs = require('fs');
-var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
-var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
+var accessLog = fs.createWriteStream('access.log', {
+  flags: 'a'
+});
+var errorLog = fs.createWriteStream('error.log', {
+  flags: 'a'
+});
+
+var models_path = __dirname + '/app/models';
+var walk = function(path) {
+  fs.readdirSync(path)
+    .forEach(function(file) {
+      var newPath = path + '/' + file;
+      var stat = fs.statSync(newPath);
+
+      if (stat.isFile()) {
+        if (/(.*)\.(js|coffee)/.test(stat)) {
+          require(newPath);
+        }
+      } else if (stat.isDirectory()) {
+        walk(newPath);
+      }
+    });
+};
+walk(models_path);
 
 app.set('views', './app/views/pages');
 app.set('view engine', 'jade');
@@ -28,7 +50,9 @@ app.use(session({
   secret: 'oneexpress',
   resave: false,
   saveUninitialized: false,
-  cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 30
+  },
   store: new mongoStore({
     url: dbUrl,
     collection: 'sessions'
@@ -51,18 +75,22 @@ require('./config/routes')(app);
 //   next();
 // });
 
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
   res.status(404);
 
   // respond with html page
   if (req.accepts('html')) {
-    res.render('404', { url: req.url });
+    res.render('404', {
+      url: req.url
+    });
     return;
   }
 
   // respond with json
   if (req.accepts('json')) {
-    res.send({ error: 'Not found' });
+    res.send({
+      error: 'Not found'
+    });
     return;
   }
 
@@ -70,13 +98,15 @@ app.use(function(req, res, next){
   res.type('txt').send('Not found');
 });
 
-app.use(function(err, req, res, next){
+app.use(function(err, req, res, next) {
   // we may use properties of the error object
   // here and next(err) appropriately, or if
   // we possibly recovered from the error, simply next().
   console.log(err.stack);
   res.status(err.status || 500);
-  res.render('500', { error: err });
+  res.render('500', {
+    error: err
+  });
 });
 
 app.locals.moment = require('moment');

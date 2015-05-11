@@ -51,7 +51,7 @@ exports.save = function(req, res, next) {
         return;
       }
       
-      billObj['index'] = _.toArray(billObj);
+      billObj.index = _.toArray(billObj);
       _bill = _.extend(bill, billObj);
       _bill.save(function(err, bill) {
         if (err) {

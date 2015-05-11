@@ -89,7 +89,7 @@ exports.save = function(req, res, next) {
         return;
       }
 
-      adObj['index'] = nodejieba.queryCutSync(ad.title);
+      adObj.index = nodejieba.queryCutSync(ad.title);
       _ad = _.extend(ad, adObj);
       _ad.save(function(err, ad) {
         if (err) {

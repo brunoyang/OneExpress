@@ -67,7 +67,7 @@ exports.save = function(req, res, next) {
 
       var wordlist = nodejieba.queryCutSync(complaint.subject);
       wordlist.push(nodejieba.queryCutSync(complaint.html));
-      complaintObj['index'] = wordlist;
+      complaintObj.index = wordlist;
 
       _complaint = _.extend(complaint, complaintObj);
       _complaint.save(function(err, complaint) {
@@ -82,7 +82,7 @@ exports.save = function(req, res, next) {
   } else {
     var wordlist = nodejieba.queryCutSync(complaintObj.subject);
     wordlist.push(nodejieba.queryCutSync(complaintObj.html));
-    complaintObj['index'] = wordlist;
+    complaintObj.index = wordlist;
 
     _complaint = new Complaint({
       form: complaintObj.form,
