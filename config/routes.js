@@ -12,6 +12,7 @@ var Error = require('../app/controllers/error');
 var Contraband = require('../app/controllers/contraband');
 var Complaint = require('../app/controllers/complaint');
 var Freight = require('../app/controllers/freight');
+var Service = require('../app/controllers/service');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -108,6 +109,10 @@ module.exports = function(app) {
 
   //tools-freight
   app.get('/tools/freight', Freight.detail);
+
+  //service
+  app.get('/service', User.signinRequired, Service.service);
+  app.get('/admin/service/service', Service.admin);
 
   //api
   app.get('/api/check/email', Api.checkEmail);
