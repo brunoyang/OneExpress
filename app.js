@@ -9,6 +9,8 @@ var mongoStore = require('connect-mongo')(session);
 var logger = require('morgan');
 var port = process.env.PORT || 3003;
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var dbUrl = 'mongodb://localhost/oneexpress';
 
 mongoose.connect(dbUrl);
@@ -68,6 +70,8 @@ if ('development' === app.get('env')) {
 }
 
 require('./config/routes')(app);
+require('./config/service')(io);
+
 
 // app.use(function(err, req, res, next) {
 //   var meta = '[' + new Date() + '] ' + req.url + '\n';
@@ -110,4 +114,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.locals.moment = require('moment');
-app.listen(port);
+http.listen(port, function(){
+  console.log('listening on *:3003');
+});
+// app.listen(port);

@@ -1,0 +1,47 @@
+extends ../layout
+
+
+block css
+  link(rel="stylesheet", href="/p/css/components.css")
+  link(rel="stylesheet", href="/p/css/news.css")
+  link(rel="stylesheet", href="/p/css/service.css")
+
+block script
+  script(src="/libs/socket.io/socket.io-1.3.5.js")
+  script(src="/libs/jquery.cookie/jquery.cookie.js")
+  script.
+    var socket = io();
+    var $chat = $('#chat');
+    var uid = $.cookie('uid');
+    console.log(uid);
+    socket.emit('welcome', uid);
+    $chat.on('submit', function(e){
+      e.preventDefault();
+
+      var $input = $('#m');
+      var val = $input.val();
+      socket.emit('say', val);
+      $input.val('');
+      $('#message').append($('<li>').text(val).addClass('me'));
+      $input.focus();
+    });
+
+    socket.on('message', function(msg){
+      $('#message').append($('<li>').text(msg).addClass('me'));
+    });
+
+    socket.on('welcome', function(msg) {
+      $('#message').append($('<li>').text(msg).addClass('oe'));
+    });
+
+block content
+  section.container
+    article.main-content
+      h1 客户服务
+      ul#message
+      form#chat.clearfix(action="")
+        input#m(type="text", autocomplete="off")
+        button 发送
+        
+    aside.sidebar
+      include ../../../components/tools
