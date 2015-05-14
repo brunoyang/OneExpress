@@ -12,7 +12,7 @@ block content
       .page-container
         h1 #{toolsTitle}
         .content-container
-          form#complaint(action="post")
+          form#complaint(method="post")
             input(type="text", placeholder="请填写你的邮箱，方便我们反馈", name="to")
             input(type="text", placeholder="主题", name="subject")
             textarea#complaint-content(cols="30", rows="10", name="html")

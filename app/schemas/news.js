@@ -62,9 +62,11 @@ NewsSchema.statics = {
   },
   fetchLimit: function(start, limit, cb, want) {
     var wantlist = {};
-    want.forEach(function(w, index){
-      wantlist[w] = 1;
-    });
+    if(typeof want !== 'undefined') {
+      want.forEach(function(w, index){
+        wantlist[w] = 1;
+      });
+    }
     return this
       .find({}, wantlist)
       .sort('-meta.updateAt')

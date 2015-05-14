@@ -31,14 +31,14 @@ jQuery(document).ready(function($) {
     $errInfo.empty();
 
     if (val === '') {
-      $errInfo.html("运单号不能为空哦！");
+      $errInfo.html('运单号不能为空哦！');
       return false;
     }
 
     var orderList = $.unique(val.replace(/\s\s+/g, ' ').split(' '));
 
     if (orderList.length > 3) {
-      $errInfo.append($('<li></li>').html("一次最多只能查3个运单号啦~"));
+      $errInfo.append($('<li></li>').html('一次最多只能查3个运单号啦~'));
       return false;
     }
 
@@ -52,12 +52,12 @@ jQuery(document).ready(function($) {
       }
     }
     if (j) {
-      if (msg.length == 1) {
+      if (msg.length === 1) {
         $errInfo.append($('<li></li>').html(msg[0]));
         return false;
       } else {
-        for (var i = 0, l = j; i < l; i++) {
-          $errInfo.append($('<li></li>').html(msg[i]));
+        for (var _i = 0, _l = j; _i < _l; _i++) {
+          $errInfo.append($('<li></li>').html(msg[_i]));
         }
         return false;
       }
@@ -67,12 +67,12 @@ jQuery(document).ready(function($) {
   }
 
   function displayBillList(data) {
-    $billListContent = $(".bill-list-content");
+    var $billListContent = $('.bill-list-content');
 
-    $.each(data, function(trackindex, trackinfo){
-      $billListContent.eq(trackindex).find("h3").html(trackinfo.billnumber);
+    $.each(data, function(trackindex, trackinfo) {
+      $billListContent.eq(trackindex).find('h3').html(trackinfo.billnumber);
       var li = '';
-      $.each(trackinfo.trackinfo, function(index, track){
+      $.each(trackinfo.trackinfo, function(index, track) {
         li += '<li>' + track + '</li>';
       });
       $billListContent.eq(trackindex).find('ul').append($(li));
@@ -80,7 +80,7 @@ jQuery(document).ready(function($) {
   }
 
   function handleBills(data) {
-    var data = data.data.object;
+    var obj = data.data.object;
     $billList.addClass('show');
     // $('.bill-content').css({
     //   'height': $window.height() - $input.height() - 50
@@ -88,14 +88,14 @@ jQuery(document).ready(function($) {
     $('.bill-list-content').css({
       'max-height': $window.height() - $input.height() - 50
     });
-    $(".bill-list-content ul, .bill-list-content h3").empty();
+    $('.bill-list-content ul, .bill-list-content h3').empty();
 
-    $('.bill-list-content').on('DOMMouseScroll', function(e){
+    $('.bill-list-content').on('DOMMouseScroll', function(e) {
       e.preventDefault();
       e.stopPropagation();
     });
 
-    displayBillList(data);
+    displayBillList(obj);
   }
 
   $('#s-form').on('submit', function(e) {
@@ -103,7 +103,7 @@ jQuery(document).ready(function($) {
     var billList = checkVal(),
       bills = {};
 
-    if(billList){
+    if (billList) {
       $.each(billList, function(index, bill) {
         bills[index] = bill;
       });
@@ -113,6 +113,35 @@ jQuery(document).ready(function($) {
           handleBills(data);
         });
       }
+    }
+  });
+
+  var $form = $('#bill');
+
+  $form.on('submit', function(e) {
+    var $t = $(this);
+    var illegalInput = [];
+    e.preventDefault();
+
+    $t.find('textarea, input').each(function(index) {
+      if ($(this).val().trim() === '') {
+        //OE.alert();
+        illegalInput.push($(this).attr('name'));
+      }
+    });
+
+    if (illegalInput.length === 0) {
+      var params = $t.serializeArray();
+
+      $.post('/api/save/bill', params, function(data) {
+        if (data.success) {
+          //OE.alert('提交成功');
+          location.reload();
+        }
+      });
+    } else {
+
+      return false;
     }
   });
 });
