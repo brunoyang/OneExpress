@@ -1,0 +1,84 @@
+extends ../layout
+
+block css
+  link(rel="stylesheet", href="/p/css/page.css")
+
+block script
+  script(src="/p/js/bill.js")
+
+block content
+  section.container.clearfix
+    article.main-content
+      .page-container
+        h1 #{toolsTitle}
+        .content-container
+          p 提价订单后次日将有快递人员上门取件，请保持手机或电话畅通。
+          form.form-group#bill
+            fieldset
+              legend 发件人信息
+              .row
+                label.col-2(for="inputSendName") 姓名
+                .col-10
+                  input(id="inputSendName", name="bill[sendname]")
+              .row
+                label.col-2(for="inputSendAreaCode") 区号
+                .col-3
+                  input(id="inputSendAreaCode", name="bill[sendareacode]")
+                label.col-2(for="inputSendTelephone") 电话
+                .col-5
+                  input(id="inputSendTelephone", name="bill[sendtelephone]")
+              .row
+                label.col-2(for="inputSendCellphone") 手机
+                .col-10
+                  input(id="inputSendCellphone", name="bill[sendcellphone]", maxlength="11")
+              .row
+                label.col-2(for="inputSendProvince") 省
+                .col-2
+                  input(id="inputSendProvince", name="bill[sendprovince]")
+                label.col-2(for="inputSendCity") 市
+                .col-2
+                  input(id="inputSendCity", name="bill[sendcity]")
+                label.col-2(for="inputSendCounty") 区
+                .col-2
+                  input(id="inputSendCounty", name="bill[sendcounty]")
+              .row
+                label.col-2(for="inputSendAddr") 地址
+                .col-10
+                  textarea(name="bill[sendaddr]", cols="30", rows="10")
+            fieldset
+              legend 收件人信息
+              .row
+                label.col-2(for="inputDeliverName") 姓名
+                .col-10
+                  input(id="inputDeliverName", name="bill[delivername]")
+              .row
+                label.col-2(for="inputDeliverAreaCode") 区号
+                .col-3
+                  input(id="inputDeliverAreaCode", name="bill[deliverareacode]")
+                label.col-2(for="inputDeliverTelephone") 电话
+                .col-5
+                  input(id="inputDeliverTelephone", name="bill[delivertelephone]")
+              .row
+                label.col-2(for="inputDeliverCellphone") 手机
+                .col-10
+                  input(id="inputDeliverCellphone", name="bill[delivercellphone]", maxlength="11")
+              .row
+                label.col-2(for="inputDeliverProvince") 省
+                .col-2
+                  input(id="inputDeliverProvince", name="bill[deliverprovince]")
+                label.col-2(for="inputDeliverCity") 市
+                .col-2
+                  input(id="inputDeliverCity", name="bill[delivercity]")
+                label.col-2(for="inputDeliverCounty") 区
+                .col-2
+                  input(id="inputDeliverCounty", name="bill[delivercounty]")
+              .row
+                label.col-2(for="inputDeliverAddr") 地址
+                .col-10
+                  textarea(id="inputDeliverAddr", name="bill[deliveraddr]", cols="30", rows="10")
+            .col-3.col-offset-9
+              button.btn.btn-success.pull-right(type="submit") 提交快递单
+
+    aside.sidebar
+      include ../../../components/side_bar
+    

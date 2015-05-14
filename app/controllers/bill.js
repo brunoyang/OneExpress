@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Bill = require('../models/bill');
-//var Track = require('../models/track');
 var nodejieba = require('../models/nodejieba');
 var _ = require('underscore');
 
@@ -8,6 +7,14 @@ exports.detail = function(req, res, next) {
   res.render('frontend/tools/bill', {
     title: '快递查询 - 一通快递',
     toolsTitle: '快递查询',
+    first: 'tools'
+  });
+};
+
+exports.onlinesend = function(req, res, next) {
+  res.render('frontend/tools/onlinesend', {
+    title: '在线寄件 - 一通快递',
+    toolsTitle: '在线寄件',
     first: 'tools'
   });
 };
