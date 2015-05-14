@@ -13,26 +13,34 @@ block script
     var socket = io();
     var $chat = $('#chat');
     var uid = $.cookie('uid');
+    var $message = $('#message');
     console.log(uid);
     socket.emit('welcome', uid);
     $chat.on('submit', function(e){
       e.preventDefault();
 
       var $input = $('#m');
-      var val = $input.val();
-      socket.emit('say', val);
+      var msg = $input.val();
+      socket.emit('say', msg);
       $input.val('');
-      $('#message').append($('<li>').text(val).addClass('me'));
+      addMEMsg(msg);
       $input.focus();
     });
 
     socket.on('message', function(msg){
-      $('#message').append($('<li>').text(msg).addClass('me'));
+      addOEMsg(msg)
     });
 
     socket.on('welcome', function(msg) {
-      $('#message').append($('<li>').text(msg).addClass('oe'));
+      addOEMsg(msg);
     });
+    
+    function addOEMsg(msg) {
+      $message.append($('<li class="clearfix"><span class="to">'+msg+'</span></li>'));
+    }
+    function addMEMsg(msg) {
+      $message.append($('<li class="clearfix"><span class="from">'+msg+'</span></li>'));
+    }
 
 block content
   section.container
