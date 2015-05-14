@@ -23,3 +23,47 @@
   padding: 7px;
   margin-right: 20px;
 }
+
+#message li {
+  margin: 10px 0;
+}
+
+#message .to,
+#message .from {
+  border-radius: 8px;
+  position: relative;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+#message .to{
+  float:left;
+  padding: 6px 10px;
+  background: #3498DB;
+  color: #fff;
+}
+#message .to:before,
+#message .from:before{
+  content: '';
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-right-color: #3498DB;
+  left: -10px;
+  top: 50%;
+  -webkit-transform: translate(0,-50%);
+}
+#message .from {
+  float: right;
+  padding: 6px 10px;
+  background: #dbdbdb;
+  color: #444;
+}
+#message .from:before{
+  right: -10px;
+  left: auto;
+  border-right-color: transparent;
+  border-left-color: #dbdbdb;
+}

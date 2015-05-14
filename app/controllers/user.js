@@ -22,7 +22,7 @@ exports.signup = function(req, res, next) {
     if (_.isEmpty(user)) {
       isFirstOne = true;
     }
-    console.log(isFirstOne);
+
     if (isFirstOne) {
       _user.role = 51;
       user = new User(_user);
@@ -81,7 +81,6 @@ exports.signin = function(req, res, next) {
 
       if (isMatch) {
         req.session.user = user;
-        console.log(user._id);
         res.cookie('uid', user._id)
         return res.redirect(url);
       } else {

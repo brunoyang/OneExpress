@@ -14,6 +14,54 @@ block content
           .col-md-2
             button.form-control.btn.btn-success 发送
 
+block css
+  style.
+    #message li {
+      margin: 10px 0;
+      padding: 10px;
+      list-style-type: none;
+    }
+
+    #message .to,
+    #message .from {
+      border-radius: 8px;
+      position: relative;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    #message .to{
+      float:left;
+      padding: 6px 10px;
+      background: #3498DB;
+      color: #fff;
+    }
+    #message .to:before,
+    #message .from:before{
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-right-color: #3498DB;
+      left: -10px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+    }
+    #message .from {
+      float: right;
+      padding: 6px 10px;
+      background: #dbdbdb;
+      color: #444;
+    }
+    #message .from:before{
+      right: -10px;
+      left: auto;
+      border-right-color: transparent;
+      border-left-color: #dbdbdb;
+    }
+
 block script
   script(src="/libs/socket.io/socket.io-1.3.5.js")
   script(src="/libs/jquery.cookie/jquery.cookie.js")
@@ -22,17 +70,25 @@ block script
     var $chat = $('#chat');
     var $input = $('#m');
     var uid = $.cookie('uid');
+    var $message = $('#message');
 
     socket.emit('admin_welcome', uid);
 
     socket.on('admin_welcome', function(msg){
-      $('#message').append($('<li>').text(msg).addClass('me'));
+      addOEMsg(msg);
     });
     
     socket.on('admin_message', function(json){
       $input.data('id', json.id);
-      $('#message').append($('<li>').text(json.msg).addClass('user'));
+      addUSERMsg(json.msg);
     })
+
+    function addOEMsg(msg) {
+      $message.append($('<li class="clearfix"><span class="from">'+msg+'</span></li>'));
+    }
+    function addUSERMsg(msg) {
+      $message.append($('<li class="clearfix"><span class="to">'+msg+'</span></li>'));
+    }
 
     $chat.on('submit', function(e){
       e.preventDefault();
@@ -42,6 +98,17 @@ block script
         id: $input.data('id')
       });
     })
+
+    $chat.on('submit', function(e){
+      e.preventDefault();
+
+      var $input = $('#m');
+      var msg = $input.val();
+      socket.emit('admin_say', msg);
+      $input.val('');
+      addOEMsg(msg);
+      $input.focus();
+    });
 
 
 
