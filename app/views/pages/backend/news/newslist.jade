@@ -19,8 +19,11 @@ block content
           each news in newslist
             tr(class="news-id-#{news._id}")
               td #{news.title}
-              td #{news.author}
-              td #{news.content.substring(0, 20) + '...'}
+              td #{news.author}       
+              if news.content.length > 20
+                td #{news.content.substring(0, 20) + '...'}
+              else
+                td #{news.content}
               td #{moment(news.meta.updateAt).format('MM/DD/YYYY')}
               td #{news.pv}
               td: a(href="/news/detail/#{news._id}", target="_blank") 查看

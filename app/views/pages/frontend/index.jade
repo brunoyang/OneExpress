@@ -77,9 +77,11 @@ block content
           each ad in ads
             li
               if ad.imgSrc.indexOf('http') > -1
-                img(src="#{ad.imgSrc}", alt="#{ad.title}")
+                a(href="/ad/detail/#{ad._id}")
+                  img(src="#{ad.imgSrc}", alt="#{ad.title}")
               else
-                img(src="/upload/#{ad.imgSrc}", alt="#{ad.title}")
+                a(href="/ad/detail/#{ad._id}")
+                  img(src="/upload/#{ad.imgSrc}", alt="#{ad.title}")
               h3
                 a(href="/ad/detail/#{ad._id}") #{ad.title}
         .nav-dot

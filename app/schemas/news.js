@@ -60,9 +60,13 @@ NewsSchema.statics = {
         .exec(cb);
     }
   },
-  fetchLimit: function(start, limit, cb) {
+  fetchLimit: function(start, limit, cb, want) {
+    var wantlist = {};
+    want.forEach(function(w, index){
+      wantlist[w] = 1;
+    });
     return this
-      .find({})
+      .find({}, wantlist)
       .sort('-meta.updateAt')
       .skip(start)
       .limit(limit)
