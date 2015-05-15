@@ -33,11 +33,11 @@ $(function() {
     $icon.addClass('h').html('');
   });
 
-  $('#complaint').on('submit', function(e){
+  $('#complaint').on('submit', function(e) {
     e.preventDefault();
-    $t = $(this);
+    var $t = $(this);
     var email = $t.serializeArray();
-    $.post('/api/save/complaint', email, function(data){
+    $.post('/api/save/complaint', email, function(data) {
       if (data.success) {
         //OE.alert('发送成功');
       } else {
@@ -46,12 +46,14 @@ $(function() {
     });
   });
 
-  $('#bill-query').on('submit', function(e){
+  $('#bill-query').on('submit', function(e) {
     e.preventDefault();
-    $t = $(this);
+    var $t = $(this);
     var number = $t.find('input').val();
-    if(number !== '') {
-      $.get('/api/query/bills',{0:number}, function(data){
+    if (number !== '') {
+      $.get('/api/query/bills', {
+        0: number
+      }, function(data) {
         var obj = data.data.object[0];
         var tpl = $('#bill-content').html();
         var template = Handlebars.compile(tpl);
@@ -115,9 +117,9 @@ function searchList(cb) {
     };
     $.get('/api/query/search', word, function(data) {
       var obj = data.data.object;
-      $modal = $('#search-modal');
+      var $modal = $('#search-modal');
       $modal.find('.modal-header h4 span').html(word.word);
-      $modalUl = $modal.find('.modal-body ul');
+      var $modalUl = $modal.find('.modal-body ul');
       $modalUl.empty();
       cb(obj, $modalUl);
     });

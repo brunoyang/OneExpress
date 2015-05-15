@@ -33,13 +33,13 @@ $(function() {
   });
 
   function next(index) {
-    var index = index === undefined ? $index : index;
+    var i = index === undefined ? $index : index;
     $span.removeClass('active')
-      .eq(index).addClass('active');
+      .eq(i).addClass('active');
     $sliderUl.stop(true, false).animate({
-      left: '-' + index * 100 + '%'
+      left: '-' + i * 100 + '%'
     });
-    index = index >= $span.length - 1 ? 0 : ++index;
-    $index = index;
+    i = i >= $span.length - 1 ? 0 : ++i;
+    $index = i;
   }
 });

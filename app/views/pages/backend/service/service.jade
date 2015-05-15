@@ -69,8 +69,12 @@ block script
     var socket = io();
     var $chat = $('#chat');
     var $input = $('#m');
-    var uid = $.cookie('uid');
     var $message = $('#message');
+    var uid = $.cookie('uid');
+    if (!uid) {
+      //OE.alert('请重新登录');
+      location.href = '/signin'
+    }
 
     socket.emit('admin_welcome', uid);
 
