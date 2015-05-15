@@ -51,7 +51,10 @@ block content
           form#bill-query(method="get")
             .row
               .col-8
-                input(type="text")
+                if bill
+                  input#bill(type="text", value="#{bill._id}")
+                else 
+                  input(type="text")
               .col-2
                 button(type="submit") 查询
           #bill-info
