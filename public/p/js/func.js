@@ -46,39 +46,6 @@ $(function() {
     });
   });
 
-  $('#bill-query').on('submit', function(e) {
-    e.preventDefault();
-    var $t = $(this);
-    var number = $t.find('input').val();
-    if (number !== '') {
-      $.get('/api/query/bills', {
-        0: number
-      }, function(data) {
-        var obj = data.data.object[0];
-        var tpl = $('#bill-content').html();
-        var template = Handlebars.compile(tpl);
-        var content = {
-          sendname: obj.sendname,
-          sendprovince: obj.sendprovince,
-          sendcity: obj.sendcity,
-          sendcounty: obj.sendcounty,
-          sendaddr: obj.sendaddr,
-          sendcellphone: obj.sendcellphone,
-          delivername: obj.delivername,
-          deliverprovince: obj.deliverprovince,
-          delivercity: obj.delivercity,
-          delivercounty: obj.delivercounty,
-          deliveraddr: obj.deliveraddr,
-          delivercellphone: obj.delivercellphone
-        };
-        var html = template(content);
-        $('#bill-info').html(html);
-      });
-    } else {
-      return false;
-    }
-  });
-
   $('.news-del, .ad-del, .site-del, .user-del, .contraband-del, .hr-del').on('click', function(e) {
     var target = $(e.target),
       id = target.data('id'),
@@ -123,5 +90,6 @@ function searchList(cb) {
       $modalUl.empty();
       cb(obj, $modalUl);
     });
+    $.get()
   });
 }

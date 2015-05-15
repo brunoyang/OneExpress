@@ -144,4 +144,49 @@ jQuery(document).ready(function($) {
       return false;
     }
   });
+
+  $('#bill-query').on('submit', function(e) {
+    e.preventDefault();
+    var $t = $(this);
+    var number = $t.find('input').val();
+    if (number !== '') {
+      $.get('/api/query/bills', {
+        0: number
+      }, function(data) {
+        var obj = data.data.object[0];
+        var tpl = $('#bill-content').html();
+        var template = Handlebars.compile(tpl);
+        var content = {
+          sendname: obj.sendname,
+          sendprovince: obj.sendprovince,
+          sendcity: obj.sendcity,
+          sendcounty: obj.sendcounty,
+          sendaddr: obj.sendaddr,
+          sendcellphone: obj.sendcellphone,
+          delivername: obj.delivername,
+          deliverprovince: obj.deliverprovince,
+          delivercity: obj.delivercity,
+          delivercounty: obj.delivercounty,
+          deliveraddr: obj.deliveraddr,
+          delivercellphone: obj.delivercellphone
+        };
+        var html = template(content);
+        $('#bill-info').html(html);
+      });
+      $.get('/api/query/track', {
+        0: number
+      }, function(data) {
+        if (data.success) {
+          var list = data.data.object[0].trackinfo;
+          var tpl = $('#bill-list-tpl').html();
+          var template = Handlebars.compile(tpl);
+          var content = {list: list};
+          var html = template(content);
+          $('#bill-track').html(html);
+        }
+      });
+    } else {
+      return false;
+    }
+  });
 });
