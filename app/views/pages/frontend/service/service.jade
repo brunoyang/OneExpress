@@ -9,38 +9,7 @@ block css
 block script
   script(src="/libs/socket.io/socket.io-1.3.5.js")
   script(src="/libs/jquery.cookie/jquery.cookie.js")
-  script.
-    var socket = io();
-    var $chat = $('#chat');
-    var uid = $.cookie('uid');
-    var $message = $('#message');
-    console.log(uid);
-    socket.emit('welcome', uid);
-    $chat.on('submit', function(e){
-      e.preventDefault();
-
-      var $input = $('#m');
-      var msg = $input.val();
-      socket.emit('say', msg);
-      $input.val('');
-      addMEMsg(msg);
-      $input.focus();
-    });
-
-    socket.on('message', function(msg){
-      addOEMsg(msg)
-    });
-
-    socket.on('welcome', function(msg) {
-      addOEMsg(msg);
-    });
-    
-    function addOEMsg(msg) {
-      $message.append($('<li class="clearfix"><span class="to">'+msg+'</span></li>'));
-    }
-    function addMEMsg(msg) {
-      $message.append($('<li class="clearfix"><span class="from">'+msg+'</span></li>'));
-    }
+  script(src="/p/js/service.js")
 
 block content
   section.container

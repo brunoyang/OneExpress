@@ -38,44 +38,44 @@ $signinDialog
   });
 
 var $signupDialog = $('.dialog-signup'),
-    $signupWrong = $('.dialog-signup .dialog-msg p');
-  $signupDialog.find('.dialog-user').on('blur', function() {
-      var $t = $(this);
-      var $span = $t.siblings('.icon-check');
-      var userVal = $t.val();
-      if (userVal === '') {
-        $span.addClass('h');
-        return $signupWrong.html('用户名不能为空');
-      }
-      if (!rUsername.test(userVal)) {
-        $span.addClass('h');
-        return $signupWrong.html('用户名只能为汉字，数字，英文和下划线');
-      }
-      $span.removeClass('h');
-      return $signupWrong.html('');
-    })
-    .end().find('.dialog-email').on('blur', function() {
-      var $t = $(this);
-      var $span = $t.siblings('.icon-check');
-      var emailVal = $t.val();
-      if (emailVal === '') {
-        $span.addClass('h');
-        return $signupWrong.html('邮箱不能为空');
-      }
-      if (!rEmail.test(emailVal)) {
-        $span.addClass('h');
-        return $signupWrong.html('邮箱格式好像有错误哦');
-      }
-      $.get('/api/check/email', {
-          email: emailVal
-        },
-        function(data) {
-          if (data.success) {
-            $span.addClass('h');
-            $signupWrong.html('已有该用户');
-          } else {
-            $span.removeClass('h');
-            $signupWrong.html('');
-          }
-        });
-    });
+  $signupWrong = $('.dialog-signup .dialog-msg p');
+$signupDialog.find('.dialog-user').on('blur', function() {
+    var $t = $(this);
+    var $span = $t.siblings('.icon-check');
+    var userVal = $t.val();
+    if (userVal === '') {
+      $span.addClass('h');
+      return $signupWrong.html('用户名不能为空');
+    }
+    if (!rUsername.test(userVal)) {
+      $span.addClass('h');
+      return $signupWrong.html('用户名只能为汉字，数字，英文和下划线');
+    }
+    $span.removeClass('h');
+    return $signupWrong.html('');
+  })
+  .end().find('.dialog-email').on('blur', function() {
+    var $t = $(this);
+    var $span = $t.siblings('.icon-check');
+    var emailVal = $t.val();
+    if (emailVal === '') {
+      $span.addClass('h');
+      return $signupWrong.html('邮箱不能为空');
+    }
+    if (!rEmail.test(emailVal)) {
+      $span.addClass('h');
+      return $signupWrong.html('邮箱格式好像有错误哦');
+    }
+    $.get('/api/check/email', {
+        email: emailVal
+      },
+      function(data) {
+        if (data.success) {
+          $span.addClass('h');
+          $signupWrong.html('已有该用户');
+        } else {
+          $span.removeClass('h');
+          $signupWrong.html('');
+        }
+      });
+  });

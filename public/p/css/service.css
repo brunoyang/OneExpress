@@ -1,4 +1,4 @@
-#chat{
+#chat {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -36,14 +36,15 @@
   word-wrap: break-word;
 }
 
-#message .to{
-  float:left;
+#message .to {
+  float: left;
   padding: 6px 10px;
   background: #3498DB;
   color: #fff;
 }
+
 #message .to:before,
-#message .from:before{
+#message .from:before {
   content: '';
   position: absolute;
   display: block;
@@ -53,15 +54,17 @@
   border-right-color: #3498DB;
   left: -10px;
   top: 50%;
-  -webkit-transform: translate(0,-50%);
+  -webkit-transform: translate(0, -50%);
 }
+
 #message .from {
   float: right;
   padding: 6px 10px;
   background: #dbdbdb;
   color: #444;
 }
-#message .from:before{
+
+#message .from:before {
   right: -10px;
   left: auto;
   border-right-color: transparent;

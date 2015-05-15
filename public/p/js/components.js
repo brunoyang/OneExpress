@@ -22,10 +22,10 @@ $(function() {
       stopProp(e);
     });
 
-    if($AREADATA) {
+    if ($AREADATA) {
       handleData($AREADATA);
     } else {
-      $.post('/api/query/site', function(result){
+      $.post('/api/query/site', function(result) {
         var data = result.data.object;
         $AREADATA = data;
         handleData(data);
@@ -49,7 +49,7 @@ $(function() {
       handlerSite($sPro, siteInfo, 'province');
     }
 
-    $sPro.on("change", function() {
+    $sPro.on('change', function() {
       var val = $sPro.val();
       if (val) {
         val = val;
@@ -62,7 +62,7 @@ $(function() {
       handlerSite($sCity, siteInfo, 'city', val);
     });
 
-    $sCity.on("change", function() {
+    $sCity.on('change', function() {
       var proVal = $sPro.val();
       var cityVal = $sCity.val();
       if (proVal) {
@@ -77,7 +77,7 @@ $(function() {
       handlerSite($sCounty, siteInfo, 'county', proVal, cityVal);
     });
 
-    $sCounty.on("change", function() {
+    $sCounty.on('change', function() {
       var arr = [],
         i = 0,
         len = $select.length;
@@ -100,21 +100,21 @@ $(function() {
     var area = '';
 
     switch (level) {
-      case 'province':
-        $.each(siteInfo, function(index, site) {
-          area += '<option value="' + index + '">' + index + '</option>';
-        });
-        break;
-      case 'city':
-        $.each(siteInfo[province], function(index, site) {
-          area += '<option value="' + index + '">' + index + '</option>';
-        });
-        break;
-      case 'county':
-        $.each(siteInfo[province][city], function(index, site) {
-          area += '<option value="' + site + '">' + site + '</option>';
-        });
-        break;
+    case 'province':
+      $.each(siteInfo, function(index, site) {
+        area += '<option value="' + index + '">' + index + '</option>';
+      });
+      break;
+    case 'city':
+      $.each(siteInfo[province], function(index, site) {
+        area += '<option value="' + index + '">' + index + '</option>';
+      });
+      break;
+    case 'county':
+      $.each(siteInfo[province][city], function(index, site) {
+        area += '<option value="' + site + '">' + site + '</option>';
+      });
+      break;
     }
     ele.append(area);
   }
@@ -146,7 +146,7 @@ $(function() {
       t.selectionEnd = range.start + val.length;
     } else if (document.selection) {
       t.focus();
-      sel = document.selection.createRange();
+      var sel = document.selection.createRange();
       sel.text = val;
       sel.select();
     } else {

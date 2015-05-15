@@ -13,12 +13,11 @@
   width: 100%;
 }
 
-.news-info{
+.news-info {
   width: 75%;
   margin-top: 20px;
   padding-bottom: 10px;
 }
-
 
 h2 {
   font-size: 36px;
@@ -26,9 +25,11 @@ h2 {
   line-height: 50px;
   color: #333;
 }
+
 .news-time {
   padding-right: 15px;
 }
+
 .main-content {
   float: left;
   position: relative;
@@ -40,17 +41,20 @@ h2 {
   min-height: 500px;
   border: 1px solid #bfbfbf;
 }
-.main-content p{
+
+.main-content p {
   font-size: 14px;
   color: #333;
   text-indent: 2em;
   line-height: 23px;
   margin: 15px 0;
 }
-.main-content p strong{
+
+.main-content p strong {
   font-weight: bold;
 }
-.news-func{
+
+.news-func {
   box-sizing: border-box;
   position: absolute;
   width: 100%;
@@ -60,14 +64,17 @@ h2 {
   border-top: 1px dashed gray;
   line-height: 1.2;
 }
-.news-func span a{
+
+.news-func span a {
   color: #F0553A;
   font-size: 18px;
 }
+
 .news-func .back-button {
   float: left;
 }
-.news-func .go-top{
+
+.news-func .go-top {
   float: right;
 }
 
@@ -81,7 +88,7 @@ h2 {
   margin: -15px -15px 15px;
 }
 
-.main-content ul li a{
+.main-content ul li a {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -95,14 +102,15 @@ h2 {
   font-size: 14px;
 }
 
-.main-content ul li a:hover{
+.main-content ul li a:hover {
   border-color: #3498DB;
 }
+
 .main-content ul li a span {
   float: right;
 }
 
-.news-content img{
+.news-content img {
   max-width: 750;
   display: block;
   margin: 20px auto;
