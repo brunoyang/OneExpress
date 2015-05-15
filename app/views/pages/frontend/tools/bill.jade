@@ -5,7 +5,7 @@ block css
 
 block script
   script(src="/libs/handlebars/handlebars.min.js")
-  script(src="/p/js/func.js")
+  script(src="/p/js/bill.js")
   script#bill-content(type="text/x-handlebars-template").
     <table class="bill-table">
       <thead>
@@ -33,6 +33,14 @@ block script
       </tr>
       </tbody>
     </table>
+  script#bill-list-tpl(type="text/x-handlebars-template").
+    <ul>
+      {{#each list}}
+        <li>
+          <p>{{this}}</p>
+        </li>
+      {{/each}}
+    <ul>
 
 block content
   section.container.clearfix
@@ -47,6 +55,7 @@ block content
               .col-2
                 button(type="submit") 查询
           #bill-info
+          #bill-track
     aside.sidebar
       include ../../../components/side_bar
     
