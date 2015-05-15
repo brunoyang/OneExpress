@@ -11,6 +11,24 @@ exports.detail = function(req, res, next) {
   });
 };
 
+exports.bill = function(req, res, next) {
+  var id = req.params.id;
+
+  Bill.findById(id, function(err, bill){
+    if (err) {
+      next(err);
+      return;
+    }
+    
+    res.render('frontend/tools/bill', {
+      title: '快递查询 - 一通快递',
+      toolsTitle: '快递查询',
+      first: 'tools',
+      bill: bill
+    });
+  }, ['index'])
+};
+
 exports.onlinesend = function(req, res, next) {
   res.render('frontend/tools/onlinesend', {
     title: '在线寄件 - 一通快递',

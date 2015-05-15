@@ -68,6 +68,7 @@ module.exports = function(app) {
   //bill
   app.get('/tools/bill', Bill.detail);
   app.get('/tools/onlinesend', Bill.onlinesend);
+  app.get('/bill/detail/:id', Bill.bill);
   app.post('/admin/bill/save', User.signinRequired, User.adminRequired, Bill.save);
   app.get('/admin/bill/new', User.signinRequired, User.adminRequired, Bill.new);
   app.get('/admin/bill/update/:id', User.signinRequired, User.adminRequired, Bill.update);

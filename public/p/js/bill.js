@@ -145,10 +145,7 @@ jQuery(document).ready(function($) {
     }
   });
 
-  $('#bill-query').on('submit', function(e) {
-    e.preventDefault();
-    var $t = $(this);
-    var number = $t.find('input').val();
+  function billQuery(number){
     if (number !== '') {
       $.get('/api/query/bills', {
         0: number
@@ -188,5 +185,14 @@ jQuery(document).ready(function($) {
     } else {
       return false;
     }
+  }
+
+  billQuery($('#bill').val());
+
+  $('#bill-query').on('submit', function(e) {
+    e.preventDefault();
+    var $t = $(this);
+    var number = $t.find('input').val();
+    billQuery(number);
   });
 });
