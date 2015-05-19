@@ -16,6 +16,7 @@ $(function() {
       }, function(data) {
         if (data.success) {
           var isCon = data.data.object;
+          OE.PopOut.alert(['警告',data.success]);
           if (isCon) {
             $icon.removeClass('h').addClass('icon-wrong').html('&#xea0d;').css('color', '#F0553A');
           } else {
@@ -40,13 +41,14 @@ $(function() {
     $.post('/api/save/complaint', email, function(data) {
       if (data.success) {
         //OE.alert('发送成功');
+        location.reload();
       } else {
         //OE.alert('发送失败，请重新发送')
       }
     });
   });
 
-  $('.news-del, .ad-del, .site-del, .user-del, .contraband-del, .hr-del').on('click', function(e) {
+  $(document).on('click', '.news-del, .ad-del, .site-del, .user-del, .contraband-del, .hr-del', function(e) {
     var target = $(e.target),
       id = target.data('id'),
       item = $(this).attr('class').split(' ')[2].split('-')[0];

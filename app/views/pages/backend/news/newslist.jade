@@ -98,7 +98,7 @@ block script
               id: item._id,
               title: item.title,
               author: item.author,
-              content: item.content.substring(0, 30) + '...',
+              content: item.content.length > 20 ? item.content.substring(0, 20) + '...' : item.content,
               time: moment(item.meta.updateAt).format('YYYY/MM/DD hh:mm:ss'),
               pv: item.pv
             };
@@ -123,7 +123,7 @@ block script
           id: item._id,
           title: item.title,
           author: item.author,
-          content: item.content.substring(0, 20) + '...'
+          content: item.content.length > 20 ? item.content.substring(0, 20) + '...' : item.content
         };
         content.searchList.push(obj);
       });

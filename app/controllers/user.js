@@ -61,7 +61,7 @@ exports.signin = function(req, res, next) {
   var _user = req.body.user;
   var email = _user.email;
   var password = _user.password;
-  var url = req.query.url;
+  var url = req.query.url || '/';
 
   User.findByEmail(email, function(err, user) {
     if (err) {
@@ -81,7 +81,7 @@ exports.signin = function(req, res, next) {
 
       if (isMatch) {
         req.session.user = user;
-        res.cookie('uid', user._id)
+        res.cookie('uid', user._id);
         return res.redirect(url);
       } else {
         return res.redirect('/signup');
