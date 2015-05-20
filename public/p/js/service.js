@@ -4,7 +4,7 @@ var $message = $('#message');
 var uid = $.cookie('uid');
 
 if (!uid) {
-  //OE.alert('请重新登录');
+  OE.PopOut.alert('请重新登录');
   location.href = '/signin'
 }
 

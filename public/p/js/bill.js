@@ -125,7 +125,7 @@ jQuery(document).ready(function($) {
 
     $t.find('textarea, input').each(function(index) {
       if ($(this).val().trim() === '') {
-        //OE.alert();
+        OE.PopOut.alert('不能为空');
         illegalInput.push($(this).attr('name'));
       }
     });
@@ -135,8 +135,8 @@ jQuery(document).ready(function($) {
 
       $.post('/api/save/bill', params, function(data) {
         if (data.success) {
-          //OE.alert('提交成功');
-          location.reload();
+          OE.PopOut.alert('提交成功');
+          setTimeout(location.reload, 2000);
         }
       });
     } else {

@@ -23,7 +23,7 @@ $(function() {
             $icon.removeClass('h').html('&#xea10;').css('color', '#3498DB');
           }
         } else {
-          //OE.alert(data.data.msg);
+          OE.PopOut.alert(data.data.msg);
         }
       });
     } else {
@@ -40,10 +40,12 @@ $(function() {
     var email = $t.serializeArray();
     $.post('/api/save/complaint', email, function(data) {
       if (data.success) {
-        //OE.alert('发送成功');
-        location.reload();
+        OE.PopOut.alert('发送成功');
+        setTimeout(function(){
+          location.reload()
+        }, 2000);
       } else {
-        //OE.alert('发送失败，请重新发送')
+        OE.PopOut.alert('发送失败，请重新发送')
       }
     });
   });

@@ -73,8 +73,10 @@ block script
     var uid = $.cookie('uid');
     
     if (!uid) {
-      //OE.alert('请重新登录');
-      location.href = '/signin'
+      OE.PopOut.alert('请重新登录');
+      setTimeout(function(){
+        location.href = '/signin';
+      }, 2000);
     }
 
     socket.emit('admin_welcome', uid);
