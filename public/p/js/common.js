@@ -46,8 +46,8 @@ var OE = function() {
           $('.OE-mask').show();
         },
         close: function() {
-          $('.OE-mask').hide();
-          $('.OE-alert').hide();
+          $('.OE-mask').remove();
+          $('.OE-alert').remove();
         }
       };
     }()

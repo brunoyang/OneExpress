@@ -17,11 +17,14 @@ block content
               if !complaint.readed
                 td
                   a(href="/admin/complaint/reply/#{complaint._id}", style="padding-right: 8px;") #{complaint.to}
-                    span.badge 未读
+                    span.badge(style="margin-left: 5px;") 未读
               else
                 td
                   a(href="/admin/complaint/reply/#{complaint._id}") #{complaint.to}
-              td #{complaint.html.substring(0, 30) + '...'}
+              if complaint.html.length > 30
+                td #{complaint.html.substring(0, 30) + '...'}
+              else
+                td #{complaint.html}
               td #{moment(complaint.meta.updateAt).format('YYYY/MM/DD hh:mm:ss')}
               td: a(href="/admin/complaint/reply/#{complaint._id}") 回复
       nav.text-center
@@ -89,7 +92,7 @@ block script
           var html = template(content);
           $tbody.html(html);
         } else {
-          //OE.alert(data.data.msg);
+          OE.Pouout.alert(data.data.msg);
         }
       })
     });
