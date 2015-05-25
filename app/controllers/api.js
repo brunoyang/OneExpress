@@ -328,7 +328,7 @@ exports.saveBill = function(req, res, next) {
     if (err) {
       return res.json(returnFailMsg('Server Error'));
     } else {
-      return res.json(returnSuccessMsg());
+      return res.json(returnSuccessMsg({billnumber: bill._id}));
     }
   });
 };
