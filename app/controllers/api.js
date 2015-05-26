@@ -205,7 +205,7 @@ exports.queryTrack = function(req, res, next) {
     var msg = '';
     if (track !== null) {
       var detail = {
-        time: moment(track.time).format('YYYY-MM-DD hh:mm:ss'),
+        time: moment(track.time).format('YYYY-MM-DD HH:mm:ss'),
         status: statusMap[track.status],
         manager: track.manager,
         site: track.site
